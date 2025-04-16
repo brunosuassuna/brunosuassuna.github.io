@@ -108,6 +108,35 @@
             align-items: center;
         }
 
+        .hero-logo-container {
+    position: absolute;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.hero-logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+        .hero-logo:hover {
+    transform: scale(1.05) rotate(5deg);
+}
+
         .logo i {
             margin-right: 0.5rem;
             font-size: 2rem;
@@ -1088,12 +1117,13 @@
             <a href="#portfolio" class="btn btn-outline">Meus Projetos</a>
         </div>
     </div>
-    <div class="hero-image slide-up delay-3" style="background-image: url('https://brunosuassuna.github.io/Imagens/B.S.png'); background-size: contain; background-color: transparent; box-shadow: none;"></div>
+    <div class="hero-logo-container slide-up delay-3">
+        <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Logo Bruno Suassuna" class="hero-logo">
+    </div>
     <div class="social-icons slide-up delay-4"><br>
         <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://github.com/brunosuassuna" target="_blank"><i class="fab fa-github"></i></a>
         <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-    
     </div>
 </section>
 
