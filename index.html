@@ -4,16 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bruno Suassuna | Engenheiro de Dados</title>
+    <meta name="description" content="Engenheiro de Dados especializado em soluções escaláveis na nuvem, ETL/ELT e arquitetura de dados.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2563eb;
-            --secondary-color: #1e40af;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary-color: #10b981;
             --dark-color: #1f2937;
+            --darker-color: #111827;
             --light-color: #f9fafb;
+            --lighter-color: #ffffff;
             --accent-color: #FACC15;
             --gray-color: #6b7280;
+            --light-gray: #e5e7eb;
+            --dark-gray: #4b5563;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --section-padding: 8rem 5%;
+            --max-width: 1400px;
         }
 
         * {
@@ -22,12 +39,18 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Space Grotesk', 'Poppins', sans-serif;
             background-color: var(--light-color);
             color: var(--dark-color);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Scrollbar personalizada */
@@ -77,6 +100,92 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--darker-color);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .btn-icon {
+            margin-left: 0.5rem;
+        }
+
         /* Header */
         header {
             position: fixed;
@@ -87,80 +196,42 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             z-index: 1000;
             transition: all 0.3s ease;
         }
 
         header.scrolled {
             padding: 1rem 5%;
-            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
-            text-decoration: none;
             display: flex;
             align-items: center;
+            gap: 0.5rem;
         }
 
-.hero-logo-container {
-    position: absolute;
-    right: 8%;  /* Ajustado para dar mais espaço */
-    width: 350px;  /* Container maior */
-    height: 350px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-logo {
-    width: 280px;  /* Logo maior */
-    height: 280px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid var(--primary-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.hero-logo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-}
-        .hero-logo:hover {
-    transform: scale(1.05) rotate(5deg);
-}
-
-        .logo i {
-            margin-right: 0.5rem;
-            font-size: 2rem;
+        .logo-icon {
+            font-size: 1.8rem;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2.5rem;
+            gap: 2rem;
         }
 
         .nav-links a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1.1rem;
-            transition: color 0.3s;
             position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--dark-color);
         }
 
         .nav-links a::after {
@@ -171,16 +242,21 @@
             background: var(--primary-color);
             bottom: -5px;
             left: 0;
-            transition: width 0.3s;
+            transition: var(--transition);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
         .hamburger {
             display: none;
             cursor: pointer;
+            z-index: 1001;
         }
 
         .hamburger div {
@@ -192,15 +268,24 @@
         }
 
         /* Hero Section */
-/* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 0 10%;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+            padding: 6rem 5% 4rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
             position: relative;
             overflow: hidden;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            position: relative;
         }
 
         .hero-content {
@@ -208,88 +293,111 @@
             z-index: 1;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
             line-height: 1.2;
         }
 
-        .hero h1 span {
+        .hero-title span {
             color: var(--primary-color);
+            position: relative;
         }
 
-        .hero p {
-            font-size: 1.2rem;
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(37, 99, 235, 0.2);
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
             margin-bottom: 2rem;
             color: var(--gray-color);
+            max-width: 90%;
         }
 
         .hero-btns {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            z-index: 1;
         }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            border: 2px solid var(--primary-color);
-        }
-
 
         .hero-image {
-            position: absolute;
-            right: 10%;
-            width: 500px;
-            height: 500px;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            background-color: var(--primary-color);
-            background-image: url('https://avatars.githubusercontent.com/u/108697199?v=4');
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
-            animation: morph 8s ease-in-out infinite;
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
+            transform-style: preserve-3d;
         }
 
-        @keyframes morph {
-            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
-            50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(10deg) rotateX(5deg) scale(1.05);
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0) 70%);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
         }
 
         .social-icons {
             position: absolute;
-            left: 10%;
+            left: 5%;
             bottom: 10%;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            z-index: 2;
         }
 
         .social-icons a {
             color: var(--dark-color);
             font-size: 1.5rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: var(--box-shadow);
         }
 
         .social-icons a:hover {
             color: var(--primary-color);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
+            background-color: white;
         }
 
-        /* About Section */
+        /* Sections */
         .section {
-            padding: 8rem 10%;
+            padding: var(--section-padding);
+            position: relative;
         }
 
         .section-title {
@@ -298,18 +406,28 @@
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
 
         .section-title p {
-            color: var(--gray-color);
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
         }
 
+        /* About Section */
         .about-content {
             display: flex;
             align-items: center;
@@ -319,18 +437,19 @@
         .about-image {
             flex: 1;
             position: relative;
+            min-width: 300px;
         }
 
         .about-image img {
             width: 100%;
             max-width: 400px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-            transition: transform 0.5s ease;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
         }
 
         .about-image:hover img {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .about-image::after {
@@ -339,7 +458,7 @@
             width: 100%;
             height: 100%;
             border: 3px solid var(--primary-color);
-            border-radius: 20px;
+            border-radius: var(--border-radius-lg);
             top: 20px;
             left: 20px;
             z-index: -1;
@@ -352,24 +471,86 @@
         .about-text h3 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            color: var(--dark-color);
         }
 
         .about-text p {
             margin-bottom: 1.5rem;
-            color: var(--gray-color);
         }
 
-        .skills {
+        .experience-list {
             margin-top: 2rem;
         }
 
-        .skills h4 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+        .experience-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--primary-color);
         }
 
-        .skill-tags {
+        .experience-date {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            background-color: #f8fafc;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+        }
+
+        .skill-items {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
@@ -382,71 +563,91 @@
             border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 500;
+            transition: var(--transition);
         }
 
-        /* Services Section */
-        .services {
-            background-color: #f8fafc;
+        .skill-tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
         }
 
-        .services-container {
+        /* Certifications Section */
+        .certifications-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .service-card {
+        .certification-card {
             background-color: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background-color: rgba(37, 99, 235, 0.1);
-            border-radius: 50%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .certification-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
             align-items: center;
-            margin: 0 auto 1.5rem;
+        }
+
+        .certification-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .certification-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .certification-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .certification-issuer {
             color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 1rem;
+            display: block;
         }
 
-        .service-card p {
+        .certification-date {
             color: var(--gray-color);
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
         }
 
-        .service-link {
-            color: var(--primary-color);
-            font-weight: 500;
-            text-decoration: none;
+        .certification-btn {
             display: inline-flex;
             align-items: center;
-            transition: all 0.3s ease;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: var(--transition);
         }
 
-        .service-link i {
+        .certification-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        .certification-btn i {
             margin-left: 0.5rem;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
         }
 
-        .service-link:hover i {
+        .certification-btn:hover i {
             transform: translateX(5px);
         }
 
@@ -462,13 +663,13 @@
         .filter-btn {
             background: none;
             border: none;
-            padding: 0.5rem 1.5rem;
-            font-family: 'Poppins', sans-serif;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--gray-color);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border-radius: 50px;
         }
 
@@ -485,15 +686,15 @@
 
         .portfolio-item {
             position: relative;
-            border-radius: 15px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
         }
 
         .portfolio-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--box-shadow-lg);
         }
 
         .portfolio-img {
@@ -515,7 +716,7 @@
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: var(--transition);
             padding: 2rem;
             text-align: center;
         }
@@ -531,7 +732,7 @@
         }
 
         .portfolio-overlay p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 1.5rem;
         }
 
@@ -549,110 +750,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
 
         .portfolio-links a:hover {
             background-color: white;
             color: var(--primary-color);
             transform: translateY(-3px);
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            background-color: #f8fafc;
-        }
-
-        .testimonials-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .testimonial-slider {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonial-track {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .testimonial-card {
-            min-width: 100%;
-            padding: 0 1rem;
-        }
-
-        .testimonial-content {
-            background-color: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-
-        .testimonial-content::before {
-            content: '\201C';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 5rem;
-            color: rgba(37, 99, 235, 0.1);
-            font-family: serif;
-            line-height: 1;
-        }
-
-        .testimonial-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: var(--gray-color);
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .author-img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 1rem;
-        }
-
-        .author-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .author-info p {
-            color: var(--gray-color);
-            font-size: 0.9rem;
-        }
-
-        .slider-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            gap: 1rem;
-        }
-
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(37, 99, 235, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .slider-dot.active {
-            background-color: var(--primary-color);
-            transform: scale(1.2);
         }
 
         /* Contact Section */
@@ -671,7 +775,6 @@
         }
 
         .contact-info p {
-            color: var(--gray-color);
             margin-bottom: 2rem;
         }
 
@@ -684,7 +787,7 @@
         .contact-item {
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .contact-icon {
@@ -705,10 +808,9 @@
             margin-bottom: 0.3rem;
         }
 
-        .contact-text a {
+        .contact-text a, .contact-text span {
             color: var(--gray-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition);
         }
 
         .contact-text a:hover {
@@ -719,8 +821,8 @@
             flex: 1;
             background-color: white;
             padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
 
         .form-group {
@@ -730,23 +832,26 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--dark-color);
         }
 
         .form-control {
             width: 100%;
             padding: 0.8rem 1rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--light-gray);
             border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
+            font-family: inherit;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            background-color: #f9fafb;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background-color: white;
         }
 
         textarea.form-control {
@@ -760,26 +865,26 @@
             border: none;
             padding: 0.8rem 2rem;
             border-radius: 50px;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .submit-btn:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-dark);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--box-shadow-lg);
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark-color);
+            background-color: var(--darker-color);
             color: white;
-            padding: 5rem 10% 2rem;
+            padding: 5rem 5% 2rem;
         }
 
         .footer-container {
@@ -787,12 +892,15 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
             margin-bottom: 3rem;
+            max-width: var(--max-width);
+            margin: 0 auto 3rem;
         }
 
         .footer-col h3 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             position: relative;
+            color: white;
         }
 
         .footer-col h3::after {
@@ -820,8 +928,7 @@
 
         .footer-links a {
             color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: inline-block;
         }
 
@@ -844,12 +951,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
 
         .footer-social a:hover {
             background-color: var(--primary-color);
             transform: translateY(-3px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-family: inherit;
         }
 
         .footer-bottom {
@@ -858,6 +978,8 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.5);
             font-size: 0.9rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
         }
 
         /* Back to Top Button */
@@ -877,9 +999,9 @@
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             z-index: 999;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--box-shadow);
         }
 
         .back-to-top.active {
@@ -888,42 +1010,81 @@
         }
 
         .back-to-top:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--primary-dark);
             transform: translateY(-5px);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-color) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
 
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .hero-image {
-                width: 400px;
-                height: 400px;
+            :root {
+                --section-padding: 6rem 5%;
             }
-        }
-
-        @media (max-width: 992px) {
-            .hero {
+            
+            .hero-container {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 120px;
-                height: auto;
-                padding-bottom: 5rem;
             }
-
+            
             .hero-content {
                 max-width: 100%;
                 margin-bottom: 3rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
-
+            
+            .hero-subtitle {
+                max-width: 100%;
+            }
+            
             .hero-btns {
                 justify-content: center;
             }
-
-            .hero-image {
-                position: relative;
-                right: auto;
+            
+            .hero-image-container {
                 margin: 0 auto;
             }
-
+            
             .social-icons {
                 position: relative;
                 left: auto;
@@ -931,42 +1092,46 @@
                 flex-direction: row;
                 justify-content: center;
                 margin-top: 3rem;
+                gap: 1rem;
             }
-
+            
             .about-content {
                 flex-direction: column;
             }
-
+            
             .about-image {
                 margin-bottom: 3rem;
+                display: flex;
+                justify-content: center;
             }
-
+            
             .contact-container {
                 flex-direction: column;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
+            :root {
+                --section-padding: 5rem 5%;
+            }
+            
             .nav-links {
                 position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
                 background-color: white;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 transition: all 0.5s ease;
                 gap: 2rem;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             }
 
             .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li {
-                margin-left: 0;
+                right: 0;
             }
 
             .hamburger {
@@ -984,58 +1149,75 @@
             .hamburger.active div:nth-child(3) {
                 transform: rotate(45deg) translate(-5px, -6px);
             }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-image {
-                width: 300px;
-                height: 300px;
-            }
-
-            .section {
-                padding: 5rem 7%;
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
 
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 5rem;
+                padding-bottom: 3rem;
             }
-
+            
             .hero-btns {
                 flex-direction: column;
                 gap: 1rem;
             }
-
+            
             .btn {
                 width: 100%;
-                text-align: center;
             }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
+            
+            .portfolio-filter {
+                flex-direction: column;
+                align-items: center;
             }
-
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
             .footer-container {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-
+            
             .footer-col h3::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
-
+            
             .footer-social {
                 justify-content: center;
             }
         }
 
+        @media (max-width: 576px) {
+            :root {
+                --section-padding: 4rem 5%;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .skill-icon {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+        }
+
         /* Animations */
         .fade-in {
-            animation: fadeIn 1s ease-in;
+            animation: fadeIn 1s ease-in forwards;
         }
 
         @keyframes fadeIn {
@@ -1044,7 +1226,7 @@
         }
 
         .slide-up {
-            animation: slideUp 1s ease-out;
+            animation: slideUp 1s ease-out forwards;
         }
 
         @keyframes slideUp {
@@ -1055,6 +1237,21 @@
             to { 
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        .slide-left {
+            animation: slideLeft 1s ease-out forwards;
+        }
+
+        @keyframes slideLeft {
+            from { 
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
@@ -1073,7 +1270,10 @@
 
     <!-- Header -->
     <header id="header">
-        <a href="https://brunosuassuna.github.io/Imagens/B.S.png" class="logo"><i class="fas fa-database"></i> Bruno Suassuna</a>
+        <a href="#" class="logo">
+            <i class="fas fa-database logo-icon"></i>
+            <span>Bruno Suassuna</span>
+        </a>
         <ul class="nav-links">
             <li><a href="#home">Início</a></li>
             <li><a href="#about">Sobre</a></li>
@@ -1088,47 +1288,57 @@
         </div>
     </header>
 
-<!-- Hero Section -->
-<section class="hero" id="home">
-    <div class="hero-content fade-in">
-        <h1 class="slide-up">Olá, eu sou <span>Bruno Suassuna</span></h1>
-        <p class="slide-up delay-1">Engenheiro de Dados | Cientista de Dados |<br> Transformando dados em decisões estratégicas</p>
- <div class="hero-btns slide-up delay-2">
-            <a href="#contact" class="btn btn-primary">Contate-me</a>
-            <a href="#portfolio" class="btn btn-outline">Meus Projetos</a>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title slide-up">Olá, eu sou <span>Bruno Suassuna</span></h1>
+                <p class="hero-subtitle slide-up delay-1">Engenheiro de Dados | Especialista em Cloud Data Solutions</p>
+                <div class="hero-btns slide-up delay-2">
+                    <a href="#contact" class="btn btn-primary">Contate-me</a>
+                    <a href="#portfolio" class="btn btn-outline">Ver Projetos</a>
+                </div>
+            </div>
+            <div class="hero-image-container slide-up delay-3">
+                <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Bruno Suassuna" class="hero-image">
+                <div class="hero-pattern"></div>
+            </div>
         </div>
-
-
-    </div>
-    <div class="hero-logo-container slide-up delay-3">
-        <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Logo Bruno Suassuna" class="hero-logo">
-    </div><br>
-    <br> 
-    <div class="social-icons slide-up delay-4"><br>
-        <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com/brunosuassuna" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-    </div>
-</section>
-
+        <div class="social-icons slide-up delay-4">
+            <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank" class="tooltip">
+                <i class="fab fa-linkedin-in"></i>
+                <span class="tooltiptext">LinkedIn</span>
+            </a>
+            <a href="https://github.com/brunosuassuna" target="_blank" class="tooltip">
+                <i class="fab fa-github"></i>
+                <span class="tooltiptext">GitHub</span>
+            </a>
+            <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank" class="tooltip">
+                <i class="fas fa-envelope"></i>
+                <span class="tooltiptext">Email</span>
+            </a>
+        </div>
+    </section>
 
     <!-- About Section -->
     <section class="section" id="about">
-        <div class="section-title">
-            <h2 class="fade-in">Sobre Mim</h2>
-            <p class="fade-in delay-1">Conheça mais sobre minha trajetória profissional</p>
-        </div>
-        <div class="about-content">
-            <div class="about-image fade-in">
-                <img src="https://brunosuassuna.github.io/Imagens/Perfil.jpeg" alt="Bruno Suassuna">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Sobre Mim</h2>
+                <p class="fade-in delay-1">Conheça minha trajetória profissional e experiência</p>
             </div>
-            <div class="about-text fade-in delay-1">
-                <h3>Engenheiro de Dados na The Store Intelligence</h3>
-                <p>🎓 Formado em Análise e Desenvolvimento de Sistemas com Pós-graduação em Ciência de Dados e Analytics pela PUC-RIO.</p>
+            <div class="about-content">
+                <div class="about-image fade-in">
+                    <img src="https://brunosuassuna.github.io/Imagens/Perfil.jpeg" alt="Bruno Suassuna">
+                </div>
+                <div class="about-text fade-in delay-1">
+                    <h3>Engenheiro de Dados na The Store Intelligence</h3>
+                     <p>🎓 Formado em Análise e Desenvolvimento de Sistemas com Pós-graduação em Ciência de Dados e Analytics pela PUC-RIO.</p>
                 <p>💡 Especialista em transformar dados brutos em insights valiosos, utilizando tecnologias como Azure Data Factory, Databricks e Power BI.</p>
                 <p>🚀 Minha missão é criar soluções de dados escaláveis que impulsionem a tomada de decisão estratégica nas organizações.</p>
-                
-                <div class="skills">
+                     técnicos, mas também impulsionem resultados mensuráveis para as organizações.</p>
+                    
+               <div class="skills">
                     <h4>Formação Acadêmica:</h4>
                     <div class="skill-tags">
                         <span class="skill-tag">Análise e Desenvolvimento de Sistemas</span>
@@ -1139,382 +1349,410 @@
         </div>
     </section>
 
-<!-- Skills Section -->
-<section class="section services" id="skills">
-    <div class="section-title">
-        <h2 class="fade-in">Habilidades Técnicas</h2>
-        <p class="fade-in delay-1">Tecnologias e ferramentas que domino</p>
-    </div>
+    <!-- Skills Section -->
+    <section class="section skills-section" id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Habilidades Técnicas</h2>
+                <p class="fade-in delay-1">Tecnologias e ferramentas que domino em profundidade</p>
+            </div>
 
-    <div class="services-container">
-
-        <!-- Card: Plataformas Cloud -->
-        <div class="service-card fade-in">
-            <div class="service-icon">
-                <i class="fas fa-cloud"></i>
-            </div>
-            <h3>Plataformas Cloud</h3>
-            <p>Azure Data Factory, Databricks, Pipelines, Data Lake, Data Warehouse, Snowflake</p>
-            <div class="skill-tags" style="justify-content: center; margin-top: 1rem;">
-                <span class="skill-tag">Azure</span>
-                <span class="skill-tag">Databricks</span>
-                <span class="skill-tag">Snowflake</span>
-            </div>
-        </div>
-
-        <!-- Card: Linguagens -->
-        <div class="service-card fade-in delay-1">
-            <div class="service-icon">
-                <i class="fas fa-code"></i>
-            </div>
-            <h3>Linguagens</h3>
-            <p>Python (Pandas, NumPy, Seaborn), SQL, APIs, ETL/ELT, Esquema Estrela</p>
-            <div class="skill-tags" style="justify-content: center; margin-top: 1rem;">
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">SQL</span>
-                <span class="skill-tag">ETL/ELT</span>
-            </div>
-        </div>
-
-        <!-- Card: Visualização & Análise -->
-        <div class="service-card fade-in delay-2">
-            <div class="service-icon">
-                <i class="fas fa-chart-bar"></i>
-            </div>
-            <h3>Visualização & Análise</h3>
-            <p>Power BI, Excel Avançado, Análise Exploratória, Modelagem Preditiva</p>
-            <div class="skill-tags" style="justify-content: center; margin-top: 1rem;">
-                <span class="skill-tag">Power BI</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">Data Viz</span>
-            </div>
-        </div>
-
-        <!-- Card: Soft Skills -->
-        <div class="service-card fade-in delay-3">
-            <div class="service-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <h3>Soft Skills</h3>
-            <p>Habilidades interpessoais e comportamentais que fortalecem minha atuação profissional</p>
-            <div class="skill-tags" style="justify-content: center; margin-top: 1rem;">
-                <span class="skill-tag">Comunicação clara</span>
-                <span class="skill-tag">Organização</span>
-                <span class="skill-tag">Pensamento analítico</span>
-                <span class="skill-tag">Foco em resultado</span>
-            </div>
-        </div>
-
-    </div>
-</section>
- <!-- Certifications Section -->
-  <section class="section certifications">
-    <div class="section-title">
-        <h2 class="fade-in">Certificações</h2>
-        <p class="fade-in delay-1">Minhas qualificações e certificados profissionais</p>
-    </div>
-    
-    <div class="certifications-container">
-        <!-- Slider de Certificações -->
-        <div class="certification-slider fade-in">
-            <div class="certification-track">
-                <!-- Certificação 1 -->
-                <div class="certification-card">
-                    <div class="certification-badge">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="certification-content">
-                        <h3>Governança de Dados</h3>
-                        <p class="certification-text">"Explorando os Conceitos Fundamentais"</p>
-                        <div class="certification-meta">
-                            <span class="certification-issuer">Alura</span>
-                            <span class="certification-date">Concluído: 2023</span>
+            <div class="skills-container">
+                <!-- Plataformas Cloud -->
+                <div class="skill-card fade-in">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-cloud"></i>
                         </div>
+                        <h3 class="skill-title">Plataformas Cloud</h3>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-tag">Azure Data Factory</span>
+                        <span class="skill-tag">Databricks</span>
+                        <span class="skill-tag">Azure Synapse</span>
+                        <span class="skill-tag">Snowflake</span>
+                        <span class="skill-tag">Data Lake</span>
+                        <span class="skill-tag">Data Warehouse</span>
+                    </div>
+                </div>
+
+                <!-- Linguagens -->
+                <div class="skill-card fade-in delay-1">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="skill-title">Linguagens</h3>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-tag">Python (Pandas, PySpark)</span>
+                        <span class="skill-tag">SQL Avançado</span>
+                        <span class="skill-tag">Scala</span>
+                        <span class="skill-tag">Bash/Shell</span>
+                        <span class="skill-tag">APIs REST</span>
+                        <span class="skill-tag">GraphQL</span>
+                    </div>
+                </div>
+
+                <!-- Engenharia de Dados -->
+                <div class="skill-card fade-in delay-2">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="skill-title">Engenharia de Dados</h3>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-tag">ETL/ELT</span>
+                        <span class="skill-tag">Data Pipeline</span>
+                        <span class="skill-tag">Data Modeling</span>
+                        <span class="skill-tag">Airflow</span>
+                        <span class="skill-tag">Kafka</span>
+                        <span class="skill-tag">Data Governance</span>
+                    </div>
+                </div>
+
+                <!-- Visualização & BI -->
+                <div class="skill-card fade-in delay-3">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="skill-title">Visualização & BI</h3>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">Tableau</span>
+                        <span class="skill-tag">Metabase</span>
+                        <span class="skill-tag">Seaborn/Matplotlib</span>
+                        <span class="skill-tag">Plotly/Dash</span>
+                        <span class="skill-tag">Excel Avançado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Certificações</h2>
+                <p class="fade-in delay-1">Minhas qualificações profissionais reconhecidas</p>
+            </div>
+            
+            <div class="certifications-container">
+                <!-- Certificação 1 -->
+                <div class="certification-card fade-in">
+                    <div class="certification-header">
+                        <i class="fas fa-database certification-icon"></i>
+                        <h3>Governança de Dados</h3>
+                    </div>
+                    <div class="certification-body">
+                        <p class="certification-text">"Explorando os Conceitos Fundamentais"</p>
+                        <span class="certification-issuer">Alura</span>
+                        <span class="certification-date">Concluído: 2023</span>
                         <a href="https://www.alura.com.br/certificados/2dcf795f-f659-4eae-b4d3-1824b8575e0c" 
                            target="_blank" 
-                           class="btn btn-outline">
-                            <i class="fas fa-external-link-alt"></i> Ver Certificado
+                           class="certification-btn">
+                            Ver Certificado
+                            <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Certificação 2 -->
-                <div class="certification-card">
-                    <div class="certification-badge">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="certification-content">
+                <div class="certification-card fade-in delay-1">
+                    <div class="certification-header">
+                        <i class="fas fa-chart-line certification-icon"></i>
                         <h3>Data Science</h3>
+                    </div>
+                    <div class="certification-body">
                         <p class="certification-text">"Testando Relações com Regressão Linear"</p>
-                        <div class="certification-meta">
-                            <span class="certification-issuer">Alura</span>
-                            <span class="certification-date">Concluído: 2023</span>
-                        </div>
+                        <span class="certification-issuer">Alura</span>
+                        <span class="certification-date">Concluído: 2023</span>
                         <a href="https://www.alura.com.br/certificados/616d92b5-d324-4b61-937c-e90d710cf3a0" 
                            target="_blank" 
-                           class="btn btn-outline">
-                            <i class="fas fa-external-link-alt"></i> Ver Certificado
+                           class="certification-btn">
+                            Ver Certificado
+                            <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Certificação 3 -->
-                <div class="certification-card">
-                    <div class="certification-badge">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="certification-content">
+                <div class="certification-card fade-in delay-2">
+                    <div class="certification-header">
+                        <i class="fas fa-brain certification-icon"></i>
                         <h3>Formação Completa</h3>
+                    </div>
+                    <div class="certification-body">
                         <p class="certification-text">"Data Science"</p>
-                        <div class="certification-meta">
-                            <span class="certification-issuer">Alura</span>
-                            <span class="certification-date">Concluído: 2023</span>
-                        </div>
+                        <span class="certification-issuer">Alura</span>
+                        <span class="certification-date">Concluído: 2023</span>
                         <a href="https://www.alura.com.br/certificados/5b4e3bf7-0adf-4a17-8aa7-6455fe7cdee1" 
                            target="_blank" 
-                           class="btn btn-outline">
-                            <i class="fas fa-external-link-alt"></i> Ver Certificado
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificação 4 -->
-                <div class="certification-card">
-                    <div class="certification-badge">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <div class="certification-content">
-                        <h3>Databricks e Data Factory</h3>
-                        <p class="certification-text">"Criando Pipelines na Nuvem"</p>
-                        <div class="certification-meta">
-                            <span class="certification-issuer">Alura</span>
-                            <span class="certification-date">Concluído: 2023</span>
-                        </div>
-                        <a href="https://www.alura.com.br/certificados/f7f1b321-c941-400f-9e69-b0884846dddd" 
-                           target="_blank" 
-                           class="btn btn-outline">
-                            <i class="fas fa-external-link-alt"></i> Ver Certificado
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Certificação 5 -->
-                <div class="certification-card">
-                    <div class="certification-badge">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <div class="certification-content">
-                        <h3>Engenharia de Dados</h3>
-                        <p class="certification-text">"Fundamentos Essenciais"</p>
-                        <div class="certification-meta">
-                            <span class="certification-issuer">Data Science Academy</span>
-                            <span class="certification-date">Concluído: 2023</span>
-                        </div>
-                        <a href="https://www.datascienceacademy.com.br/certificados/6400288ed95562f1e20b5169" 
-                           target="_blank" 
-                           class="btn btn-outline">
-                            <i class="fas fa-external-link-alt"></i> Ver Certificado
+                           class="certification-btn">
+                            Ver Certificado
+                            <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-            
-        </div>
-    </div>
-
-</section>
+    </section>
 
     <!-- Portfolio Section -->
     <section class="section" id="portfolio">
-        <div class="section-title">
-            <h2 class="fade-in">Projetos Recentes</h2>
-            <p class="fade-in delay-1">Alguns dos meus trabalhos em engenharia e ciência de dados</p>
-        </div>
-        <div class="portfolio-filter fade-in">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="engineering">Engenharia</button>
-            <button class="filter-btn" data-filter="science">Ciência</button>
-            <button class="filter-btn" data-filter="analytics">Análise</button>
-        </div>
-        <div class="portfolio-grid">
-<!-- Projeto 1 -->
-<div class="portfolio-item fade-in" data-category="engineering">
-    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Análise de Qualidade de Vinhos" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>Análise de Qualidade de Vinhos</h3>
-        <p>Análise avançada de datasets de vinhos utilizando PySpark no Databricks</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/Analise-Qualidade-de-Vinhos" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
-</div>
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Projetos Recentes</h2>
+                <p class="fade-in delay-1">Soluções de dados que desenvolvi para desafios complexos</p>
+            </div>
+            <div class="portfolio-filter fade-in">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="engineering">Engenharia</button>
+                <button class="filter-btn" data-filter="science">Ciência</button>
+                <button class="filter-btn" data-filter="analytics">Análise</button>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Projeto 1 -->
+                <div class="portfolio-item fade-in" data-category="engineering">
+                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Análise de Qualidade de Vinhos" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Análise de Qualidade de Vinhos</h3>
+                        <p>Pipeline de dados completo para análise de qualidade de vinhos utilizando PySpark no Databricks</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/Analise-Qualidade-de-Vinhos" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Projeto 2 -->
-<div class="portfolio-item fade-in delay-1" data-category="engineering">
-    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="MVP Engenharia de Dados" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>MVP Engenharia de Dados</h3>
-        <p>Pipeline completo de engenharia de dados com Databricks e análise estratégica</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/MVP-Engenharia-de-Dados" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
-</div>
+                <!-- Projeto 2 -->
+                <div class="portfolio-item fade-in delay-1" data-category="engineering">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="MVP Engenharia de Dados" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>MVP Engenharia de Dados</h3>
+                        <p>Arquitetura de dados escalável com Databricks e análise estratégica para tomada de decisão</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/MVP-Engenharia-de-Dados" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Projeto 3 -->
-<div class="portfolio-item fade-in delay-2" data-category="science">
-    <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="COVID-19 Global Data Analysis" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>Análise Global COVID-19</h3>
-        <p>Análise do impacto da pandemia com Databricks DeltaLake e visualizações interativas</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/COVID-19-Global-Data-Analysis" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
-</div>
+                <!-- Projeto 3 -->
+                <div class="portfolio-item fade-in delay-2" data-category="science">
+                    <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="COVID-19 Global Data Analysis" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Análise Global COVID-19</h3>
+                        <p>Pipeline ETL para análise do impacto da pandemia com Databricks DeltaLake e visualizações interativas</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/COVID-19-Global-Data-Analysis" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Projeto 4 -->
-<div class="portfolio-item fade-in" data-category="analytics">
-    <img src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Análise de Criptomoedas" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>Análise de Criptomoedas</h3>
-        <p>Análise de mercado de Bitcoin e Ethereum desenvolvida no ambiente Databricks</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/Analise-de-Criptomoedas-Bitcoin-Ethereum" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
-</div>
+                <!-- Projeto 4 -->
+                <div class="portfolio-item fade-in" data-category="analytics">
+                    <img src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Análise de Criptomoedas" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Análise de Criptomoedas</h3>
+                        <p>Solução de análise de mercado para Bitcoin e Ethereum com pipeline automatizado no Databricks</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/Analise-de-Criptomoedas-Bitcoin-Ethereum" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Projeto 5 -->
-<div class="portfolio-item fade-in delay-1" data-category="engineering">
-    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="API Gerenciamento de Usuários" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>API Gerenciamento de Usuários</h3>
-        <p>API RESTful desenvolvida em Python para controle e autenticação de usuários</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/API_Gerenciamento_Usuarios" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
-        </div>
-    </div>
-</div>
+                <!-- Projeto 5 -->
+                <div class="portfolio-item fade-in delay-1" data-category="engineering">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="API Gerenciamento de Usuários" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>API Gerenciamento de Usuários</h3>
+                        <p>API RESTful desenvolvida em Python para controle e autenticação de usuários com segurança</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/API_Gerenciamento_Usuarios" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-<!-- Projeto 6 -->
-<div class="portfolio-item fade-in delay-2" data-category="analytics">
-    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Projeto Brothers Learning" class="portfolio-img">
-    <div class="portfolio-overlay">
-        <h3>Brothers Learning</h3>
-        <p>Plataforma de aprendizado com backend em PHP para cursos e conteúdos educacionais</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/Brothers-Learning" target="_blank"><i class="fas fa-link"></i></a>
-            <a href="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank"><i class="fas fa-search"></i></a>
+                <!-- Projeto 6 -->
+                <div class="portfolio-item fade-in delay-2" data-category="analytics">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Projeto Brothers Learning" class="portfolio-img">
+                    <div class="portfolio-overlay">
+                        <h3>Brothers Learning</h3>
+                        <p>Plataforma de aprendizado com backend em PHP para cursos e conteúdos educacionais</p>
+                        <div class="portfolio-links">
+                            <a href="https://github.com/brunosuassuna/Brothers-Learning" target="_blank" class="tooltip">
+                                <i class="fas fa-link"></i>
+                                <span class="tooltiptext">Ver Código</span>
+                            </a>
+                            <a href="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" target="_blank" class="tooltip">
+                                <i class="fas fa-search"></i>
+                                <span class="tooltiptext">Visualizar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </section>
 
     <!-- Contact Section -->
     <section class="section" id="contact">
-        <div class="section-title">
-            <h2 class="fade-in">Entre em Contato</h2>
-            <p class="fade-in delay-1">Vamos conversar sobre dados e oportunidades!</p>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info fade-in">
-                <h3>Vamos trabalhar juntos</h3>
-                <p>Estou disponível para discutir projetos, oportunidades de colaboração ou qualquer dúvida sobre engenharia de dados.</p>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Entre em Contato</h2>
+                <p class="fade-in delay-1">Vamos conversar sobre como posso ajudar no seu próximo projeto de dados</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info fade-in">
+                    <h3>Vamos trabalhar juntos</h3>
+                    <p>Estou disponível para discutir projetos, oportunidades de colaboração ou qualquer dúvida sobre engenharia de dados e soluções na nuvem.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <a href="mailto:brunosuassuna.dev@gmail.com">brunosuassuna.dev@gmail.com</a>
+                            </div>
                         </div>
-                        <div class="contact-text">
-                            <h4>Email</h4>
-                            <a href="mailto:brunosuassuna.dev@gmail.com">brunosuassuna.dev@gmail.com</a>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Localização</h4>
+                                <span>João Pessoa, Brasil</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Localização</h4>
-                            <a href="#">João Pessoa, Brasil</a>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Disponibilidade</h4>
+                                <span>Segunda a Sexta, 9:00 - 18:00</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="contact-form fade-in delay-1">
-                <form id="form-contato">
-                    <div class="form-group">
-                        <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="assunto">Assunto</label>
-                        <input type="text" id="assunto" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" class="form-control" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Enviar Mensagem <i class="fas fa-paper-plane"></i></button>
-                </form>
+                <div class="contact-form fade-in delay-1">
+                    <form id="form-contato">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="assunto">Assunto</label>
+                            <input type="text" id="assunto" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Enviar Mensagem 
+                            <i class="fas fa-paper-plane btn-icon"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>Bruno Suassuna</h3>
-                <p>Engenheiro de Dados especializado em transformar dados brutos em insights valiosos e soluções escaláveis.</p>
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/brunosuassuna" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Bruno Suassuna</h3>
+                    <p>Engenheiro de Dados especializado em soluções escaláveis na nuvem, ETL/ELT e arquitetura de dados.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/brunosuassuna" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#skills">Habilidades</a></li>
+                        <li><a href="#portfolio">Projetos</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Áreas de Especialização</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Engenharia de Dados</a></li>
+                        <li><a href="#">Arquitetura de Dados</a></li>
+                        <li><a href="#">Data Pipelines</a></li>
+                        <li><a href="#">Azure Data Solutions</a></li>
+                        <li><a href="#">Business Intelligence</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Receba atualizações sobre meus projetos e artigos técnicos sobre engenharia de dados.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Seu email" class="form-control" required>
+                        <button type="submit" class="submit-btn">Inscrever</button>
+                    </form>
                 </div>
             </div>
-            <div class="footer-col">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="#home">Início</a></li>
-                    <li><a href="#about">Sobre</a></li>
-                    <li><a href="#skills">Habilidades</a></li>
-                    <li><a href="#portfolio">Projetos</a></li>
-                    <li><a href="#contact">Contato</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Bruno Suassuna. Todos os direitos reservados.</p>
             </div>
-            <div class="footer-col">
-                <h3>Áreas de Especialização</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Engenharia de Dados</a></li>
-                    <li><a href="#">Ciência de Dados</a></li>
-                    <li><a href="#">Análise de Dados</a></li>
-                    <li><a href="#">Azure Data Factory</a></li>
-                    <li><a href="#">Databricks</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Newsletter</h3>
-                <p>Receba atualizações sobre meus projetos e artigos sobre dados.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Seu email" class="form-control" required>
-                    <button type="submit" class="submit-btn">Inscrever</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> Bruno Suassuna. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -1527,7 +1765,9 @@
         // Loader
         window.addEventListener('load', function() {
             const loader = document.querySelector('.loader');
-            loader.classList.add('hidden');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 500);
         });
 
         // Header scroll effect
@@ -1547,6 +1787,13 @@
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
+            
+            // Toggle body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
 
         // Close mobile menu when clicking a link
@@ -1554,6 +1801,7 @@
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                document.body.style.overflow = '';
             });
         });
 
@@ -1590,41 +1838,16 @@
                 portfolioItems.forEach(item => {
                     if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                         item.style.display = 'block';
+                        item.classList.add('fade-in');
                     } else {
                         item.style.display = 'none';
+                        item.classList.remove('fade-in');
                     }
                 });
             });
         });
 
-        // Testimonial slider
-        const track = document.querySelector('.testimonial-track');
-        const dots = document.querySelectorAll('.slider-dot');
-        let currentSlide = 0;
-
-        function goToSlide(index) {
-            track.style.transform = `translateX(-${index * 100}%)`;
-            
-            // Update dots
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[index].classList.add('active');
-            
-            currentSlide = index;
-        }
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                goToSlide(index);
-            });
-        });
-
-        // Auto slide
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % dots.length;
-            goToSlide(currentSlide);
-        }, 5000);
-
-         // Back to top button
+        // Back to top button
         const backToTopButton = document.querySelector('.back-to-top');
         
         window.addEventListener('scroll', function() {
@@ -1662,12 +1885,22 @@
             contactForm.reset();
         });
 
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            alert(`Obrigado por se inscrever! Você receberá nossas atualizações no email ${emailInput.value}.`);
+            emailInput.value = '';
+        });
+
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
         // Animation on scroll
         const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.fade-in, .slide-up');
+            const elements = document.querySelectorAll('.fade-in, .slide-up, .slide-left');
             
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
@@ -1675,7 +1908,7 @@
                 
                 if (elementPosition < screenPosition) {
                     element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+                    element.style.transform = 'translate(0)';
                 }
             });
         };
@@ -1688,6 +1921,12 @@
         document.querySelectorAll('.slide-up').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        document.querySelectorAll('.slide-left').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(50px)';
             el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         });
 
