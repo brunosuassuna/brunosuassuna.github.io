@@ -1288,38 +1288,355 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-container">
-            <div class="hero-content fade-in">
-                <h1 class="hero-title slide-up">Olá, eu sou <span>Bruno Suassuna</span></h1>
-                <p class="hero-subtitle slide-up delay-1">Engenheiro de Dados | Cientista de Dados |<br> Transformando dados em decisões estratégicas</p>
-</p>
-                <div class="hero-btns slide-up delay-2">
-                    <p></p><a href="#contact" class="btn btn-primary">Contate-me</a></p>
-                    <a href="#portfolio" class="btn btn-outline">Ver Projetos</a>
+   <!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-container">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title slide-up">Transformando dados em <span>soluções estratégicas</span></h1>
+            <p class="hero-subtitle slide-up delay-1">Engenheiro de Dados Sênior | Especialista em Arquitetura de Dados na Nuvem</p>
+            
+            <div class="hero-btns slide-up delay-2">
+                <a href="#contact" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Contate-me
+                </a>
+                <a href="#portfolio" class="btn btn-outline">
+                    <i class="fas fa-code-branch"></i> Ver Projetos
+                </a>
+            </div>
+            
+            <div class="hero-highlights slide-up delay-3">
+                <div class="highlight-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>+5 anos de experiência</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Certificações em Cloud</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Arquiteturas escaláveis</span>
                 </div>
             </div>
-            <p></p><div class="hero-image-container slide-up delay-3"></p>
+        </div>
+        
+        <div class="hero-image-container slide-up delay-4">
+            <div class="hero-image-wrapper">
                 <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Bruno Suassuna" class="hero-image">
-                <div class="hero-pattern"></div>
+                <div class="hero-image-border"></div>
+                <div class="hero-tech-icons">
+                    <div class="tech-icon" style="--i:1">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure">
+                    </div>
+                    <div class="tech-icon" style="--i:2">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    </div>
+                    <div class="tech-icon" style="--i:3">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka">
+                    </div>
+                    <div class="tech-icon" style="--i:4">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas">
+                    </div>
+                </div>
             </div>
+            <div class="hero-pattern"></div>
         </div>
-        <div class="social-icons slide-up delay-4">
-            <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank" class="tooltip">
-                <i class="fab fa-linkedin-in"></i>
-                <span class="tooltiptext">LinkedIn</span>
-            </a>
-            <a href="https://github.com/brunosuassuna" target="_blank" class="tooltip">
-                <i class="fab fa-github"></i>
-                <span class="tooltiptext">GitHub</span>
-            </a>
-            <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank" class="tooltip">
-                <i class="fas fa-envelope"></i>
-                <span class="tooltiptext">Email</span>
-            </a>
-        </div>
-    </section>
+    </div>
+    
+    <div class="social-icons slide-up delay-5">
+        <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank" class="tooltip social-icon">
+            <i class="fab fa-linkedin-in"></i>
+            <span class="tooltiptext">LinkedIn</span>
+        </a>
+        <a href="https://github.com/brunosuassuna" target="_blank" class="tooltip social-icon">
+            <i class="fab fa-github"></i>
+            <span class="tooltiptext">GitHub</span>
+        </a>
+        <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank" class="tooltip social-icon">
+            <i class="fas fa-envelope"></i>
+            <span class="tooltiptext">Email</span>
+        </a>
+        <a href="#" class="tooltip social-icon">
+            <i class="fas fa-file-pdf"></i>
+            <span class="tooltiptext">Currículo</span>
+        </a>
+    </div>
+</section>
+
+<style>
+/* Estilos adicionais para a Hero Section */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 5% 4rem;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+    overflow: hidden;
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    gap: 3rem;
+}
+
+.hero-content {
+    max-width: 600px;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-title span {
+    color: var(--primary-color);
+    position: relative;
+}
+
+.hero-title span::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(37, 99, 235, 0.2);
+    z-index: -1;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--gray-color);
+    max-width: 90%;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.hero-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--dark-color);
+}
+
+.highlight-item i {
+    color: var(--primary-color);
+}
+
+.hero-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    z-index: 1;
+}
+
+.hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s ease;
+}
+
+.hero-image-border {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--primary-color);
+    border-radius: 20px;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+.hero-image-container:hover .hero-image {
+    transform: translate(-10px, -10px);
+}
+
+.hero-image-container:hover .hero-image-border {
+    transform: translate(10px, 10px);
+}
+
+.hero-tech-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.tech-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: rotate(calc(360deg / 4 * var(--i))) translateY(-120px) rotate(calc(-360deg / 4 * var(--i)));
+    transition: all 0.5s ease;
+}
+
+.tech-icon img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.hero-image-container:hover .tech-icon {
+    transform: rotate(calc(360deg / 4 * var(--i))) translateY(-120px) rotate(calc(-360deg / 4 * var(--i))) scale(1.1);
+}
+
+.hero-pattern {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0) 70%);
+    z-index: -1;
+    animation: pulse 8s infinite alternate;
+}
+
+.social-icons {
+    position: absolute;
+    left: 5%;
+    bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 2;
+}
+
+.social-icon {
+    color: var(--dark-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-icon:hover {
+    color: var(--primary-color);
+    transform: translateY(-5px) scale(1.1);
+    background-color: white;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-subtitle {
+        max-width: 100%;
+    }
+    
+    .hero-btns {
+        justify-content: center;
+    }
+    
+    .hero-highlights {
+        align-items: center;
+    }
+    
+    .hero-image-container {
+        margin: 0 auto;
+    }
+    
+    .social-icons {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 3rem;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+    }
+    
+    .hero-btns {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .hero-image {
+        max-width: 280px;
+    }
+    
+    .tech-icon {
+        width: 40px;
+        height: 40px;
+        transform: rotate(calc(360deg / 4 * var(--i))) translateY(-90px) rotate(calc(-360deg / 4 * var(--i)));
+    }
+}
+</style>
 
     <!-- About Section -->
     <section class="section" id="about">
