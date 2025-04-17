@@ -1350,23 +1350,69 @@
         </div>
     </section>
 
-<!-- Ícones Sociais -->
-<section class="section" id="about">                             <!-- Ícones Sociais -->
-<div class="social-icons slide-up delay-4">
+<section class="section" id="about">
+  <style>
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      font-size: 1.8rem;
+      color: #333;
+      transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .social-icons a:hover {
+      color: #0077b5;
+      transform: translateY(-3px);
+    }
+
+    .tooltiptext {
+      visibility: hidden;
+      opacity: 0;
+      background-color: #333;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+
+  <div class="social-icons slide-up delay-4">
     <a href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank" class="tooltip">
-        <i class="fab fa-linkedin-in"></i>
-        <span class="tooltiptext">LinkedIn</span>
+      <i class="fab fa-linkedin-in"></i>
+      <span class="tooltiptext">LinkedIn</span>
     </a>
     <a href="https://github.com/brunosuassuna" target="_blank" class="tooltip">
-        <i class="fab fa-github"></i>
-        <span class="tooltiptext">GitHub</span>
+      <i class="fab fa-github"></i>
+      <span class="tooltiptext">GitHub</span>
     </a>
     <a href="mailto:brunosuassuna.dev@gmail.com" target="_blank" class="tooltip">
-        <i class="fas fa-envelope"></i>
-        <span class="tooltiptext">Email</span>
+      <i class="fas fa-envelope"></i>
+      <span class="tooltiptext">Email</span>
     </a>
-</div>
- </section>
+  </div>
+</section>
+
 
    <!-- Skills Section -->
 <section class="section skills-section" id="skills">
