@@ -299,38 +299,28 @@ header.scrolled {
 }
 
 /* Hero Section Updates */
-.hero-text-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-/* Hero Section Updates */
 .hero-title {
     display: flex;
     align-items: center;
-    gap: 2rem; /* Aumentei o espaçamento entre texto e imagem */
+    gap: 5rem; /* Aumentei o espaçamento entre texto e imagem */
     position: relative;
 }
 
 .hero-image-container {
-    width: 120px;
-    height: 120px;
-    margin-left: 5rem; /* ou 0 se preferir centralizado */
-    margin-top: 1.5rem;
-    align-self: center;
+    position: relative;
+    width: 150px; /* Aumentei o tamanho da imagem */
+    height: 150px;
+    margin-left: 5rem; /* Aumentei a margem para empurrar mais para direita */
 }
 
-
-
 .hero-image {
-width: 100%;
-height: auto;
-border-radius: var(--border-radius-lg);
-box-shadow: var(--box-shadow-lg);
-transition: var(--transition);
-transform-style: preserve-3d;
-
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-lg);
+    transition: var(--transition);
+    border: 3px solid var(--primary-light);
 }
 
 /* Efeito de hover opcional */
@@ -347,16 +337,14 @@ transform-style: preserve-3d;
         gap: 1.5rem;
     }
     
-.hero-image-container {
-    width: 120px;
-    height: 120px;
-    margin-left: 5rem; /* ou 0 se preferir centralizado */
-    margin-top: 1.5rem;
-    align-self: center;
+    .hero-image-container {
+        width: 120px;
+        height: 120px;
+        margin-left: 0;
+        margin-top: 1.5rem;
+        align-self: center;
+    }
 }
-
-}
-
 
         
 .hero {
@@ -1387,16 +1375,15 @@ footer {
     </div>
 
 
-<!-- Hero Section -->
 <section class="hero" id="home">
     <div class="container hero-container">
         <div class="hero-content">
             <div class="hero-text-container">
-      <h1 class="hero-title slide-up">
-    Olá, sou <span>Bruno Suassuna</span>
-    <div class="hero-image-container slide-up delay-3">
-        <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Bruno Suassuna" class="hero-image">
-    </div>
+                <h1 class="hero-title slide-up">
+                    Olá, sou <span>Bruno Suassuna</span>
+                    <div class="hero-image-container slide-up delay-3">
+                        <img src="https://brunosuassuna.github.io/Imagens/B.S.png" alt="Bruno Suassuna" class="hero-image">
+                    </div>
 </h1>
             <p class="hero-subtitle slide-up delay-1">
                 Engenheiro de Dados | Cientista de Dados<br>
