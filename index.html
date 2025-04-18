@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-       :root {
+ :root {
     --primary-color: #2563eb;
     --primary-dark: #1e40af;
     --primary-light: #3b82f6;
@@ -287,57 +287,6 @@ header.scrolled {
 }
 
 /* Hero Section */
-
-
-/* Hero Section Updates */
-.hero-title {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem; /* Aumentei o espaçamento entre texto e imagem */
-    position: relative;
-}
-
-.hero-image-container {
-    position: relative;
-    width: 150px; /* Aumentei o tamanho da imagem */
-    height: 150px;
-    margin-left: 1.5rem; /* Aumentei a margem para empurrar mais para direita */
-}
-
-.hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow-lg);
-    transition: var(--transition);
-    border: 3px solid var(--primary-light);
-}
-
-/* Efeito de hover opcional */
-.hero-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .hero-title {
-        flex-direction: column;
-        align-items: flex-start;
-         gap: 1rem;
-    }
-    
-    .hero-image-container {
-        width: 120px;
-        height: 120px;
-        margin-left: 0;
-        margin-top: 1.5rem;
-        align-self: center;
-    }
-}
-
-        
 .hero {
     min-height: 100vh;
     display: flex;
@@ -348,6 +297,15 @@ header.scrolled {
     overflow: hidden;
 }
 
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+}
 
 .hero-content {
     max-width: 600px;
