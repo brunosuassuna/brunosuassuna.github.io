@@ -2103,5 +2103,31 @@ footer {
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove a classe 'active' de todos os botões
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Adiciona a classe 'active' apenas ao botão clicado
+            button.classList.add('active');
+            
+            const filterValue = button.getAttribute('data-filter');
+            
+            portfolioItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block'; // Mostra o item
+                } else {
+                    item.style.display = 'none'; // Esconde o item
+                }
+            });
+        });
+    });
+});
+</script>
 </body>
 </html>
