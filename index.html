@@ -1863,31 +1863,14 @@ footer {
                 <h3>Vamos trabalhar juntos</h3>
                 <p>Estou disponível para discutir projetos, oportunidades de colaboração ou qualquer dúvida sobre engenharia de dados e soluções na nuvem.</p>
                 <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Email</h4>
-                            <a href="mailto:brunosuassuna.dev@gmail.com">brunosuassuna.dev@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h4>Localização</h4>
-                            <span>João Pessoa, Brasil</span>
-                        </div>
-                    </div>
+                    <!-- Seus dados de contato -->
                 </div>
             </div>
             <div class="contact-form fade-in delay-1">
                 <form id="form-contato" action="https://formspree.io/f/mjkwgjwb" method="POST">
                     <div class="form-group">
                         <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" name="nome" class="form-control" required>
+                        <input type="text" id="nome" name="name" class="form-control" required> <!-- Mudei para 'name' -->
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -1895,25 +1878,68 @@ footer {
                     </div>
                     <div class="form-group">
                         <label for="assunto">Assunto</label>
-                        <input type="text" id="assunto" name="assunto" class="form-control" required>
+                        <input type="text" id="assunto" name="_subject" class="form-control" required> <!-- Usando _subject -->
                     </div>
                     <div class="form-group">
                         <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" name="mensagem" class="form-control" rows="5" required></textarea>
+                        <textarea id="mensagem" name="message" class="form-control" rows="5" required></textarea> <!-- Mudei para 'message' -->
                     </div>
-                    <!-- Adicione estes campos ocultos para melhor configuração -->
-                    <input type="hidden" name="_language" value="pt">
-                    <input type="hidden" name="_next" value="https://seusite.com/obrigado.html"> <!-- Substitua pela sua URL de sucesso -->
-                    <input type="hidden" name="_subject" value="Novo contato do site">
+                    
+                    <!-- Campos ocultos otimizados -->
+                    <input type="hidden" name="_language" value="pt-BR">
+                    <input type="hidden" name="_replyto" value="brunosuassuna.dev@gmail.com">
+                    <input type="hidden" name="_next" value="https://seusite.com/obrigado.html">
+                    <input type="text" name="_gotcha" style="display:none"> <!-- Anti-spam -->
+                    
                     <button type="submit" class="submit-btn">
                         Enviar Mensagem 
                         <i class="fas fa-paper-plane btn-icon"></i>
                     </button>
                 </form>
+                
+                <!-- Adicione este feedback visual -->
+                <div id="form-feedback" style="display:none; margin-top:20px;"></div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.getElementById('form-contato').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const feedback = document.getElementById('form-feedback');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    // Feedback visual
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
+    
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            feedback.style.display = 'block';
+            feedback.innerHTML = '<div class="success">Mensagem enviada com sucesso!</div>';
+            form.reset();
+        } else {
+            throw new Error('Erro no servidor');
+        }
+    } catch (error) {
+        feedback.style.display = 'block';
+        feedback.innerHTML = `<div class="error">Erro ao enviar: ${error.message}</div>`;
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Enviar Mensagem <i class="fas fa-paper-plane btn-icon"></i>';
+    }
+});
+</script>
 
     <!-- Footer -->
     <footer>
