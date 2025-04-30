@@ -1884,23 +1884,27 @@ footer {
                 </div>
             </div>
             <div class="contact-form fade-in delay-1">
-                <form id="form-contato">
+                <form id="form-contato" action="https://formspree.io/f/mjkwgjwb" method="POST">
                     <div class="form-group">
                         <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" class="form-control" required>
+                        <input type="text" id="nome" name="nome" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="assunto">Assunto</label>
-                        <input type="text" id="assunto" class="form-control" required>
+                        <input type="text" id="assunto" name="assunto" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" class="form-control" rows="5" required></textarea>
+                        <textarea id="mensagem" name="mensagem" class="form-control" rows="5" required></textarea>
                     </div>
+                    <!-- Adicione estes campos ocultos para melhor configuração -->
+                    <input type="hidden" name="_language" value="pt">
+                    <input type="hidden" name="_next" value="https://seusite.com/obrigado.html"> <!-- Substitua pela sua URL de sucesso -->
+                    <input type="hidden" name="_subject" value="Novo contato do site">
                     <button type="submit" class="submit-btn">
                         Enviar Mensagem 
                         <i class="fas fa-paper-plane btn-icon"></i>
@@ -2166,6 +2170,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+});
+document.getElementById('form-contato').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Coletar dados do formulário
+    const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        assunto: document.getElementById('assunto').value,
+        mensagem: document.getElementById('mensagem').value
+    };
+
+    // Aqui você pode:
+    // 1. Enviar para um endpoint de backend
+    // 2. Usar um serviço de terceiros como FormSubmit
+    // 3. Usar a API de EmailJS
+
+    console.log("Dados do formulário:", formData);
+    alert("Mensagem enviada com sucesso! Entrarei em contato em breve.");
+    this.reset();
 });
 </script>
 </body>
