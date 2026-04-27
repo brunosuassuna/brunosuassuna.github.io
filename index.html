@@ -1,1906 +1,1034 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruno Suassuna | Data Engineer</title>
-    <meta name="description" content="Data Engineer especializado em arquitetura de dados, big data e soluções cloud-native.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111117;
-            --bg-tertiary: #1a1a24;
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --accent-primary: #6366f1;
-            --accent-secondary: #8b5cf6;
-            --accent-tertiary: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border-subtle: #27272a;
-            --border-strong: #3f3f46;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-strong: rgba(255, 255, 255, 0.08);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --transition-fast: all 0.15s ease;
-            --transition-base: all 0.25s ease;
-            --transition-slow: all 0.4s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Background Effects */
-        .bg-grid {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black, transparent);
-        }
-
-        .bg-gradient {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 90%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: var(--transition-base);
-        }
-
-        nav.scrolled {
-            background: rgba(10, 10, 15, 0.95);
-            border-bottom-color: var(--accent-primary);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition-base);
-        }
-
-        .logo:hover::after {
-            transform: scaleX(1);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
-            position: relative;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--text-primary);
-            background: var(--glass);
-        }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .mobile-menu span {
-            width: 24px;
-            height: 2px;
-            background: var(--text-primary);
-            border-radius: 1px;
-            transition: var(--transition-fast);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 8rem 2rem 4rem;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.5rem;
-            color: var(--accent-primary);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-text p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            max-width: 90%;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.875rem 2rem;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition-base);
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: var(--glass);
-            color: var(--text-primary);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .btn-secondary:hover {
-            background: var(--glass-strong);
-            border-color: var(--accent-primary);
-        }
-
-        .hero-image {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profile-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--accent-primary), transparent);
-            border-radius: var(--radius-xl);
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            border: 3px solid var(--accent-primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            color: var(--success);
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Sections */
-        .section {
-            padding: 5rem 2rem;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .about-text {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-        }
-
-        .about-text h3 {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition-base);
-        }
-
-        .stat-card:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-primary);
-            display: block;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-top: 0.5rem;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            transition: var(--transition-base);
-        }
-
-        .skill-category:hover {
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .skill-category h3 {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .skill-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-tag {
-            background: var(--glass);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.875rem;
-            font-weight: 500;
-            border: 1px solid var(--border-subtle);
-            transition: var(--transition-fast);
-        }
-
-        .skill-tag:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-primary);
-            background: var(--glass-strong);
-        }
-
-        /* Experience Section */
-        .experience-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 1rem;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-left: 2rem;
-            transition: var(--transition-base);
-        }
-
-        .timeline-item:hover {
-            border-color: var(--accent-primary);
-            transform: translateX(8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -3rem;
-            top: 2rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            border: 3px solid var(--bg-primary);
-        }
-
-        .timeline-date {
-            color: var(--accent-primary);
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-company {
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        .contact-item i {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-sm);
-            background: var(--glass);
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .social-links a:hover {
-            color: white;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .contact-form {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            transition: var(--transition-fast);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-subtle);
-            padding: 3rem 2rem 1rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            color: var(--text-secondary);
-        }
-
-        .footer-content p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-primary);
-        } {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group
-
-        /* Portfolio Section */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .portfolio-item {
-            position: relative;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition-base);
-            cursor: pointer;
-            group: 1;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .portfolio-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: var(--transition-base);
-        }
-
-        .portfolio-item:hover .portfolio-image {
-            transform: scale(1.05);
-            filter: brightness(0.8);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(10, 10, 15, 0.95) 0%,
-                rgba(17, 17, 23, 0.9) 50%,
-                rgba(26, 26, 36, 0.95) 100%
-            );
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition-base);
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-overlay h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .portfolio-overlay p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        .portfolio-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .portfolio-links a {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-sm);
-            background: var(--glass-strong);
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition-base);
-            position: relative;
-        }
-
-        .portfolio-links a:hover {
-            color: white;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-color: transparent;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-        }
-
-        .tooltip::before {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 0.5rem 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition-fast);
-            z-index: 1000;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-top-color: var(--border-subtle);
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition-fast);
-        }
-
-        .tooltip:hover::before,
-        .tooltip:hover::after {
-            opacity: 1;
-        }
-
-        /* Alternative Portfolio Layout */
-        .portfolio-content {
-            padding: 1.5rem;
-            position: relative;
-            z-index: 2;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .portfolio-item-alt {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition-base);
-            cursor: pointer;
-        }
-
-        .portfolio-item-alt:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .portfolio-item-alt:hover .portfolio-image {
-            transform: scale(1.02);
-        }
-
-        .portfolio-item-alt .portfolio-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .portfolio-item-alt .portfolio-content p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .portfolio-tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tech-tag {
-            background: var(--glass);
-            color: var(--text-secondary);
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid var(--border-subtle);
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition-slow);
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
-
-        /* Responsive Design */
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-            
-            .about-content,
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .portfolio-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: flex;
-            }
-            
-            .section {
-                padding: 3rem 1rem;
-            }
-            
-            .hero {
-                padding: 6rem 1rem 3rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .portfolio-overlay {
-                padding: 1.5rem;
-            }
-            
-            .portfolio-overlay h3 {
-                font-size: 1.25rem;
-            }
-            
-            .portfolio-links {
-                gap: 0.75rem;
-            }
-            
-            .experience-timeline {
-                padding-left: 1rem;
-            }
-            
-            .timeline-item {
-                margin-left: 1rem;
-            }
-            
-            .timeline-item::before {
-                left: -2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-container {
-                padding: 0 1rem;
-            }
-            
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.75rem;
-            }
-            
-            .portfolio-overlay {
-                padding: 1rem;
-            }
-            
-            .timeline-item {
-                padding: 1.5rem;
-            }
-            
-            .profile-img {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .profile-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bruno Suassuna — Data Engineer</title>
+<meta name="description" content="Data Engineer especializado em Azure, Databricks, PySpark e Machine Learning. João Pessoa, Brasil."/>
+<meta property="og:title" content="Bruno Suassuna — Data Engineer"/>
+<meta property="og:description" content="Transformando dados brutos em decisões estratégicas."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#04070f;
+  --bg2:#080e1a;
+  --bg3:#0c1424;
+  --border:#192235;
+  --border2:#243249;
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --cyan:#22d3ee;
+  --text:#eef2ff;
+  --muted:#7b91b0;
+  --dim:#3d5170;
+  --accent:#0ea5e9;
+  --glow:rgba(59,130,246,0.15);
+}
+ 
+html{scroll-behavior:smooth;}
+ 
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+ 
+/* CURSOR */
+.cursor{
+  width:8px;height:8px;
+  background:var(--blue2);
+  border-radius:50%;
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  z-index:9999;
+  transition:transform .1s,background .2s;
+  transform:translate(-50%,-50%);
+}
+.cursor-ring{
+  width:32px;height:32px;
+  border:1px solid rgba(96,165,250,0.4);
+  border-radius:50%;
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .18s ease,width .2s,height .2s,border-color .2s;
+}
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring{
+  width:48px;height:48px;
+  border-color:rgba(96,165,250,0.7);
+}
+ 
+/* CANVAS */
+#bg-canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+ 
+/* NOISE OVERLAY */
+.noise{
+  position:fixed;inset:0;
+  opacity:0.025;
+  pointer-events:none;
+  z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+ 
+/* LAYOUT */
+.page{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 2rem;}
+ 
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:1.2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid transparent;
+  transition:background .3s,border-color .3s,backdrop-filter .3s;
+}
+nav.scrolled{
+  background:rgba(4,7,15,0.85);
+  backdrop-filter:blur(20px);
+  border-color:var(--border);
+}
+.nav-logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:0.05em;
+}
+.nav-logo span{color:var(--blue2);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--dim);
+  text-decoration:none;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  transition:color .2s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--blue2);
+  transition:width .25s;
+}
+.nav-links a:hover{color:var(--blue2);}
+.nav-links a:hover::after{width:100%;}
+ 
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 0 6rem;
+  position:relative;
+}
+.hero-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--cyan);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:12px;
+  opacity:0;animation:fadeUp .7s .1s forwards;
+}
+.hero-label::before{content:'';width:32px;height:1px;background:var(--cyan);}
+ 
+.hero-name{
+  font-size:clamp(56px,8vw,96px);
+  font-weight:800;
+  line-height:.95;
+  letter-spacing:-3px;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .7s .25s forwards;
+}
+.hero-name .line1{display:block;color:var(--text);}
+.hero-name .line2{display:block;color:transparent;-webkit-text-stroke:1px rgba(96,165,250,0.5);}
+ 
+.hero-desc{
+  font-size:18px;
+  color:var(--muted);
+  max-width:560px;
+  line-height:1.7;
+  font-weight:400;
+  margin-bottom:3rem;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+.hero-desc strong{color:var(--text);font-weight:600;}
+ 
+.hero-cta{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s .55s forwards;
+}
+.btn{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  padding:12px 28px;
+  border-radius:6px;
+  text-decoration:none;
+  letter-spacing:0.06em;
+  transition:all .25s;
+  cursor:none;
+}
+.btn-primary{
+  background:var(--blue);
+  color:#fff;
+  border:1px solid var(--blue);
+}
+.btn-primary:hover{background:#2563eb;box-shadow:0 0 24px rgba(59,130,246,0.35);}
+.btn-outline{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid var(--border2);
+}
+.btn-outline:hover{border-color:var(--blue2);color:var(--blue2);}
+ 
+.hero-stats{
+  display:flex;gap:3rem;margin-top:5rem;
+  opacity:0;animation:fadeUp .7s .7s forwards;
+}
+.stat-num{font-size:36px;font-weight:800;color:var(--blue2);display:block;letter-spacing:-1px;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;}
+ 
+.scroll-hint{
+  position:absolute;bottom:3rem;left:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--dim);
+  letter-spacing:0.1em;
+  display:flex;align-items:center;gap:10px;
+  opacity:0;animation:fadeUp .7s .9s forwards;
+}
+.scroll-hint::after{content:'';width:48px;height:1px;background:var(--dim);}
+ 
+/* SECTIONS */
+section{padding:8rem 0;}
+ 
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--dim);
+  letter-spacing:0.15em;text-transform:uppercase;
+  margin-bottom:.75rem;
+  display:flex;align-items:center;gap:12px;
+}
+.section-label::before{content:'';width:20px;height:1px;background:var(--dim);}
+.section-title{
+  font-size:clamp(36px,5vw,56px);
+  font-weight:800;
+  letter-spacing:-2px;
+  line-height:1;
+  margin-bottom:4rem;
+}
+.section-title span{color:var(--blue2);}
+ 
+/* SOBRE */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:start;
+}
+.about-text{font-size:17px;color:var(--muted);line-height:1.8;}
+.about-text p{margin-bottom:1.2rem;}
+.about-text strong{color:var(--text);}
+ 
+.about-cards{display:flex;flex-direction:column;gap:12px;}
+.acard{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.2rem 1.4rem;
+  transition:border-color .2s,transform .2s;
+}
+.acard:hover{border-color:var(--border2);transform:translateX(4px);}
+.acard-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--dim);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-bottom:6px;
+}
+.acard-val{font-size:14px;color:var(--text);line-height:1.5;}
+.acard-val.mono{font-family:'JetBrains Mono',monospace;color:var(--blue2);font-size:13px;}
+ 
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem;}
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;padding:5px 14px;
+  border-radius:99px;
+  border:1px solid var(--border2);
+  color:var(--muted);
+  transition:all .2s;cursor:none;
+}
+.tag:hover{border-color:var(--blue);color:var(--blue2);background:rgba(59,130,246,0.08);}
+ 
+/* SKILLS */
+.skills-container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+}
+.skill-group{margin-bottom:2.5rem;}
+.skill-group:last-child{margin-bottom:0;}
+.sg-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--cyan);
+  text-transform:uppercase;letter-spacing:0.12em;
+  margin-bottom:1.2rem;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.skill-row{margin-bottom:14px;}
+.skill-top{display:flex;justify-content:space-between;margin-bottom:6px;}
+.skill-name{font-size:14px;color:var(--text);}
+.skill-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+.skill-track{height:2px;background:var(--border);border-radius:99px;overflow:hidden;}
+.skill-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--accent),var(--blue2));
+  width:0;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+ 
+/* STACK LOGOS */
+.stack-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:10px;
+  margin-top:4rem;
+}
+.stack-item{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1rem;
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--muted);
+  transition:all .2s;cursor:none;
+}
+.stack-item:hover{border-color:var(--blue);color:var(--blue2);background:rgba(59,130,246,0.05);}
+.stack-icon{font-size:20px;display:block;margin-bottom:6px;}
+ 
+/* PROJETOS */
+.projects-filter{
+  display:flex;gap:8px;flex-wrap:wrap;
+  margin-bottom:2.5rem;
+}
+.fbtn{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;padding:6px 16px;
+  border-radius:99px;
+  border:1px solid var(--border);
+  background:none;color:var(--dim);
+  cursor:none;
+  transition:all .2s;
+}
+.fbtn:hover{border-color:var(--border2);color:var(--muted);}
+.fbtn.active{border-color:var(--blue);color:var(--blue2);background:rgba(59,130,246,0.1);}
+ 
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:14px;
+}
+.pcard{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.6rem;
+  cursor:none;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+  text-decoration:none;
+  display:block;
+}
+.pcard::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 85% 15%,rgba(59,130,246,0.08),transparent 60%);
+  opacity:0;transition:opacity .3s;
+}
+.pcard:hover{border-color:var(--blue);transform:translateY(-4px);}
+.pcard:hover::before{opacity:1;}
+.pcard.hidden{display:none;}
+ 
+.pcard-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;}
+.pcard-icon{font-size:22px;}
+.pcard-arrow{
+  font-size:16px;color:var(--dim);
+  transition:color .2s,transform .2s;
+}
+.pcard:hover .pcard-arrow{color:var(--blue2);transform:translate(3px,-3px);}
+.pcard-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:-.3px;}
+.pcard-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1.2rem;}
+.pcard-highlight{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--cyan);
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:6px;
+}
+.pcard-highlight::before{content:'▸';}
+.ptags{display:flex;flex-wrap:wrap;gap:6px;}
+.ptag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;padding:3px 10px;
+  border-radius:99px;
+  background:rgba(59,130,246,0.07);
+  color:var(--blue2);
+  border:1px solid rgba(59,130,246,0.2);
+}
+ 
+.projects-more{
+  text-align:center;margin-top:3rem;
+}
+ 
+/* IMPACTO */
+.impact-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:5rem;
+}
+.mcard{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:2rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.mcard::before{
+  content:'';position:absolute;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:60%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+}
+.mcard:hover{border-color:var(--border2);}
+.mnum{
+  font-size:48px;font-weight:800;
+  color:var(--blue2);
+  display:block;line-height:1;
+  letter-spacing:-2px;
+  font-family:'Syne',sans-serif;
+}
+.mlabel{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--dim);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-top:10px;
+}
+ 
+/* TIMELINE CERTS */
+.cert-section-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--dim);
+  text-transform:uppercase;letter-spacing:0.12em;
+  margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:12px;
+}
+.cert-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+ 
+.cert-list{list-style:none;}
+.cert-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+  transition:background .2s;
+}
+.cert-item:last-child{border:none;}
+.cdot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--blue);
+  margin-top:5px;flex-shrink:0;
+  box-shadow:0 0 8px rgba(59,130,246,0.5);
+}
+.cdot.prog{background:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,0.5);}
+.cname{font-size:14px;color:var(--text);line-height:1.4;font-weight:500;}
+.cissuer{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);margin-top:3px;}
+.cbadge{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;padding:4px 12px;
+  border-radius:99px;
+  border:1px solid var(--border2);
+  color:var(--dim);
+  flex-shrink:0;white-space:nowrap;
+}
+.cbadge.prog{
+  border-color:rgba(34,211,238,0.4);
+  color:var(--cyan);
+  background:rgba(34,211,238,0.07);
+}
+ 
+/* CONTACT */
+.contact-wrapper{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:center;
+}
+.contact-big{
+  font-size:clamp(40px,5vw,64px);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-2px;
+  margin-bottom:1.5rem;
+}
+.contact-big span{color:var(--blue2);}
+.contact-sub{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:10px;}
+.contact-link{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  text-decoration:none;
+  transition:all .2s;
+  cursor:none;
+}
+.contact-link:hover{border-color:var(--blue);transform:translateX(4px);}
+.cl-icon{font-size:16px;width:20px;text-align:center;}
+.cl-text{flex:1;}
+.cl-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;}
+.cl-val{font-size:13px;color:var(--muted);margin-top:2px;transition:color .2s;}
+.contact-link:hover .cl-val{color:var(--blue2);}
+.cl-arr{color:var(--dim);font-size:14px;transition:color .2s,transform .2s;}
+.contact-link:hover .cl-arr{color:var(--blue2);transform:translateX(3px);}
+ 
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:2.5rem 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-copy{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);}
+.footer-copy span{color:var(--muted);}
+ 
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:none;}
+}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:none;}
+ 
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{gap:1rem;}
+  .page{padding:0 1.5rem;}
+  .hero{padding:7rem 0 5rem;}
+  .hero-stats{gap:2rem;flex-wrap:wrap;}
+  .about-grid,.skills-container,.contact-wrapper{grid-template-columns:1fr;}
+  .impact-metrics{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="bg-gradient"></div>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo">Bruno Suassuna</a>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="mobile-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Data Engineer</h1>
-                <div class="subtitle">Architecting Data Solutions at Scale</div>
-                <p>
-                    Especialista em arquitetura de dados moderna, pipelines ETL/ELT de alta performance e soluções cloud-native. 
-                    Transformo dados complexos em insights acionáveis para impulsionar decisões estratégicas de negócio.
-                </p>
-                <div class="hero-actions">
-                    <a href="#contact" class="btn btn-primary">
-                        <span>Vamos Conversar</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="#about" class="btn btn-secondary">
-                        <span>Conheça Meu Trabalho</span>
-                        <i class="fas fa-user"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="profile-card">
-                    <img src="https://brunosuassuna.github.io/Imagens/Perfil.jpeg" alt="Bruno Suassuna" class="profile-img">
-                    <h3>Bruno Suassuna</h3>
-                    <p>Data Engineer</p>
-                    <div class="status-indicator">
-                        <span class="status-dot"></span>
-                        Disponível para novos projetos
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2 class="fade-in">Sobre Mim</h2>
-                <p class="fade-in delay-1">Conheça minha trajetória e expertise em engenharia de dados</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Minha Jornada</h3>
-                    <p>
-                        Possuo experiência em engenharia de dados, desenvolvi expertise profunda em 
-                        arquitetura de dados moderna, processamento distribuído e soluções cloud-native. Minha paixão 
-                        é criar sistemas de dados robustos e escaláveis que capacitam organizações a extrair valor 
-                        máximo de seus ativos de dados.
-                    </p>
-                    <p>
-                        Especializo-me em projetar e implementar pipelines de dados de alta performance, data lakes 
-                        e warehouses, além de sistemas de processamento em tempo real. Trabalho com as principais 
-                        tecnologias do mercado, sempre focando em performance, confiabilidade e maintibilidade.
-                    </p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card fade-in">
-                        <span class="stat-number" data-count="15">0</span>
-                        <div class="stat-label">Projetos Entregues</div>
-                    </div>
-                    <div class="stat-card fade-in delay-1">
-                        <span class="stat-number" data-count="3">0</span>
-                        <div class="stat-label">Anos de Experiência</div>
-                    </div>
-                    <div class="stat-card fade-in delay-2">
-                        <span class="stat-number" data-count="15">0</span>
-                        <div class="stat-label">Tecnologias Dominadas</div>
-                    </div>
-                    <div class="stat-card fade-in delay-3">
-                        <span class="stat-number" data-count="99">0</span>
-                        <div class="stat-label">% Satisfação Cliente</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="section" id="skills">
-        <div class="container">
-            <div class="section-title">
-                <h2 class="fade-in">Tecnologias & Skills</h2>
-                <p class="fade-in delay-1">Arsenal tecnológico para criar soluções de dados de classe mundial</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category fade-in">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        Linguagens de Programação
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Scala</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">R</span>
-                        <span class="skill-tag">Go</span>
-                    </div>
-                </div>
-
-                <div class="skill-category fade-in delay-1">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        Cloud & Infrastructure
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">GCP</span>
-                        <span class="skill-tag">Azure</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Terraform</span>
-                    </div>
-                </div>
-
-                <div class="skill-category fade-in delay-2">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fas fa-stream"></i>
-                        </div>
-                        Big Data & Processing
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Apache Spark</span>
-                        <span class="skill-tag">Kafka</span>
-                        <span class="skill-tag">Airflow</span>
-                        <span class="skill-tag">Hadoop</span>
-                        <span class="skill-tag">Flink</span>
-                        <span class="skill-tag">Storm</span>
-                    </div>
-                </div>
-
-                <div class="skill-category fade-in delay-3">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        Databases & Storage
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Cassandra</span>
-                        <span class="skill-tag">BigQuery</span>
-                        <span class="skill-tag">Snowflake</span>
-                    </div>
-                </div>
-
-                <div class="skill-category fade-in delay-4">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        Analytics & Visualization
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Power BI</span>
-                        <span class="skill-tag">Tableau</span>
-                        <span class="skill-tag">Looker</span>
-                        <span class="skill-tag">Grafana</span>
-                        <span class="skill-tag">Jupyter</span>
-                        <span class="skill-tag">Plotly</span>
-                    </div>
-                </div>
-
-                <div class="skill-category fade-in delay-5">
-                    <h3>
-                        <div class="skill-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        DevOps & Tools
-                    </h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Jenkins</span>
-                        <span class="skill-tag">GitLab CI</span>
-                        <span class="skill-tag">Ansible</span>
-                        <span class="skill-tag">Prometheus</span>
-                        <span class="skill-tag">ELK Stack</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section class="section" id="experience">
-        <div class="container">
-            <div class="section-title">
-                <h2 class="fade-in">Experiência Profissional</h2>
-                <p class="fade-in delay-1">Trajetória construindo soluções de dados e sistemas escaláveis</p>
-            </div>
-            <div class="experience-timeline">
-                <div class="timeline-line"></div>
-
-                <div class="timeline-item fade-in">
-                    <div class="timeline-date">2024 - Atual</div>
-                    <h3 class="timeline-title">Engenheiro de Dados</h3>
-                    <div class="timeline-company">The Store Intelligence (México)</div>
-                    <p class="timeline-description">
-                        Desenvolvo pipelines de dados escaláveis e inteligentes com foco em performance, governança e valor de negócio.
-                        Trabalho com tecnologias de ponta para processamento de big data e analytics avançadas.
-                        <br><br><strong>Tecnologias:</strong> ADF • Databricks • Power BI • SQL • Python • Azure
-                    </p>
-                </div>
-
-                <div class="timeline-item fade-in delay-1">
-                    <div class="timeline-date">2023 - 2024</div>
-                    <h3 class="timeline-title">Desenvolvedor Back-End & Pesquisador</h3>
-                    <div class="timeline-company">SUDEMA</div>
-                    <p class="timeline-description">
-                        Desenvolvimento de sistemas web robustos com foco em segurança, escalabilidade e boas práticas de arquitetura.
-                        Criação de APIs RESTful, implementação do padrão MVC e integração com bancos relacionais.
-                        <br><br><strong>Tecnologias:</strong> PHP • Laravel • MySQL • PostgreSQL • Git • MVC
-                    </p>
-                </div>
-
-                <div class="timeline-item fade-in delay-2">
-                    <div class="timeline-date">2022 - 2023</div>
-                    <h3 class="timeline-title">Desenvolvedor Back-End</h3>
-                    <div class="timeline-company">DoktorBank</div>
-                    <p class="timeline-description">
-                        Desenvolvimento de interfaces dinâmicas e responsivas com JavaScript moderno.
-                        Implementação de funcionalidades avançadas, manipulação do DOM e integração com APIs RESTful.
-                        <br><br><strong>Tecnologias:</strong> JavaScript • ES6+ • Fetch API • JSON • React/Vue • Git
-                    </p>
-                </div>
-
-                <div class="timeline-item fade-in delay-3">
-                    <div class="timeline-date">2021 - 2022</div>
-                    <h3 class="timeline-title">Desenvolvedor Back-End</h3>
-                    <div class="timeline-company">Fábrica de Software UBTech Office / Unipê</div>
-                    <p class="timeline-description">
-                        Criação de soluções backend escaláveis utilizando Python e Django.
-                        Modelagem de dados eficiente, desenvolvimento de APIs RESTful, testes automatizados e implementação de práticas DevOps.
-                        <br><br><strong>Tecnologias:</strong> Python • Django REST Framework • PostgreSQL • Docker • Git • Scrum
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
- <!-- Portfolio Section -->
-<section class="section" id="portfolio">
-    <div class="container">
-        <div class="section-title">
-            <h2 class="fade-in">Projetos em Destaque</h2>
-            <p class="fade-in delay-1">Soluções de dados que desenvolvi para desafios complexos</p>
-        </div>
-        
-        <div class="portfolio-grid">
-            
-            <!-- Análise Temporal -->
-            <div class="portfolio-item fade-in">
-                <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Análise de Séries Temporais" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>✈️ Análise de Séries Temporais</h3>
-                    <p>Modelagem ARIMA/SARIMA para previsão de demanda de passageiros aéreos com alta acurácia e análise de sazonalidade.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/Analise-Temporal-de-Passageiros-Aereos" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver previsões">
-                            <i class="fas fa-chart-line"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NYC Taxi -->
-            <div class="portfolio-item fade-in delay-1">
-                <img src="https://image.visitenovayork.com.br/wp-content/uploads/2012/07/taxi-is-a-great-way-to-travel-in-new-york.jpg" alt="NYC Taxi Analysis" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>🚖 NYC Taxi Analysis</h3>
-                    <p>Análise de milhões de corridas com PySpark e Databricks, explorando padrões geográficos e temporais em big data.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/Analise-de-Corridas-de-Taxi-em-NYC" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver mapas">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Wine Quality -->
-            <div class="portfolio-item fade-in delay-2">
-                <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Wine Quality Prediction" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>🍷 Wine Quality Prediction</h3>
-                    <p>Pipeline completo de ML com PySpark, feature engineering e múltiplos algoritmos de classificação para prever qualidade de vinhos.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/Analise-Qualidade-de-Vinhos" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver modelos">
-                            <i class="fas fa-brain"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sales Analytics -->
-<div class="portfolio-item fade-in delay-3">
-    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" 
-         alt="Sales Analytics" class="portfolio-image">
-    <div class="portfolio-overlay">
-        <h3>📊 Sales Analytics Pipeline</h3>
-        <p>Pipeline completo de ETL e dashboards interativos com KPIs estratégicos para análise de vendas e performance comercial.</p>
-        <div class="portfolio-links">
-            <a href="https://github.com/brunosuassuna/Analise-de-Vendas" target="_blank" class="tooltip" data-tooltip="Ver código">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="#" target="_blank" class="tooltip" data-tooltip="Ver dashboard">
-                <i class="fas fa-chart-bar"></i>
-            </a>
-        </div>
+ 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="noise"></div>
+<canvas id="bg-canvas"></canvas>
+ 
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">bs<span>.</span>dev</div>
+  <div class="nav-links">
+    <a href="#sobre">sobre</a>
+    <a href="#skills">skills</a>
+    <a href="#projetos">projetos</a>
+    <a href="#impacto">impacto</a>
+    <a href="#contato">contato</a>
+  </div>
+</nav>
+ 
+<!-- HERO -->
+<div class="page">
+  <section class="hero">
+    <div class="hero-label">Data Engineer · João Pessoa, Brasil</div>
+    <h1 class="hero-name">
+      <span class="line1">Bruno</span>
+      <span class="line2">Suassuna</span>
+    </h1>
+    <p class="hero-desc">
+      Especialista em construir <strong>pipelines de dados escaláveis</strong> e 
+      arquiteturas modernas que transformam dados brutos em 
+      <strong>insights estratégicos de negócio</strong> — Azure, Databricks & PySpark.
+    </p>
+    <div class="hero-cta">
+      <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+      <a href="#contato" class="btn btn-outline">Entre em contato</a>
+      <a href="https://brunosuassuna.github.io/" class="btn btn-outline" target="_blank">Portfolio completo ↗</a>
     </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num" data-target="500" data-suffix=" TB">0</span>
+        <div class="stat-label">dados processados</div>
+      </div>
+      <div>
+        <span class="stat-num" data-target="40" data-suffix="%">0</span>
+        <div class="stat-label">redução de custos</div>
+      </div>
+      <div>
+        <span class="stat-num" data-target="10" data-suffix="x">0</span>
+        <div class="stat-label">ganho de performance</div>
+      </div>
+      <div>
+        <span class="stat-num" data-target="20" data-suffix="+">0</span>
+        <div class="stat-label">projetos entregues</div>
+      </div>
+    </div>
+    <div class="scroll-hint">scroll</div>
+  </section>
+ 
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="section-label">01 — sobre</div>
+    <h2 class="section-title reveal">Engenharia de<br><span>dados</span> como arte.</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Sou <strong>Data Engineer</strong> na The Store Intelligence, com mais de 4 anos transformando dados caóticos em pipelines robustos, confiáveis e performáticos.</p>
+        <p>Meu foco está na interseção entre <strong>engenharia de dados de alto desempenho</strong> e impacto real de negócio — desde a arquitetura Medallion (Bronze → Silver → Gold) até a entrega de insights que orientam decisões executivas.</p>
+        <p>Formado em Análise e Desenvolvimento de Sistemas pela Unipê e pós-graduando em Ciência de Dados e Analytics pela <strong>PUC-Rio</strong>.</p>
+        <div class="tag-cloud">
+          <span class="tag">Arquitetura Medallion</span>
+          <span class="tag">Delta Lake</span>
+          <span class="tag">Real-time Analytics</span>
+          <span class="tag">ML em Produção</span>
+          <span class="tag">Data Quality</span>
+          <span class="tag">Cloud Cost Optimization</span>
+          <span class="tag">ETL/ELT</span>
+          <span class="tag">Data Governance</span>
+        </div>
+      </div>
+      <div class="about-cards reveal">
+        <div class="acard">
+          <div class="acard-label">empresa atual</div>
+          <div class="acard-val">Data Engineer @ The Store Intelligence</div>
+        </div>
+        <div class="acard">
+          <div class="acard-label">localização</div>
+          <div class="acard-val">João Pessoa, Paraíba — Brasil 🇧🇷</div>
+        </div>
+        <div class="acard">
+          <div class="acard-label">stack principal</div>
+          <div class="acard-val mono">Azure · Databricks · PySpark · Python · SQL</div>
+        </div>
+        <div class="acard">
+          <div class="acard-label">idiomas</div>
+          <div class="acard-val">Português (nativo) · Espanhol (avançado)</div>
+        </div>
+        <div class="acard">
+          <div class="acard-label">disponibilidade</div>
+          <div class="acard-val">Full-time · Freelance · Colaborações</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">02 — habilidades</div>
+    <h2 class="section-title reveal">Stack<br><span>técnico.</span></h2>
+    <div class="skills-container">
+      <div>
+        <div class="skill-group reveal">
+          <div class="sg-label">cloud & orquestração</div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Microsoft Azure / ADF</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-w="95"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Databricks</span><span class="skill-pct">92%</span></div><div class="skill-track"><div class="skill-fill" data-w="92"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Apache Airflow</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" data-w="80"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Snowflake</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" data-w="78"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Apache Kafka</span><span class="skill-pct">72%</span></div><div class="skill-track"><div class="skill-fill" data-w="72"></div></div></div>
+        </div>
+        <div class="skill-group reveal">
+          <div class="sg-label">processamento & armazenamento</div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">PySpark / Apache Spark</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-w="90"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Delta Lake</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-w="88"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">PostgreSQL / MySQL</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-w="85"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">MongoDB / Redis</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill" data-w="75"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group reveal">
+          <div class="sg-label">linguagens & dados</div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-w="95"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">SQL</span><span class="skill-pct">93%</span></div><div class="skill-track"><div class="skill-fill" data-w="93"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Pandas / NumPy</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-w="90"></div></div></div>
+        </div>
+        <div class="skill-group reveal">
+          <div class="sg-label">analytics & machine learning</div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Power BI / Tableau / Plotly</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-w="88"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Scikit-learn / MLflow</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" data-w="82"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">TensorFlow / Keras</span><span class="skill-pct">70%</span></div><div class="skill-track"><div class="skill-fill" data-w="70"></div></div></div>
+        </div>
+        <div class="skill-group reveal">
+          <div class="sg-label">devops & infra</div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Docker / Kubernetes</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" data-w="78"></div></div></div>
+          <div class="skill-row"><div class="skill-top"><span class="skill-name">Git / Azure DevOps</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-w="90"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-item"><span class="stack-icon">☁</span>Azure</div>
+      <div class="stack-item"><span class="stack-icon">⚡</span>Databricks</div>
+      <div class="stack-item"><span class="stack-icon">❄</span>Snowflake</div>
+      <div class="stack-item"><span class="stack-icon">🔥</span>PySpark</div>
+      <div class="stack-item"><span class="stack-icon">△</span>Delta Lake</div>
+      <div class="stack-item"><span class="stack-icon">🐍</span>Python</div>
+      <div class="stack-item"><span class="stack-icon">🗄</span>PostgreSQL</div>
+      <div class="stack-item"><span class="stack-icon">📊</span>Power BI</div>
+      <div class="stack-item"><span class="stack-icon">🤖</span>MLflow</div>
+      <div class="stack-item"><span class="stack-icon">🐳</span>Docker</div>
+      <div class="stack-item"><span class="stack-icon">☸</span>Kubernetes</div>
+      <div class="stack-item"><span class="stack-icon">🌊</span>Airflow</div>
+    </div>
+  </section>
+ 
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <div class="section-label">03 — projetos</div>
+    <h2 class="section-title reveal">Trabalho<br><span>selecionado.</span></h2>
+    <div class="projects-filter reveal">
+      <button class="fbtn active" onclick="filterP('all',this)">todos</button>
+      <button class="fbtn" onclick="filterP('bigdata',this)">big data</button>
+      <button class="fbtn" onclick="filterP('ml',this)">machine learning</button>
+      <button class="fbtn" onclick="filterP('etl',this)">ETL / pipeline</button>
+      <button class="fbtn" onclick="filterP('analytics',this)">analytics</button>
+    </div>
+    <div class="projects-grid reveal">
+ 
+      <a class="pcard" data-cat="bigdata ml" href="https://github.com/brunosuassuna/Analise-Temporal-de-Passageiros-Aereos" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">✈</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">Passenger Demand Forecasting</div>
+        <div class="pcard-desc">Análise completa de séries temporais com modelagem ARIMA/SARIMA para identificação de padrões sazonais e previsões de alta acurácia na demanda de passageiros aéreos.</div>
+        <div class="pcard-highlight">Acurácia &gt;95% nas previsões</div>
+        <div class="ptags"><span class="ptag">Python</span><span class="ptag">ARIMA</span><span class="ptag">Statsmodels</span><span class="ptag">Pandas</span><span class="ptag">Time Series</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="bigdata etl" href="https://github.com/brunosuassuna/Analise-de-Corridas-de-Taxi-em-NYC" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">🚖</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">NYC Taxi Big Data Analytics</div>
+        <div class="pcard-desc">EDA distribuída em 10M+ registros de corridas de táxi em Nova York, com análise geoespacial avançada e identificação de padrões de demanda temporal.</div>
+        <div class="pcard-highlight">10M+ registros processados</div>
+        <div class="ptags"><span class="ptag">Databricks</span><span class="ptag">PySpark</span><span class="ptag">Delta Lake</span><span class="ptag">Geospatial</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="ml" href="https://github.com/brunosuassuna/Analise-Qualidade-de-Vinhos" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">🍷</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">Wine Quality ML Pipeline</div>
+        <div class="pcard-desc">Pipeline end-to-end de classificação com PySpark incluindo ETL, feature engineering avançado e comparação de múltiplos algoritmos de machine learning.</div>
+        <div class="pcard-highlight">82% de acurácia no modelo final</div>
+        <div class="ptags"><span class="ptag">PySpark</span><span class="ptag">MLlib</span><span class="ptag">Feature Eng.</span><span class="ptag">Classification</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="etl analytics" href="https://github.com/brunosuassuna/Analise-de-Vendas" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">📊</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">Sales Analytics Pipeline</div>
+        <div class="pcard-desc">Sistema end-to-end de ETL com dashboards executivos interativos focados em métricas de negócio, KPIs estratégicos e visualizações de alta qualidade.</div>
+        <div class="pcard-highlight">15+ KPIs de negócio automatizados</div>
+        <div class="ptags"><span class="ptag">ETL</span><span class="ptag">PySpark</span><span class="ptag">Plotly</span><span class="ptag">BI</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="analytics" href="https://github.com/brunosuassuna/premier-league-analysis" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">⚽</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">Premier League Analytics</div>
+        <div class="pcard-desc">Dashboard analítico completo da temporada 2023-2024 com 100+ métricas de performance de times e jogadores, correlações estatísticas e visualizações avançadas.</div>
+        <div class="pcard-highlight">380 partidas · 100+ métricas</div>
+        <div class="ptags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Statistics</span><span class="ptag">Viz</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="bigdata etl" href="https://github.com/brunosuassuna/COVID-19-Global-Data-Analysis" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">🌎</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">COVID-19 Global Analysis</div>
+        <div class="pcard-desc">Pipeline com Databricks e Delta Lake para análise comparativa do impacto global da COVID-19, com foco especial no Brasil e visualizações interativas de séries temporais.</div>
+        <div class="pcard-highlight">190+ países analisados</div>
+        <div class="ptags"><span class="ptag">Delta Lake</span><span class="ptag">Databricks</span><span class="ptag">Plotly</span><span class="ptag">Time Series</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="etl" href="https://github.com/brunosuassuna/API_Gerenciamento_Usuarios" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">🔐</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">User Management API</div>
+        <div class="pcard-desc">API RESTful robusta com autenticação JWT, CRUD completo, validações avançadas e implementação de melhores práticas de segurança em ambiente containerizado.</div>
+        <div class="pcard-highlight">95% de cobertura de testes</div>
+        <div class="ptags"><span class="ptag">FastAPI</span><span class="ptag">PostgreSQL</span><span class="ptag">Docker</span><span class="ptag">JWT</span></div>
+      </a>
+ 
+      <a class="pcard" data-cat="bigdata etl" href="https://github.com/brunosuassuna/MVP-Engenharia-de-Dados" target="_blank">
+        <div class="pcard-header"><div class="pcard-icon">🏗</div><div class="pcard-arrow">↗</div></div>
+        <div class="pcard-title">Medallion Architecture MVP</div>
+        <div class="pcard-desc">Projeto end-to-end implementando arquitetura Medallion completa com Databricks, orquestração automatizada, data quality checks e boas práticas de DataOps.</div>
+        <div class="pcard-highlight">Bronze → Silver → Gold completo</div>
+        <div class="ptags"><span class="ptag">Databricks</span><span class="ptag">Delta Lake</span><span class="ptag">PySpark</span><span class="ptag">Medallion</span></div>
+      </a>
+ 
+    </div>
+    <div class="projects-more reveal">
+      <a href="https://github.com/brunosuassuna?tab=repositories" target="_blank" class="btn btn-outline">Ver todos os 20+ projetos no GitHub ↗</a>
+    </div>
+  </section>
+ 
+  <!-- IMPACTO -->
+  <section id="impacto">
+    <div class="section-label">04 — impacto</div>
+    <h2 class="section-title reveal">Números<br><span>reais.</span></h2>
+    <div class="impact-metrics reveal">
+      <div class="mcard">
+        <span class="mnum" id="m-cost">0%</span>
+        <div class="mlabel">redução em custos de infraestrutura cloud</div>
+      </div>
+      <div class="mcard">
+        <span class="mnum" id="m-speed">0x</span>
+        <div class="mlabel">mais velocidade nos pipelines de dados</div>
+      </div>
+      <div class="mcard">
+        <span class="mnum" id="m-data">0 TB</span>
+        <div class="mlabel">de dados processados em produção</div>
+      </div>
+    </div>
+ 
+    <div class="cert-section-title reveal">certificações conquistadas</div>
+    <ul class="cert-list reveal">
+      <li class="cert-item">
+        <div class="cdot"></div>
+        <div><div class="cname">Governança de Dados: Conceitos Fundamentais</div><div class="cissuer">Alura</div></div>
+        <span class="cbadge">concluído</span>
+      </li>
+      <li class="cert-item">
+        <div class="cdot"></div>
+        <div><div class="cname">Data Science: Regressão Linear</div><div class="cissuer">Alura</div></div>
+        <span class="cbadge">concluído</span>
+      </li>
+      <li class="cert-item">
+        <div class="cdot"></div>
+        <div><div class="cname">Formação Data Science</div><div class="cissuer">Alura</div></div>
+        <span class="cbadge">concluído</span>
+      </li>
+      <li class="cert-item">
+        <div class="cdot"></div>
+        <div><div class="cname">Databricks e Azure Data Factory</div><div class="cissuer">Alura</div></div>
+        <span class="cbadge">concluído</span>
+      </li>
+      <li class="cert-item">
+        <div class="cdot"></div>
+        <div><div class="cname">Fundamentos de Engenharia de Dados</div><div class="cissuer">Data Science Academy</div></div>
+        <span class="cbadge">concluído</span>
+      </li>
+      <li class="cert-item">
+        <div class="cdot prog"></div>
+        <div><div class="cname">Azure Data Engineer Associate — DP-203</div><div class="cissuer">Microsoft</div></div>
+        <span class="cbadge prog">em progresso</span>
+      </li>
+    </ul>
+  </section>
+ 
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="section-label">05 — contato</div>
+    <div class="contact-wrapper">
+      <div class="reveal">
+        <h2 class="contact-big">Vamos<br><span>trabalhar</span><br>juntos?</h2>
+        <p class="contact-sub">Estou sempre aberto a novas oportunidades, projetos freelance e colaborações interessantes na área de dados.</p>
+        <a href="mailto:brunosuassuna.dev@gmail.com" class="btn btn-primary">brunosuassuna.dev@gmail.com</a>
+      </div>
+      <div class="contact-links reveal">
+        <a class="contact-link" href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank">
+          <div class="cl-icon">in</div>
+          <div class="cl-text"><div class="cl-label">linkedin</div><div class="cl-val">bruno-suassuna-698aa7235</div></div>
+          <div class="cl-arr">→</div>
+        </a>
+        <a class="contact-link" href="https://github.com/brunosuassuna" target="_blank">
+          <div class="cl-icon">gh</div>
+          <div class="cl-text"><div class="cl-label">github</div><div class="cl-val">github.com/brunosuassuna</div></div>
+          <div class="cl-arr">→</div>
+        </a>
+        <a class="contact-link" href="https://brunosuassuna.github.io/" target="_blank">
+          <div class="cl-icon">↗</div>
+          <div class="cl-text"><div class="cl-label">portfolio</div><div class="cl-val">brunosuassuna.github.io</div></div>
+          <div class="cl-arr">→</div>
+        </a>
+        <a class="contact-link" href="mailto:brunosuassuna.dev@gmail.com">
+          <div class="cl-icon">@</div>
+          <div class="cl-text"><div class="cl-label">email</div><div class="cl-val">brunosuassuna.dev@gmail.com</div></div>
+          <div class="cl-arr">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <div class="footer-copy">© 2025 <span>Bruno Suassuna</span> — Feito com dados e café ☕</div>
+    <div class="footer-copy"><span>João Pessoa, Brasil 🇧🇷</span></div>
+  </footer>
 </div>
-
-
-            <!-- Premier League -->
-            <div class="portfolio-item fade-in delay-4">
-                <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="Premier League Analytics" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>⚽ Premier League Analytics</h3>
-                    <p>Dashboard com estatísticas avançadas da temporada 2023-2024, métricas de desempenho e correlações entre variáveis.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/premier-league-analysis" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver dashboard">
-                            <i class="fas fa-futbol"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COVID-19 -->
-            <div class="portfolio-item fade-in delay-5">
-                <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="COVID-19 Analysis" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>🦠 COVID-19 Global Analysis</h3>
-                    <p>Pipeline Delta Lake e visualizações interativas do impacto global da pandemia com foco no Brasil.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/COVID-19-Global-Data-Analysis" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver análise">
-                            <i class="fas fa-globe-americas"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- API Users -->
-            <div class="portfolio-item fade-in delay-6">
-                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="API Users" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>🔐 API de Gestão de Usuários</h3>
-                    <p>API RESTful com autenticação JWT, CRUD completo e segurança aprimorada em FastAPI e PostgreSQL.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/API_Gerenciamento_Usuarios" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver documentação">
-                            <i class="fas fa-book"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MVP Engenharia de Dados -->
-            <div class="portfolio-item fade-in delay-7">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80" alt="MVP Engenharia de Dados" class="portfolio-image">
-                <div class="portfolio-overlay">
-                    <h3>🏗️ MVP Engenharia de Dados</h3>
-                    <p>Arquitetura completa Medallion (Bronze, Silver, Gold) em Databricks com orquestração e validação de qualidade de dados.</p>
-                    <div class="portfolio-links">
-                        <a href="https://github.com/brunosuassuna/MVP-Engenharia-de-Dados" target="_blank" class="tooltip" data-tooltip="Ver código">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" target="_blank" class="tooltip" data-tooltip="Ver arquitetura">
-                            <i class="fas fa-sitemap"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div align="center" class="fade-in delay-8" style="margin-top: 40px;">
-            <a href="https://github.com/brunosuassuna?tab=repositories" target="_blank" class="btn btn-primary">
-                📂 Ver Todos os Projetos (20+)
-            </a>
-        </div>
-
-    </div>
-</section>
-
-
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2 class="fade-in">Vamos Trabalhar Juntos</h2>
-                <p class="fade-in delay-1">Entre em contato para discutir seu próximo projeto de dados</p>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-info fade-in">
-                    <h3>Informações de Contato</h3>
-                    <p>Estou sempre aberto a novas oportunidades e desafios interessantes. 
-                       Vamos conversar sobre como posso ajudar com suas necessidades de dados.</p>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Email</div>
-                            <div>brunosuassuna.dev@gmail.com</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Telefone</div>
-                            <div>+55 (83) 99112-0626</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Localização</div>
-                            <div>João Pessoa, PB - Brasil</div>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <a href="https://linkedin.com/in/brunosuassuna" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://github.com/brunosuassuna" target="_blank" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="mailto:bruno.suassuna@email.com" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="https://twitter.com/brunosuassuna" target="_blank" title="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <form class="contact-form fade-in delay-1" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Assunto</label>
-                        <input type="text" id="subject" name="subject" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Mensagem</label>
-                        <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <span>Enviar Mensagem</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <p>&copy; <span id="currentYear">2024</span> Bruno Suassuna. Todos os direitos reservados.</p>
-            <p>Feito com <i class="fas fa-heart" style="color: var(--danger);"></i> e muito café ☕</p>
-        </div>
-    </section>
-
-    <!-- Scripts -->
-    <script>
-        // Utility functions
-        const debounce = (func, wait) => {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        };
-
-        const throttle = (func, limit) => {
-            let inThrottle;
-            return function() {
-                const args = arguments;
-                const context = this;
-                if (!inThrottle) {
-                    func.apply(context, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
-                }
-            }
-        };
-
-        // Navigation functionality
-        class Navigation {
-            constructor() {
-                this.navbar = document.getElementById('navbar');
-                this.navLinks = document.querySelectorAll('.nav-link');
-                this.sections = document.querySelectorAll('section[id]');
-                this.mobileMenu = document.querySelector('.mobile-menu');
-                
-                this.init();
-            }
-
-            init() {
-                this.handleScroll();
-                this.handleActiveLink();
-                this.handleSmoothScroll();
-                this.handleMobileMenu();
-            }
-
-            handleScroll() {
-                const scrollHandler = throttle(() => {
-                    if (window.scrollY > 100) {
-                        this.navbar.classList.add('scrolled');
-                    } else {
-                        this.navbar.classList.remove('scrolled');
-                    }
-                }, 10);
-
-                window.addEventListener('scroll', scrollHandler);
-            }
-
-            handleActiveLink() {
-                const updateActiveLink = throttle(() => {
-                    let current = '';
-                    
-                    this.sections.forEach(section => {
-                        const sectionTop = section.offsetTop - 200;
-                        const sectionHeight = section.clientHeight;
-                        
-                        if (window.scrollY >= sectionTop && 
-                            window.scrollY < sectionTop + sectionHeight) {
-                            current = section.getAttribute('id');
-                        }
-                    });
-
-                    this.navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${current}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }, 50);
-
-                window.addEventListener('scroll', updateActiveLink);
-            }
-
-            handleSmoothScroll() {
-                this.navLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href').substring(1);
-                        const targetSection = document.getElementById(targetId);
-                        
-                        if (targetSection) {
-                            const offsetTop = targetSection.offsetTop - 80;
-                            window.scrollTo({
-                                top: offsetTop,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
-                });
-            }
-
-            handleMobileMenu() {
-                if (this.mobileMenu) {
-                    this.mobileMenu.addEventListener('click', () => {
-                        console.log('Mobile menu clicked');
-                    });
-                }
-            }
-        }
-
-        // Counter Animation
-        class CounterAnimation {
-            constructor() {
-                this.counters = document.querySelectorAll('[data-count]');
-                this.observer = null;
-                this.init();
-            }
-
-            init() {
-                this.observer = new IntersectionObserver(
-                    (entries) => this.handleIntersection(entries),
-                    { threshold: 0.5 }
-                );
-
-                this.counters.forEach(counter => {
-                    this.observer.observe(counter);
-                });
-            }
-
-            handleIntersection(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        this.animateCounter(entry.target);
-                        this.observer.unobserve(entry.target);
-                    }
-                });
-            }
-
-            animateCounter(counter) {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const duration = 2000;
-                const start = performance.now();
-
-                const animate = (currentTime) => {
-                    const elapsed = currentTime - start;
-                    const progress = Math.min(elapsed / duration, 1);
-                    
-                    // Easing function
-                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                    const current = Math.floor(target * easeOutQuart);
-                    
-                    counter.textContent = current;
-
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-
-                requestAnimationFrame(animate);
-            }
-        }
-
-        // Scroll Animations
-        class ScrollAnimations {
-            constructor() {
-                this.elements = document.querySelectorAll('.fade-in, .skill-category, .timeline-item, .stat-card, .portfolio-item');
-                this.observer = null;
-                this.init();
-            }
-
-            init() {
-                // Add fade-in class to elements that don't have it
-                this.elements.forEach(el => {
-                    if (!el.classList.contains('fade-in')) {
-                        el.classList.add('fade-in');
-                    }
-                });
-
-                this.observer = new IntersectionObserver(
-                    (entries) => this.handleIntersection(entries),
-                    { 
-                        threshold: 0.1,
-                        rootMargin: '0px 0px -50px 0px'
-                    }
-                );
-
-                this.elements.forEach(el => {
-                    this.observer.observe(el);
-                });
-            }
-
-            handleIntersection(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        this.observer.unobserve(entry.target);
-                    }
-                });
-            }
-        }
-
-        // Form Handling
-        class ContactForm {
-            constructor() {
-                this.form = document.getElementById('contactForm');
-                this.init();
-            }
-
-            init() {
-                if (this.form) {
-                    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-                }
-            }
-
-            handleSubmit(e) {
-                e.preventDefault();
-                
-                // Get form data
-                const formData = new FormData(this.form);
-                const data = Object.fromEntries(formData);
-                
-                // Show loading state
-                const submitBtn = this.form.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<span>Enviando...</span><i class="fas fa-spinner fa-spin"></i>';
-                submitBtn.disabled = true;
-
-                // Simulate form submission (replace with actual implementation)
-                setTimeout(() => {
-                    console.log('Form submitted:', data);
-                    
-                    // Reset form
-                    this.form.reset();
-                    
-                    // Reset button
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    
-                    // Show success message (you can implement a toast/modal here)
-                    this.showSuccessMessage();
-                }, 2000);
-            }
-
-            showSuccessMessage() {
-                // Create a simple toast notification
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: linear-gradient(135deg, var(--success), #059669);
-                    color: white;
-                    padding: 1rem 2rem;
-                    border-radius: 8px;
-                    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-                    z-index: 10000;
-                    font-weight: 500;
-                    transform: translateX(100%);
-                    transition: transform 0.3s ease;
-                `;
-                toast.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>Mensagem enviada com sucesso!';
-                
-                document.body.appendChild(toast);
-                
-                // Animate in
-                setTimeout(() => {
-                    toast.style.transform = 'translateX(0)';
-                }, 100);
-                
-                // Remove after 3 seconds
-                setTimeout(() => {
-                    toast.style.transform = 'translateX(100%)';
-                    setTimeout(() => {
-                        document.body.removeChild(toast);
-                    }, 300);
-                }, 3000);
-            }
-        }
-
-        // Performance monitoring
-        class PerformanceMonitor {
-            constructor() {
-                this.init();
-            }
-
-            init() {
-                if ('performance' in window) {
-                    window.addEventListener('load', () => {
-                        setTimeout(() => {
-                            const perfData = performance.getEntriesByType('navigation')[0];
-                            if (perfData) {
-                                const loadTime = Math.round(perfData.loadEventEnd - perfData.fetchStart);
-                                console.log(`🚀 Portfolio loaded in ${loadTime}ms`);
-                            }
-                        }, 0);
-                    });
-                }
-            }
-        }
-
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set current year
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            // Initialize components
-            new Navigation();
-            new CounterAnimation();
-            new ScrollAnimations();
-            new ContactForm();
-            new PerformanceMonitor();
-            
-            console.log('✨ Portfolio initialized successfully!');
-        });
-
-        // Handle errors
-        window.addEventListener('error', (e) => {
-            console.error('❌ Error occurred:', e.error);
-        });
-
-        // Handle unhandled promise rejections
-        window.addEventListener('unhandledrejection', (e) => {
-            console.error('❌ Unhandled promise rejection:', e.reason);
-        });
-    </script>
+ 
+<script>
+/* CURSOR */
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+function animCursor(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+ 
+/* PARTICLES */
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+ 
+const pts=[];
+for(let i=0;i<70;i++){
+  pts.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.25,
+    vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.2+.4,
+    life:Math.random()*Math.PI*2
+  });
+}
+ 
+function drawBg(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    p.x+=p.vx;p.y+=p.vy;p.life+=.015;
+    if(p.x<0)p.x=canvas.width;
+    if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;
+    if(p.y>canvas.height)p.y=0;
+    const alpha=(.4+.3*Math.sin(p.life));
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(59,130,246,${alpha*.6})`;
+    ctx.fill();
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j];
+      const dx=p.x-q.x,dy=p.y-q.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<140){
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+        ctx.strokeStyle=`rgba(59,130,246,${.08*(1-d/140)})`;
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+ 
+/* NAV SCROLL */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+ 
+/* REVEAL ON SCROLL */
+const revEls=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*60);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+revEls.forEach(el=>obs.observe(el));
+ 
+/* SKILL BARS */
+const skillObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-fill').forEach((f,i)=>{
+        setTimeout(()=>f.style.width=f.dataset.w+'%',i*80);
+      });
+      skillObs.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.skill-group').forEach(g=>skillObs.observe(g));
+ 
+/* COUNTER ANIMATION */
+function countUp(el,end,suffix){
+  const dur=1800;const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(ease*end)+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(el=>{
+        countUp(el,+el.dataset.target,el.dataset.suffix);
+      });
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.hero-stats').forEach(s=>statObs.observe(s));
+ 
+const impactObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const cost=document.getElementById('m-cost');
+      const speed=document.getElementById('m-speed');
+      const data=document.getElementById('m-data');
+      if(cost&&!cost._done){
+        cost._done=true;
+        countUp({textContent:'',set textContent(v){cost.textContent=v+'%';}},'',40);
+        const dc=performance.now();
+        function sc(now){const p=Math.min((now-dc)/1800,1);const ease=1-Math.pow(1-p,3);cost.textContent=Math.round(ease*40)+'%';if(p<1)requestAnimationFrame(sc);}
+        requestAnimationFrame(sc);
+        const ds=performance.now();
+        function ss(now){const p=Math.min((now-ds)/1500,1);const ease=1-Math.pow(1-p,3);speed.textContent=Math.round(ease*10)+'x';if(p<1)requestAnimationFrame(ss);}
+        requestAnimationFrame(ss);
+        const dd=performance.now();
+        function sd(now){const p=Math.min((now-dd)/2000,1);const ease=1-Math.pow(1-p,3);data.textContent=Math.round(ease*500)+' TB';if(p<1)requestAnimationFrame(sd);}
+        requestAnimationFrame(sd);
+      }
+      impactObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.impact-metrics').forEach(s=>impactObs.observe(s));
+ 
+/* PROJECT FILTER */
+function filterP(cat,btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pcard').forEach(c=>{
+    c.classList.toggle('hidden',cat!=='all'&&!c.dataset.cat.includes(cat));
+  });
+}
+</script>
 </body>
 </html>
