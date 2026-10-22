@@ -1,1079 +1,1338 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Bruno Suassuna — Data Engineer</title>
-<meta name="description" content="Data Engineer especializado em Azure, Databricks, PySpark. João Pessoa, Brasil."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bruno Suassuna · Engenheiro de Dados</title>
+<meta name="description" content="Portfólio de Bruno Suassuna, engenheiro de dados. Pipelines em Azure, Databricks e Snowflake, projetos e stack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --cream:#F5F0E8;
-  --cream2:#EDE8DC;
-  --ink:#0D0D0D;
-  --red:#C8321A;
-  --red2:#E84A2F;
-  --gold:#B8963E;
-  --gray:#6B6660;
-  --gray2:#9E9890;
-  --line:#D4CFC6;
+/* Layout: coluna editorial alinhada à esquerda; o hero termina numa simulação do pipeline Medallion
+   (bronze, prata e ouro são as cores das camadas e do sistema inteiro). */
+:root {
+  --bg: #F1F4F8;
+  --surface: #FFFFFF;
+  --surface-2: #E8EDF3;
+  --ink: #0D1A2B;
+  --ink-2: #44546A;
+  --line: #D3DBE5;
+  --accent: #0A62C9;
+  --accent-ink: #FFFFFF;
+  --bronze: #96571F;
+  --silver: #5D6C7C;
+  --gold: #8A6205;
+  --bad: #C2413B;
+  --flag-bg: rgba(194, 65, 59, .08);
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #09111D;
+    --surface: #0F1B2C;
+    --surface-2: #14233A;
+    --ink: #E7EDF5;
+    --ink-2: #9DADBF;
+    --line: #213149;
+    --accent: #5BA8FF;
+    --accent-ink: #06101D;
+    --bronze: #D88C46;
+    --silver: #B5C1CE;
+    --gold: #E9BA4B;
+    --bad: #F0716A;
+    --flag-bg: rgba(240, 113, 106, .1);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #09111D;
+  --surface: #0F1B2C;
+  --surface-2: #14233A;
+  --ink: #E7EDF5;
+  --ink-2: #9DADBF;
+  --line: #213149;
+  --accent: #5BA8FF;
+  --accent-ink: #06101D;
+  --bronze: #D88C46;
+  --silver: #B5C1CE;
+  --gold: #E9BA4B;
+  --bad: #F0716A;
+  --flag-bg: rgba(240, 113, 106, .1);
+  color-scheme: dark;
 }
 
-html{scroll-behavior:smooth;font-size:16px;}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+img, canvas { max-width: 100%; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--bg); padding: 8px 12px; z-index: 50; }
+.skip:focus { left: 8px; }
 
-body{
-  background:var(--cream);
-  color:var(--ink);
-  font-family:'Barlow',sans-serif;
-  font-weight:300;
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* CUSTOM CURSOR */
-.c-dot{
-  width:6px;height:6px;
-  background:var(--red);
-  border-radius:50%;
-  position:fixed;top:0;left:0;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform .08s;
-}
-.c-ring{
-  width:28px;height:28px;
-  border:1px solid var(--ink);
-  border-radius:50%;
-  position:fixed;top:0;left:0;
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:left .14s ease,top .14s ease,width .25s,height .25s,border-color .25s;
-}
-body:has(a:hover) .c-ring,body:has(button:hover) .c-ring{width:44px;height:44px;border-color:var(--red);}
-
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 3rem;
-  mix-blend-mode:normal;
-}
-nav::after{
-  content:'';position:absolute;bottom:0;left:3rem;right:3rem;
-  height:1px;background:var(--line);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .4s ease;
-}
-nav.active::after{transform:scaleX(1);}
-nav.scrolled{background:rgba(245,240,232,0.92);backdrop-filter:blur(12px);}
-
-.nav-mark{
-  font-family:'DM Mono',monospace;
-  font-size:11px;letter-spacing:.12em;
-  color:var(--gray);
-}
-.nav-mark em{color:var(--red);font-style:normal;}
-
-.nav-items{display:flex;gap:2.5rem;align-items:center;}
-.nav-items a{
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--gray);text-decoration:none;
-  transition:color .2s;
-}
-.nav-items a:hover{color:var(--ink);}
-.nav-contact{
-  font-family:'DM Mono',monospace;font-size:10px;
-  padding:7px 18px;border:1px solid var(--ink);
-  color:var(--ink);text-decoration:none;letter-spacing:.08em;
-  transition:all .2s;
-}
-.nav-contact:hover{background:var(--ink);color:var(--cream);}
-
-/* ─── HERO ─── */
-.hero{
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  padding-top:80px;
-  position:relative;
-}
-.hero-left{
-  padding:5rem 3rem 4rem;
-  display:flex;flex-direction:column;justify-content:space-between;
-  border-right:1px solid var(--line);
-}
-.hero-right{
-  padding:5rem 3rem 4rem;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  position:relative;
-  overflow:hidden;
+/* Header */
+.top { position: sticky; top: 0; z-index: 20; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); background: var(--bg); background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; padding-block: 12px; }
+.brand { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 1.05rem; letter-spacing: .01em; color: var(--ink); text-decoration: none; }
+nav { display: flex; gap: 4px; margin-left: auto; }
+nav a { font-family: var(--font-mono); font-size: .8rem; color: var(--ink-2); text-decoration: none; padding: 6px 10px; border-radius: 3px; white-space: nowrap; }
+nav a:hover { color: var(--ink); background: var(--surface-2); }
+nav a[aria-current="true"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); border-radius: 0; }
+.ctrl { display: flex; gap: 8px; }
+.icon-btn { font-family: var(--font-mono); font-size: .78rem; font-weight: 500; min-width: 38px; height: 34px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 3px; cursor: pointer; }
+.icon-btn:hover { border-color: var(--accent); }
+.icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 720px) {
+  nav { order: 3; width: 100%; margin-left: 0; overflow-x: auto; padding-bottom: 2px; }
+  .ctrl { margin-left: auto; }
 }
 
-/* big italic serif label */
-.hero-eyebrow{
-  font-family:'DM Serif Display',serif;
-  font-style:italic;
-  font-size:14px;
-  color:var(--gray);
-  margin-bottom:2.5rem;
-  display:flex;align-items:center;gap:12px;
-}
-.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gray);}
+/* Sections */
+section { padding-block: clamp(48px, 8vw, 96px); scroll-margin-top: 88px; }
+section + section { border-top: 1px solid var(--line); }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 14px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+h1 { font-stretch: 125%; font-weight: 800; font-size: clamp(2.5rem, 7.2vw, 5rem); letter-spacing: -.015em; }
+h2 { font-stretch: 112%; font-weight: 750; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: -.01em; }
+.intro { color: var(--ink-2); max-width: 62ch; margin: 14px 0 0; font-size: 1.05rem; }
+.sec-head { margin-bottom: 32px; }
 
-.hero-headline{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(72px,9vw,118px);
-  font-weight:900;
-  line-height:.88;
-  letter-spacing:-3px;
-  text-transform:uppercase;
-  margin-bottom:auto;
-  padding-bottom:3rem;
+/* Hero */
+.hero { padding-block: 0 clamp(48px, 7vw, 88px); margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); overflow-x: clip; }
+.hero-top { position: relative; min-height: clamp(560px, 78vh, 720px); display: flex; align-items: center; padding-block: 64px 72px; }
+.hero-top::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); right: calc(-1 * max(16px, env(safe-area-inset-right, 0px))); pointer-events: none;
+  background: linear-gradient(0deg, var(--bg) 0%, transparent 24%), linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 94%, transparent) 34%, color-mix(in srgb, var(--bg) 55%, transparent) 58%, transparent 82%); }
+.hero-copy { position: relative; z-index: 1; }
+@media (max-width: 720px) {
+  .hero-top { padding-block: 40px 56px; }
+  .hero-top::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 20%), linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, transparent), color-mix(in srgb, var(--bg) 88%, transparent)); }
 }
-.hero-headline .hl-name{display:block;}
-.hero-headline .hl-last{
-  display:block;
-  color:transparent;
-  -webkit-text-stroke:2px var(--ink);
-}
+.stages { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.stg { font-family: var(--font-mono); font-size: .8rem; display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; cursor: pointer; }
+.stg .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--stage); }
+.stg:hover, .stg:focus-visible { border-color: var(--stage); }
+.rvon .rv { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.rvon .rv.in { opacity: 1; transform: none; }
+.lead { font-size: clamp(1.1rem, 2.2vw, 1.35rem); max-width: 38ch; margin: 22px 0 0; color: var(--ink-2); }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { font-family: var(--font-body); font-weight: 600; font-size: .95rem; text-decoration: none; padding: 11px 18px; border-radius: 4px; border: 1px solid var(--accent); display: inline-block; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { color: var(--accent); background: transparent; }
+.btn.ghost:hover { background: var(--surface-2); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 32px; margin: 0; }
+.facts div { border-top: 1px solid var(--line); padding: 14px 0 18px; min-width: 0; }
+.facts dt { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.facts dd { margin: 6px 0 0; font-weight: 500; }
+#flow { position: absolute; left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); top: 0; width: calc(100% + max(16px, env(safe-area-inset-left, 0px)) + max(16px, env(safe-area-inset-right, 0px))); max-width: none; height: 100%; display: block; pointer-events: none; }
+.flow-cap { margin: 14px 0 0; max-width: 54ch; font-size: .88rem; color: var(--ink-2); }
 
-.hero-meta{
-  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
-  padding-top:2.5rem;
-  border-top:1px solid var(--line);
-}
-.hm-item{}
-.hm-label{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--gray2);
-  margin-bottom:6px;
-}
-.hm-val{font-size:14px;font-weight:400;color:var(--ink);line-height:1.4;}
+/* Pipeline */
+.tabs { display: flex; flex-wrap: nowrap; gap: 0; scrollbar-width: thin; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { font-family: var(--font-mono); font-size: .85rem; padding: 12px 16px; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--ink-2); cursor: pointer; white-space: nowrap; margin-bottom: -1px; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--stage, var(--accent)); }
+.tab .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--stage, var(--ink-2)); margin-right: 8px; }
+.panel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px 48px; padding-top: 32px; align-items: start; }
+.panel h3 { font-stretch: 112%; font-weight: 750; font-size: 1.6rem; display: flex; align-items: center; gap: 12px; }
+.panel h3 .bar-s { width: 6px; height: 1.5rem; background: var(--stage, var(--accent)); display: inline-block; }
+.panel p { margin: 14px 0 0; }
+.panel ul { margin: 16px 0 0; padding-left: 1.1rem; color: var(--ink-2); }
+.panel li { margin-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+.chip { font-family: var(--font-mono); font-size: .78rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); color: var(--ink); }
+.codebox { border: 1px solid var(--line); background: var(--surface); border-radius: 4px; min-width: 0; }
+.codebox header { display: flex; justify-content: space-between; gap: 12px; padding: 8px 14px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .75rem; color: var(--ink-2); }
+.codebox pre { margin: 0; padding: 16px; overflow-x: auto; font-family: var(--font-mono); font-size: .82rem; line-height: 1.65; color: var(--ink); }
+.codebox .s { color: var(--bronze); }
+.codebox .k { color: var(--accent); font-weight: 500; }
+.nocode { border: 1px dashed var(--line); border-radius: 4px; padding: 20px; color: var(--ink-2); font-size: .92rem; }
+@media (max-width: 860px) { .panel { grid-template-columns: minmax(0, 1fr); } }
 
-/* right panel */
-.hero-ticker{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--gray2);letter-spacing:.1em;
-  position:absolute;top:6rem;left:3rem;
-  display:flex;align-items:center;gap:8px;
-}
-.ticker-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:var(--red);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+/* Demo */
+button.btn { cursor: pointer; font-size: .95rem; }
+.btn:disabled { opacity: .55; cursor: default; }
+.steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.dstep { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: .82rem; padding: 9px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 4px; cursor: pointer; }
+.dstep b { color: var(--ink); font-weight: 500; }
+.dstep .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--stage); }
+.dstep:hover { border-color: var(--stage); }
+.dstep[aria-pressed="true"] { border-color: var(--stage); box-shadow: inset 0 -3px 0 var(--stage); }
+.dctl { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 20px; }
+.demo { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 24px; align-items: start; }
+@media (max-width: 900px) { .demo { grid-template-columns: minmax(0, 1fr); } }
+.dtable { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); border-radius: 4px; min-height: 120px; }
+.dtable table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: .82rem; }
+.dtable th { text-align: left; font-weight: 500; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.dtable td { padding: 9px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.dtable tbody tr:last-child td { border-bottom: 0; }
+.dtable tr { transition: opacity .6s; }
+.dtable tr.flag { background: var(--flag-bg); }
+.dtable tr.drop { opacity: 0; }
+.dtable .num { text-align: right; }
+.tag { font-size: .72rem; padding: 1px 7px; border-radius: 3px; border: 1px solid var(--bad); color: var(--bad); }
+.ok { color: var(--ink-2); }
+.gold { padding: 20px 18px; display: grid; gap: 18px; }
+.grow { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: .85rem; }
+.gtrack { height: 14px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+.gfill { display: block; height: 100%; width: 0; background: var(--gold); transition: width .8s; }
+.gval { text-align: right; font-weight: 500; }
+.gval small { display: block; color: var(--ink-2); font-weight: 400; font-size: .72rem; }
+.dside { display: grid; gap: 16px; min-width: 0; }
+.log { border: 1px solid var(--line); background: var(--surface); border-radius: 4px; padding: 12px 14px; font-family: var(--font-mono); font-size: .78rem; list-style: none; margin: 0; display: grid; gap: 6px; }
+.log li { color: var(--ink-2); overflow-wrap: anywhere; }
+.log li.new { color: var(--ink); }
+.log li::before { content: "› "; color: var(--accent); }
+@media (max-width: 520px) { .dtable th, .dtable td { padding: 8px 7px; font-size: .76rem; letter-spacing: 0; } .grow { grid-template-columns: 44px minmax(0, 1fr) auto; } }
+.dnote { margin: 16px 0 0; font-size: .85rem; color: var(--ink-2); }
 
-.hero-stats-big{
-  display:flex;flex-direction:column;gap:0;
-  margin-bottom:3rem;
-}
-.hstat{
-  display:flex;align-items:baseline;gap:1rem;
-  padding:1.4rem 0;
-  border-bottom:1px solid var(--line);
-}
-.hstat:first-child{border-top:1px solid var(--line);}
-.hstat-n{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:54px;
-  letter-spacing:-2px;color:var(--ink);
-  line-height:1;min-width:110px;
-}
-.hstat-n em{font-style:normal;font-size:.55em;color:var(--red);}
-.hstat-l{font-size:13px;color:var(--gray);line-height:1.4;max-width:150px;}
+/* Projects */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.filter { font-family: var(--font-mono); font-size: .8rem; padding: 7px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; cursor: pointer; }
+.filter:hover { border-color: var(--accent); color: var(--ink); }
+.filter[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.card { border: 1px solid var(--line); background: var(--surface); border-radius: 4px; min-width: 0; }
+.card[hidden] { display: none; }
+.card h3 { font-size: 1.15rem; font-stretch: 105%; font-weight: 700; }
+.card-head { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; width: 100%; padding: 18px 18px 16px; cursor: pointer; align-items: start; }
+.card-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.card-head:hover h3 { color: var(--accent); }
+.cats { grid-column: 1 / -1; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.mini { grid-column: 1 / -1; font-family: var(--font-mono); font-size: .75rem; color: var(--ink-2); }
+.metric { grid-column: 1; font-family: var(--font-mono); font-size: .82rem; color: var(--gold); font-weight: 500; }
+.chev { grid-row: 2; grid-column: 2; width: 18px; height: 18px; position: relative; transition: transform .2s; margin-top: 3px; }
+.chev::before { content: ""; position: absolute; inset: 3px 4px 6px; border-right: 2px solid var(--ink-2); border-bottom: 2px solid var(--ink-2); transform: rotate(45deg); }
+.card-head[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.card-body { padding: 4px 18px 18px; border-top: 1px solid var(--line); }
+.card-body dl { margin: 14px 0 0; }
+.card-body dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-top: 12px; }
+.card-body dd { margin: 3px 0 0; }
+.card-body .chips { margin-top: 6px; }
+.card-body .lnk { display: inline-block; margin-top: 16px; font-weight: 600; }
+.more { margin-top: 24px; }
 
-.hero-cta{
-  display:flex;gap:12px;flex-wrap:wrap;
-}
-.btn-main{
-  font-family:'DM Mono',monospace;font-size:11px;
-  padding:13px 28px;letter-spacing:.08em;
-  background:var(--ink);color:var(--cream);
-  text-decoration:none;
-  transition:background .2s,color .2s;
-}
-.btn-main:hover{background:var(--red);}
-.btn-ghost{
-  font-family:'DM Mono',monospace;font-size:11px;
-  padding:13px 28px;letter-spacing:.08em;
-  border:1px solid var(--line);color:var(--gray);
-  text-decoration:none;
-  transition:border-color .2s,color .2s;
-}
-.btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+/* Stack */
+.stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+@media (max-width: 760px) { .stack { grid-template-columns: minmax(0, 1fr); } }
+.stack h3 { font-size: 1.1rem; font-stretch: 105%; font-weight: 700; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+.stack .chips { margin-top: 18px; }
+.stack .daily h3 { border-bottom-color: var(--accent); }
+.stack .chip { font-size: .85rem; padding: 6px 12px; transition: border-color .15s, transform .15s; }
+.stack .chip:hover { border-color: var(--accent); transform: translateY(-2px); }
 
-/* cross decorative */
-.cross{
-  position:absolute;
-  width:24px;height:24px;
-  opacity:.25;
-}
-.cross::before,.cross::after{
-  content:'';position:absolute;background:var(--ink);
-}
-.cross::before{width:1px;height:100%;left:50%;}
-.cross::after{height:1px;width:100%;top:50%;}
-.cross-1{bottom:3rem;right:3rem;}
-.cross-2{top:9rem;right:1.5rem;}
+/* Formação */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+@media (max-width: 760px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.two h3 { font-size: 1.1rem; font-stretch: 105%; font-weight: 700; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 16px; flex-wrap: wrap; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.rows .who { color: var(--ink-2); font-size: .9rem; }
+.badge { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--gold); color: var(--gold); border-radius: 3px; }
+.rows .main { font-weight: 500; }
+.rows .sub { display: block; color: var(--ink-2); font-size: .9rem; font-weight: 400; }
 
-/* ─── SECTION BASE ─── */
-.section{padding:7rem 3rem;}
-.section-header{
-  display:flex;align-items:baseline;
-  justify-content:space-between;
-  border-bottom:1px solid var(--line);
-  padding-bottom:1.2rem;
-  margin-bottom:4.5rem;
-}
-.sh-num{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--gray2);letter-spacing:.15em;
-}
-.sh-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;font-size:clamp(44px,5.5vw,68px);
-  letter-spacing:-2px;text-transform:uppercase;line-height:.9;
-}
-.sh-title em{font-style:italic;color:var(--red);font-family:'DM Serif Display',serif;}
-.sh-sub{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--gray2);letter-spacing:.08em;text-align:right;
-  max-width:160px;line-height:1.6;
-}
+/* Contato */
+.contact-list { list-style: none; margin: 32px 0 0; padding: 0; max-width: 640px; }
+.contact-list li { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; padding: 16px 0; border-top: 1px solid var(--line); }
+.contact-list li:last-child { border-bottom: 1px solid var(--line); }
+.contact-list .k { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.contact-list .v { overflow-wrap: anywhere; font-weight: 500; }
+.contact-list .v a { font-weight: 500; }
+@media (max-width: 520px) { .contact-list li { grid-template-columns: minmax(0, 1fr) auto; } .contact-list .k { grid-column: 1 / -1; } }
+footer { padding-block: 32px 40px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: .88rem; font-family: var(--font-mono); }
+/* Progresso, busca rápida e fluxos */
+.progress { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: linear-gradient(90deg, var(--bronze), var(--silver), var(--gold)); pointer-events: none; }
+.hint { margin: 10px 0 0; font-size: .85rem; color: var(--ink-2); }
+@media (hover: none) { .hint { display: none; } }
+kbd { font-family: var(--font-mono); font-size: .78rem; padding: 2px 7px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 3px; background: var(--surface); color: var(--ink); }
+@media (max-width: 720px) { #kbtn { display: none; } }
+.cmd { position: fixed; inset: 0; z-index: 60; background: rgba(5, 10, 18, .55); display: flex; align-items: flex-start; justify-content: center; padding: 12vh 16px 16px; }
+.cmd[hidden] { display: none; }
+.cmd-box { width: 100%; max-width: 580px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); overflow: hidden; }
+#cmdq { width: 100%; font: inherit; font-size: 1rem; padding: 16px 18px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); outline: none; }
+#cmdq::placeholder { color: var(--ink-2); }
+#cmdlist { list-style: none; margin: 0; padding: 6px; max-height: min(52vh, 420px); overflow-y: auto; }
+#cmdlist li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 9px 12px; border-radius: 4px; cursor: pointer; }
+#cmdlist li small { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-2); white-space: nowrap; }
+#cmdlist li[aria-selected="true"] { background: var(--surface-2); box-shadow: inset 3px 0 0 var(--accent); }
+#cmdlist li.grp { cursor: default; padding: 12px 12px 4px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+#cmdlist li.empty { cursor: default; color: var(--ink-2); }
+.cmd-foot { margin: 0; padding: 10px 16px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: .72rem; color: var(--ink-2); }
+.fl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fl i { font-style: normal; color: var(--ink-2); }
+.node { font-family: var(--font-mono); font-size: .76rem; padding: 4px 9px; border: 1px solid var(--line); border-radius: 3px; background: var(--surface-2); color: var(--ink); }
+.node.b { border-color: var(--bronze); } .node.s { border-color: var(--silver); } .node.g { border-color: var(--gold); }
+/* ===== v5: sistema visual (ícones, cartões, vidro) ===== */
+:root {
+  --i-db: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='12' cy='5' rx='9' ry='3'/%3E%3Cpath d='M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5'/%3E%3Cpath d='M3 12c0 1.7 4 3 9 3s9-1.3 9-3'/%3E%3C/svg%3E");
+  --i-layers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 10 5-10 5L2 7z'/%3E%3Cpath d='m2 12 10 5 10-5'/%3E%3Cpath d='m2 17 10 5 10-5'/%3E%3C/svg%3E");
+  --i-flow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='6' height='6' rx='1'/%3E%3Crect x='15' y='15' width='6' height='6' rx='1'/%3E%3Cpath d='M9 6h4a2 2 0 0 1 2 2v7'/%3E%3C/svg%3E");
+  --i-code: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16 18 6-6-6-6'/%3E%3Cpath d='m8 6-6 6 6 6'/%3E%3C/svg%3E");
+  --i-chart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='M7 15v3M12 9v9M17 5v13'/%3E%3C/svg%3E");
+  --i-shield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+  --i-mail: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E");
+  --i-in: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z'/%3E%3Crect x='2' y='9' width='4' height='12'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E");
+  --i-gh: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.1-1.3-.4-2.6-1.3-3.6.4-1.1.4-2.4 0-3.5 0 0-1.1 0-3.5 1.5a12 12 0 0 0-6.4 0C6 2.700 4.900 3 4.900 3c-.4 1.100-.4 2.400 0 3.500A5.400 5.400 0 0 0 4 10c0 3.500 3 5.500 6 5.500-.4.500-.8 1.100-.9 2V22'/%3E%3Cpath d='M9 18c-4.500 2-5-2-7-2'/%3E%3C/svg%3E");
+  --i-pin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+  --i-cap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m22 10-10-5L2 10l10 5z'/%3E%3Cpath d='M6 12v5c3 2 9 2 12 0v-5'/%3E%3Cpath d='M22 10v6'/%3E%3C/svg%3E");
+  --i-award: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='6'/%3E%3Cpath d='m8.5 14-1.5 8 5-3 5 3-1.5-8'/%3E%3C/svg%3E");
+  --i-globe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z'/%3E%3C/svg%3E");
+  --i-play: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 4 14 8-14 8z'/%3E%3C/svg%3E");
+  --i-redo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 3-6.7L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E");
+  --i-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='12' height='12' rx='2'/%3E%3Cpath d='M5 15V5a2 2 0 0 1 2-2h8'/%3E%3C/svg%3E");
+  --i-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  --i-ur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
+  --i-ar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --i-snow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v20M4.9 7l14.2 10M4.9 17 19.1 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5'/%3E%3C/svg%3E");
+  --i-zap: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2 3 14h9l-1 8 10-12h-9z'/%3E%3C/svg%3E");
+  --i-spark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z'/%3E%3Cpath d='M19 17v4M17 19h4'/%3E%3C/svg%3E");
+  --i-inbox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 12h-6l-2 3h-4l-2-3H2'/%3E%3Cpath d='M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.7 4H7.3a2 2 0 0 0-1.8 1.1z'/%3E%3C/svg%3E");
+  --i-timer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13' r='8'/%3E%3Cpath d='M12 9v4l2 2M9 2h6'/%3E%3C/svg%3E");
+  --i-flask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 2h6M10 2v6L4 20a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2l-6-12V2'/%3E%3C/svg%3E");
+  --i-plug: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z'/%3E%3C/svg%3E");
+  --i-term: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 17 6-6-6-6M12 19h8'/%3E%3C/svg%3E");
+  --i-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  --i-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 7-7 7 7M12 19V5'/%3E%3C/svg%3E");
+  --i-langs: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6'/%3E%3C/svg%3E");
+  --i-cloud: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 19a4.5 4.5 0 1 0-1.4-8.8A6 6 0 1 0 5 15.3 4 4 0 0 0 6 19z'/%3E%3C/svg%3E");
+  --i-cmd: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3'/%3E%3C/svg%3E");
 
-/* ─── SOBRE ─── */
-#sobre{background:var(--cream);}
-.sobre-grid{
-  display:grid;grid-template-columns:5fr 4fr;gap:5rem;align-items:start;
+  --r: 14px; --r-sm: 10px;
+  --shadow: 0 1px 2px rgba(13,26,43,.05), 0 8px 24px -12px rgba(13,26,43,.14);
+  --shadow-lg: 0 2px 4px rgba(13,26,43,.06), 0 24px 48px -20px rgba(10,98,201,.28);
+  --glow: rgba(10,98,201,.13);
+  --accent-2: #0A62C9;
 }
-.sobre-text{
-  font-size:18px;color:var(--gray);line-height:1.85;font-weight:300;
-}
-.sobre-text p{margin-bottom:1.4rem;}
-.sobre-text strong{color:var(--ink);font-weight:600;}
-.sobre-text .highlight{
-  font-family:'DM Serif Display',serif;
-  font-style:italic;font-size:24px;
-  color:var(--ink);line-height:1.4;
-  display:block;margin:2rem 0;
-  padding-left:1.5rem;
-  border-left:3px solid var(--red);
-}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -12px rgba(0,0,0,.6); --shadow-lg: 0 2px 4px rgba(0,0,0,.4), 0 24px 48px -20px rgba(91,168,255,.25); --glow: rgba(91,168,255,.16); } }
+:root[data-theme="dark"] { --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -12px rgba(0,0,0,.6); --shadow-lg: 0 2px 4px rgba(0,0,0,.4), 0 24px 48px -20px rgba(91,168,255,.25); --glow: rgba(91,168,255,.16); }
 
-.sobre-aside{}
-.aside-card{
-  border:1px solid var(--line);
-  padding:1.4rem 1.6rem;
-  margin-bottom:10px;
-  transition:border-color .2s;
-}
-.aside-card:hover{border-color:var(--gray2);}
-.ac-label{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--gray2);
-  margin-bottom:7px;
-}
-.ac-val{font-size:13px;color:var(--ink);line-height:1.5;font-weight:400;}
-.ac-val.mono{font-family:'DM Mono',monospace;color:var(--ink);font-size:12px;}
+.ic, .bi::before { display: inline-block; width: 1.15em; height: 1.15em; flex: none; background: currentColor; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.bi::before { content: ""; }
+.bi { display: inline-flex; align-items: center; gap: 8px; }
 
-.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:2.5rem;}
-.tag{
-  font-family:'DM Mono',monospace;font-size:10px;
-  padding:5px 13px;border:1px solid var(--line);
-  color:var(--gray);letter-spacing:.05em;
-  transition:all .2s;cursor:none;
-}
-.tag:hover{border-color:var(--ink);color:var(--ink);}
+/* cabeçalho */
+.top { box-shadow: 0 1px 0 var(--line), 0 8px 24px -18px rgba(0,0,0,.35); }
+.brand { display: inline-flex; align-items: center; gap: 10px; }
+.mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; font-size: .78rem; font-weight: 800; font-stretch: 100%; letter-spacing: 0; color: #fff; background: linear-gradient(135deg, var(--bronze), var(--gold) 55%, var(--accent)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 4px 12px -4px var(--accent); }
+nav a { border-radius: 8px; }
+nav a[aria-current="true"] { box-shadow: none; background: var(--surface-2); color: var(--ink); }
+.icon-btn { border-radius: 9px; }
+.btn { border-radius: 10px; display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; }
+.btn.primary { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent)); box-shadow: 0 8px 20px -8px var(--accent), inset 0 1px 0 rgba(255,255,255,.25); border-color: transparent; }
+.btn.primary:hover { transform: translateY(-1px); }
+.btn.ghost { background: var(--surface); }
+.btn { transition: transform .15s, box-shadow .15s, background .15s; }
 
-/* ─── SKILLS ─── */
-#skills{background:var(--ink);color:var(--cream);}
-#skills .section-header{border-bottom-color:rgba(255,255,255,.12);}
-#skills .sh-num{color:rgba(255,255,255,.3);}
-#skills .sh-title{color:var(--cream);}
-#skills .sh-sub{color:rgba(255,255,255,.3);}
+/* hero */
+.hero-top { background:
+  radial-gradient(46% 70% at 88% 18%, var(--glow), transparent 70%),
+  radial-gradient(40% 60% at 70% 95%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 70%); }
+h1 { background: linear-gradient(100deg, var(--ink) 35%, var(--accent) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; padding-bottom: .06em; }
+.badge-loc { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; padding: 6px 14px 6px 11px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(6px); font-family: var(--font-mono); font-size: .8rem; color: var(--ink-2); box-shadow: var(--shadow); }
+.badge-loc .ic { color: var(--accent); }
+.stg { box-shadow: var(--shadow); }
+.facts { gap: 14px; margin-top: 8px; }
+.fact { position: relative; margin: 0; padding: 18px 18px 20px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; min-width: 0; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.fact::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--bronze), var(--silver), var(--gold)); opacity: .85; }
+.fact:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.facts div { border-top: 0; padding: 0; }
+.fi { width: 40px; height: 40px; padding: 10px; border-radius: 11px; background: color-mix(in srgb, var(--accent) 12%, var(--surface)); color: var(--accent); box-sizing: border-box; margin-bottom: 14px; }
+.fact dd { line-height: 1.45; }
 
-.skills-cols{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
-}
-.skill-col{
-  padding:0 2.5rem 0 0;
-  border-right:1px solid rgba(255,255,255,.08);
-  margin-right:2.5rem;
-}
-.skill-col:last-child{border:none;margin:0;padding:0;}
+/* faixa de tecnologias */
+.marquee { overflow: hidden; border-block: 1px solid var(--line); background: var(--surface); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.mq-track { display: flex; width: max-content; animation: mq 48s linear infinite; }
+.marquee:hover .mq-track { animation-play-state: paused; }
+.mq-track ul { display: flex; gap: 12px; list-style: none; margin: 0; padding: 16px 6px; }
+.mq { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; font-family: var(--font-mono); font-size: .85rem; color: var(--ink); padding: 6px 14px 6px 6px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+@keyframes mq { to { transform: translateX(-50%); } }
+.tbadge { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 9px; font-family: var(--font-mono); font-size: .68rem; font-weight: 500; letter-spacing: 0; color: #fff; background: linear-gradient(135deg, var(--bc), color-mix(in srgb, var(--bc) 62%, #000)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
 
-.scol-label{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--red2);
-  margin-bottom:1.8rem;
-  padding-bottom:12px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.sk-row{margin-bottom:1.1rem;}
-.sk-top{
-  display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:5px;
-}
-.sk-name{font-size:13px;color:rgba(255,255,255,.85);font-weight:300;}
-.sk-pct{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);}
-.sk-track{height:1px;background:rgba(255,255,255,.1);}
-.sk-fill{
-  height:1px;background:var(--cream);
-  width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);
-}
+/* seções */
+body { counter-reset: sec; }
+section { padding-block: clamp(56px, 9vw, 112px); }
+section + section { border-top: 0; }
+.sec-head { margin-bottom: 36px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); }
+.sec-head .eyebrow::before, .sec-eb::before { counter-increment: sec; content: "0" counter(sec); font-weight: 500; padding: 3px 8px; border-radius: 6px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+h2 { display: flex; align-items: center; gap: 14px; }
+.hi { width: 44px; height: 44px; padding: 11px; border-radius: 13px; box-sizing: border-box; color: #fff; background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--gold))); box-shadow: 0 8px 18px -8px var(--accent); -webkit-mask: none; mask: none; position: relative; }
+.hi::after { content: ""; position: absolute; inset: 11px; background: #fff; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.hi { background-color: transparent; }
+.hi { --bgi: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--gold))); background: var(--bgi); }
+.hi { -webkit-mask: none; mask: none; }
+.intro { font-size: 1.08rem; }
 
-/* stack row */
-.stack-row{
-  display:flex;flex-wrap:wrap;gap:8px;
-  margin-top:3.5rem;
-  padding-top:2rem;
-  border-top:1px solid rgba(255,255,255,.08);
-}
-.stack-chip{
-  font-family:'DM Mono',monospace;font-size:10px;
-  padding:5px 14px;
-  border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.45);
-  letter-spacing:.05em;
-  transition:all .2s;cursor:none;
-}
-.stack-chip:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85);}
+/* pipeline */
+.tabs { gap: 8px; border-bottom: 0; padding: 6px; background: var(--surface-2); border-radius: 14px; width: fit-content; max-width: 100%; }
+.tab { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 10px; margin: 0; padding: 10px 16px; }
+.tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow), inset 0 -2px 0 var(--stage, var(--accent)); }
+.ti { color: var(--stage, var(--ink-2)); }
+.panel { margin-top: 20px; padding: 32px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--stage, var(--accent)); }
+.panel h3 .bar-s { display: none; }
+.pic { width: 42px; height: 42px; padding: 0; background: var(--stage, var(--accent)); }
+.panel h3 { gap: 14px; }
+.panel h3 .pic { box-sizing: border-box; }
+.codebox { border-radius: 12px; overflow: hidden; background: var(--surface-2); }
+.codebox header { background: color-mix(in srgb, var(--surface-2) 70%, var(--line)); }
+.chip { border-radius: 8px; background: var(--surface-2); }
+.panel li::marker { color: var(--stage, var(--accent)); }
+@media (max-width: 520px) { .panel { padding: 22px 18px; } }
 
-/* ─── PROJETOS ─── */
-#projetos{background:var(--cream2);}
-.proj-filter{
-  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:3rem;
-}
-.pfbtn{
-  font-family:'DM Mono',monospace;font-size:10px;
-  padding:5px 15px;letter-spacing:.08em;
-  border:1px solid var(--line);color:var(--gray);
-  background:none;cursor:none;transition:all .2s;
-}
-.pfbtn:hover{border-color:var(--ink);color:var(--ink);}
-.pfbtn.on{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+/* demo (janela) */
+.win { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow-lg); overflow: hidden; }
+.win-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-2); border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .78rem; color: var(--ink-2); }
+.wd { width: 11px; height: 11px; border-radius: 50%; background: #ED6A5E; } .wd:nth-child(2) { background: #F4BF4F; } .wd:nth-child(3) { background: #61C554; }
+.win-t { margin-left: 10px; }
+.live { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, #2DBE6C 14%, transparent); color: #1B8F4E; font-weight: 500; }
+:root[data-theme="dark"] .live { color: #5EE59A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .live { color: #5EE59A; } }
+.live i { width: 7px; height: 7px; border-radius: 50%; background: #2DBE6C; animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; transform: scale(.8); } }
+.win-body { padding: 22px; }
+@media (max-width: 520px) { .win-body { padding: 14px; } .win-t { display: none; } }
+.dstep { border-radius: 10px; } .dtable, .log { border-radius: 12px; }
+.dstep[aria-pressed="true"] { background: color-mix(in srgb, var(--stage) 10%, var(--surface)); }
 
-.proj-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:1px;
-  background:var(--line);
-}
-.pj{
-  background:var(--cream2);
-  padding:2rem 2.2rem;
-  text-decoration:none;
-  display:block;
-  transition:background .25s;
-  position:relative;
-  overflow:hidden;
-}
-.pj:hover{background:var(--cream);}
-.pj.hidden{display:none;}
+/* projetos */
+.filter { display: inline-flex; align-items: center; }
+.card { border-radius: var(--r); box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s, border-color .2s; overflow: hidden; }
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.card-head { grid-template-columns: 48px minmax(0, 1fr) auto; gap: 4px 14px; padding: 20px; }
+.card-head .pi { grid-column: 1; grid-row: 1 / span 3; width: 48px; height: 48px; padding: 0; border-radius: 13px; background: var(--accent); position: relative; align-self: start; -webkit-mask: none; mask: none; }
+.card-head .pi::after { content: ""; position: absolute; inset: 12px; background: #fff; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.card:nth-child(4n+2) .pi { background: var(--bronze); } .card:nth-child(4n+3) .pi { background: var(--silver); } .card:nth-child(4n+4) .pi { background: var(--gold); }
+.card-head .cats { grid-column: 2 / 4; grid-row: 1; } .card-head .ttl { grid-column: 2; grid-row: 2; }
+.card-head .metric { grid-column: 2; grid-row: 3; justify-self: start; padding: 2px 10px; border-radius: 999px; background: color-mix(in srgb, var(--gold) 14%, transparent); }
+.card-head .chev { grid-column: 3; grid-row: 2; } .card-head .mini { grid-column: 1 / -1; grid-row: 4; padding-top: 6px; }
+.card-body { padding: 4px 20px 20px; } .card-body .lnk { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 9px; text-decoration: none; }
+.card-body .lnk:hover { border-color: var(--accent); background: var(--surface-2); }
+.node { border-radius: 8px; }
 
-.pj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem;}
-.pj-cat{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:var(--gray2);
-}
-.pj-arr{
-  font-size:18px;color:var(--line);
-  transition:color .2s,transform .2s;
-}
-.pj:hover .pj-arr{color:var(--red);transform:translate(3px,-3px);}
+/* stack */
+.stack { gap: 20px; align-items: start; }
+.scard { padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); }
+.scard.daily { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, var(--surface)), var(--surface)); }
+.stack h3 { display: flex; align-items: center; gap: 10px; border: 0; padding: 0 0 18px; }
+.sh { color: var(--accent); width: 1.3em; height: 1.3em; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.tile { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-size: .9rem; font-weight: 500; transition: transform .15s, border-color .15s; min-width: 0; }
+.tile span:last-child { min-width: 0; overflow-wrap: anywhere; line-height: 1.25; }
+.tile:hover { transform: translateY(-2px); border-color: var(--accent); }
+.tiles.big .tile { padding: 12px 14px; }
+.tiles.big .tbadge { min-width: 36px; height: 36px; }
 
-.pj-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;font-size:24px;
-  letter-spacing:-.5px;text-transform:uppercase;
-  color:var(--ink);margin-bottom:.6rem;line-height:1;
-}
-.pj-desc{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:1rem;}
-.pj-stat{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:var(--red);letter-spacing:.04em;
-  margin-bottom:1.2rem;
-}
-.pj-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.pjtag{
-  font-family:'DM Mono',monospace;font-size:9px;
-  padding:3px 10px;
-  border:1px solid var(--line);color:var(--gray2);
-}
+/* formação */
+.two { gap: 20px; align-items: start; }
+.ccol { padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); }
+.two h3 { display: flex; align-items: center; gap: 10px; border: 0; padding: 0 0 8px; }
+.rows li { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 4px 14px; }
+.rows li:last-child { border-bottom: 0; }
+.ri { width: 38px; height: 38px; padding: 9px; box-sizing: border-box; border-radius: 10px; background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--gold); -webkit-mask: none; mask: none; position: relative; }
+.ri::after { content: ""; position: absolute; inset: 9px; background: currentColor; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.rows .who { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.badge { border-radius: 999px; padding: 3px 10px; }
+@media (max-width: 520px) { .rows li { grid-template-columns: 38px minmax(0, 1fr); } .rows .who, .rows .badge { grid-column: 2; justify-self: start; } .ccol, .scard { padding: 20px 16px; } }
 
-/* wide card */
-.pj.wide{grid-column:1/-1;}
-
-/* ─── IMPACTO ─── */
-#impacto{background:var(--cream);}
-.impact-cols{
-  display:grid;grid-template-columns:1fr 1fr;gap:0;
-}
-.impact-nums{
-  padding-right:4rem;
-  border-right:1px solid var(--line);
-  margin-right:4rem;
-}
-.imp-row{
-  display:flex;align-items:baseline;gap:1.5rem;
-  padding:1.8rem 0;
-  border-bottom:1px solid var(--line);
-}
-.imp-row:first-child{border-top:1px solid var(--line);}
-.imp-n{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:60px;
-  letter-spacing:-2px;color:var(--ink);line-height:1;
-  min-width:130px;
-}
-.imp-n em{font-style:normal;font-size:.5em;color:var(--red);}
-.imp-l{font-size:13px;color:var(--gray);line-height:1.5;max-width:180px;}
-
-/* certs */
-.cert-title{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:var(--gray2);margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:1rem;
-}
-.cert-title::after{content:'';flex:1;height:1px;background:var(--line);}
-.cert-list{list-style:none;}
-.cert-li{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:14px 0;
-  border-bottom:1px solid var(--line);
-}
-.cert-li:last-child{border:none;}
-.cbullet{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--ink);margin-top:4px;flex-shrink:0;
-}
-.cbullet.prog{background:var(--red);}
-.cert-name{font-size:13px;color:var(--ink);font-weight:400;line-height:1.4;}
-.cert-from{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray2);margin-top:3px;}
-.cert-badge{
-  margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;
-  padding:3px 11px;border:1px solid var(--line);color:var(--gray2);
-  white-space:nowrap;flex-shrink:0;letter-spacing:.05em;
-}
-.cert-badge.prog{border-color:var(--red);color:var(--red);}
-
-/* ─── CONTATO ─── */
-#contato{background:var(--ink);}
-#contato .section-header{border-bottom-color:rgba(255,255,255,.1);}
-#contato .sh-num{color:rgba(255,255,255,.25);}
-#contato .sh-title{color:var(--cream);}
-#contato .sh-sub{color:rgba(255,255,255,.25);}
-
-.contact-body{
-  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
-}
-.contact-left .cta-big{
-  font-family:'DM Serif Display',serif;
-  font-style:italic;
-  font-size:clamp(36px,4vw,52px);
-  color:var(--cream);
-  line-height:1.25;
-  margin-bottom:1.5rem;
-}
-.contact-left .cta-big em{
-  color:var(--red2);
-}
-.contact-left p{
-  font-size:16px;color:rgba(255,255,255,.45);
-  line-height:1.7;font-weight:300;margin-bottom:2.5rem;
-}
-.contact-email{
-  display:inline-block;
-  font-family:'DM Mono',monospace;font-size:13px;
-  color:var(--cream);letter-spacing:.04em;
-  padding:14px 28px;border:1px solid rgba(255,255,255,.2);
-  text-decoration:none;
-  transition:all .2s;
-}
-.contact-email:hover{background:var(--red);border-color:var(--red);}
-
-.contact-links-col{display:flex;flex-direction:column;gap:8px;}
-.clink{
-  display:flex;align-items:center;gap:16px;
-  padding:16px 18px;
-  border:1px solid rgba(255,255,255,.08);
-  text-decoration:none;transition:border-color .2s;
-}
-.clink:hover{border-color:rgba(255,255,255,.25);}
-.clink-icon{
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:rgba(255,255,255,.3);width:20px;text-align:center;letter-spacing:.1em;
-}
-.clink-body{flex:1;}
-.clink-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.25);}
-.clink-val{font-size:13px;color:rgba(255,255,255,.55);margin-top:2px;transition:color .2s;}
-.clink:hover .clink-val{color:rgba(255,255,255,.85);}
-.clink-arr{color:rgba(255,255,255,.2);font-size:13px;transition:all .2s;}
-.clink:hover .clink-arr{color:var(--red2);transform:translateX(3px);}
-
-/* ─── FOOTER ─── */
-footer{
-  background:var(--ink);
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:2rem 3rem;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.foot-copy{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.25);letter-spacing:.06em;}
-.foot-copy span{color:rgba(255,255,255,.4);}
-
-/* ─── REVEAL ─── */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .75s,transform .75s;}
-.rv.in{opacity:1;transform:none;}
-
-/* ─── MOBILE ─── */
-@media(max-width:768px){
-  nav{padding:1rem 1.5rem;}
-  .nav-items a{display:none;}
-  .hero{grid-template-columns:1fr;}
-  .hero-right{display:none;}
-  .hero-left{padding:4rem 1.5rem;}
-  .section{padding:5rem 1.5rem;}
-  .sobre-grid,.skills-cols,.impact-cols,.contact-body{grid-template-columns:1fr;}
-  .impact-nums{padding-right:0;border-right:none;margin-right:0;}
-  .skill-col{border:none;padding:0;margin:0 0 2.5rem;}
-  .proj-grid{grid-template-columns:1fr;}
-  .pj.wide{grid-column:auto;}
-  footer{flex-direction:column;gap:1rem;}
-  .hero-headline{font-size:clamp(60px,15vw,80px);}
-}
+/* contato */
+#contato { background: radial-gradient(ellipse 50% 380px at 50% 0, var(--glow), transparent); }
+.ccards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+@media (max-width: 860px) { .ccards { grid-template-columns: minmax(0, 1fr); } }
+.ccard { position: relative; display: grid; grid-template-columns: 1fr; gap: 4px; align-content: start; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); color: var(--ink); text-decoration: none; min-width: 0; transition: transform .2s, box-shadow .2s, border-color .2s; }
+a.ccard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+.cic { width: 48px; height: 48px; padding: 0; border-radius: 14px; background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--gold))); position: relative; margin-bottom: 14px; -webkit-mask: none; mask: none; }
+.cic::after { content: ""; position: absolute; inset: 13px; background: #fff; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.ccard .k { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.ccard .v { font-weight: 600; overflow-wrap: anywhere; margin-bottom: 10px; }
+.ccard .go { position: absolute; top: 22px; right: 22px; color: var(--ink-2); }
+a.ccard:hover .go { color: var(--accent); }
+.ccard .icon-btn { justify-self: start; }
+.contact-list { display: none; }
+footer .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.totop { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); text-decoration: none; }
+.totop:hover { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } .marquee { overflow-x: auto; } }
+.pic, .fi { -webkit-mask: none; mask: none; position: relative; }
+.pic::after { content: ""; position: absolute; inset: 11px; background: #fff; -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.fi::after { content: ""; position: absolute; inset: 10px; background: var(--accent); -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.pic { display: inline-block; border-radius: 12px; flex: none; }
+.hi::after, .pic::after, .pi::after, .cic::after { background: var(--on-ic, #fff) !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --on-ic: #06101D; } }
+:root[data-theme="dark"] { --on-ic: #06101D; }
+.tbadge { text-shadow: 0 1px 1px rgba(0,0,0,.25); }
 </style>
 </head>
-<body>
+<body id="top-of-page">
+<a class="skip" href="#main" data-i18n="skip">Pular para o conteúdo</a>
 
-<div class="c-dot" id="cdot"></div>
-<div class="c-ring" id="cring"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-mark">bs<em>.</em>dev</div>
-  <div class="nav-items">
-    <a href="#sobre">sobre</a>
-    <a href="#skills">stack</a>
-    <a href="#projetos">projetos</a>
-    <a href="#impacto">impacto</a>
-    <a href="#contato" class="nav-contact">Contato</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Data Engineer · João Pessoa, Brasil</div>
-
-    <h1 class="hero-headline">
-      <span class="hl-name">Bruno</span>
-      <span class="hl-last">Suassuna</span>
-    </h1>
-
-    <div class="hero-meta">
-      <div class="hm-item">
-        <div class="hm-label">empresa</div>
-        <div class="hm-val">The Store Intelligence</div>
-      </div>
-      <div class="hm-item">
-        <div class="hm-label">stack</div>
-        <div class="hm-val">Azure · Databricks · PySpark</div>
-      </div>
-      <div class="hm-item">
-        <div class="hm-label">experiência</div>
-        <div class="hm-val">2+ anos</div>
-      </div>
-      <div class="hm-item">
-        <div class="hm-label">disponibilidade</div>
-        <div class="hm-val">Full-time · Freelance</div>
-      </div>
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true">BS</span><span>Bruno Suassuna</span></a>
+    <nav id="nav" aria-label="Principal" data-i18n-aria="nav_aria">
+      <a href="#pipeline" data-i18n="nav_pipeline">Pipeline</a>
+      <a href="#demo" data-i18n="nav_demo">Demo</a>
+      <a href="#projetos" data-i18n="nav_projects">Projetos</a>
+      <a href="#stack" data-i18n="nav_stack">Stack</a>
+      <a href="#formacao" data-i18n="nav_cert">Formação</a>
+      <a href="#contato" data-i18n="nav_contact">Contato</a>
+    </nav>
+    <div class="ctrl">
+      <button class="icon-btn bi" style="--i:var(--i-search)" id="kbtn" type="button" aria-label="Abrir busca rápida" data-i18n-aria="kbtn_aria"></button>
+      <button class="icon-btn" id="lang" type="button" aria-label="Switch to English">EN</button>
+      <button class="icon-btn" id="theme" type="button" aria-label="Alternar tema" data-i18n-aria="theme_aria">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
     </div>
   </div>
+<div class="progress" id="prog" aria-hidden="true"></div>
+</header>
 
-  <div class="hero-right">
-    <div class="hero-ticker">
-      <div class="ticker-dot"></div>
-      DISPONÍVEL PARA PROJETOS
-    </div>
-
-    <div class="hero-stats-big">
-      <div class="hstat">
-        <div class="hstat-n" data-target="500" data-suffix=" TB">0</div>
-        <div class="hstat-l">dados processados em produção</div>
-      </div>
-      <div class="hstat">
-        <div class="hstat-n" data-target="40" data-suffix="%">0</div>
-        <div class="hstat-l">redução em custos de infra cloud</div>
-      </div>
-      <div class="hstat">
-        <div class="hstat-n" data-target="10" data-suffix="×">0</div>
-        <div class="hstat-l">de ganho de performance nos pipelines</div>
-      </div>
-    </div>
-
-    <div class="hero-cta">
-      <a href="#projetos" class="btn-main">Ver projetos</a>
-      <a href="#contato" class="btn-ghost">Fale comigo</a>
-      <a href="https://brunosuassuna.github.io/" target="_blank" class="btn-ghost">Portfolio ↗</a>
-    </div>
-
-    <div class="cross cross-1"></div>
-    <div class="cross cross-2"></div>
-  </div>
-</section>
-
-<!-- SOBRE -->
-<section class="section" id="sobre">
-  <div class="section-header rv">
-    <div>
-      <div class="sh-num">01 — sobre</div>
-      <div class="sh-title">Engenharia<br>de <em>dados.</em></div>
-    </div>
-    <div class="sh-sub">João Pessoa<br>Brasil 🇧🇷</div>
-  </div>
-
-  <div class="sobre-grid">
-    <div class="sobre-text rv">
-      <p>Sou <strong>Data Engineer</strong> na The Store Intelligence com mais de 2 anos transformando dados caóticos em pipelines robustos, confiáveis e de alto desempenho.</p>
-      <span class="highlight">"Dados sem estrutura são ruído. Meu trabalho é transformá-los em sinal."</span>
-      <p>Meu foco está na interseção entre <strong>engenharia de alto desempenho</strong> e impacto real de negócio — desde a arquitetura Medallion (Bronze → Silver → Gold) até a entrega de insights que orientam decisões executivas.</p>
-      <p>Formado em Análise e Desenvolvimento de Sistemas pela Unipê e pós-graduado em <strong>Ciência de Dados e Analytics pela PUC-Rio</strong>.</p>
-      <div class="tags">
-        <span class="tag">Arquitetura Medallion</span>
-        <span class="tag">Delta Lake</span>
-        <span class="tag">Real-time Analytics</span>
-        <span class="tag">ML em Produção</span>
-        <span class="tag">Data Quality</span>
-        <span class="tag">Cost Optimization</span>
-        <span class="tag">ETL / ELT</span>
-        <span class="tag">Data Governance</span>
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero-top" id="herotop">
+      <canvas id="flow" aria-hidden="true"></canvas>
+      <div class="wrap hero-copy">
+        <p class="badge-loc"><span class="ic" style="--i:var(--i-pin)" aria-hidden="true"></span><span data-i18n="eyebrow">João Pessoa, PB · Engenharia de Dados</span></p>
+        <h1 data-i18n="h1">Engenheiro de Dados</h1>
+        <p class="lead" data-i18n="lead">Construo pipelines de dados na nuvem com Azure, Databricks e Snowflake, do dado bruto ao dashboard.</p>
+        <div class="cta">
+          <a class="btn primary" href="#projetos"><span class="ic" style="--i:var(--i-layers)" aria-hidden="true"></span><span data-i18n="cta_projects">Ver projetos</span></a>
+          <a class="btn ghost" href="#contato"><span class="ic" style="--i:var(--i-mail)" aria-hidden="true"></span><span data-i18n="cta_contact">Entrar em contato</span></a>
+        </div>
+        <div class="stages" id="stagepills" role="group" aria-label="Camadas do pipeline" data-i18n-aria="pills_aria">
+          <button class="stg" type="button" style="--stage: var(--ink-2)"><span class="dot"></span><span data-i18n="pill_src">Fontes</span></button>
+          <button class="stg" type="button" style="--stage: var(--bronze)"><span class="dot"></span>Bronze</button>
+          <button class="stg" type="button" style="--stage: var(--silver)"><span class="dot"></span>Silver</button>
+          <button class="stg" type="button" style="--stage: var(--gold)"><span class="dot"></span>Gold</button>
+        </div>
+        <p class="flow-cap" data-i18n="canvas_cap">Cada ponto é um registro.</p>
+        <p class="hint" id="hint"></p>
       </div>
     </div>
-
-    <div class="sobre-aside rv">
-      <div class="aside-card">
-        <div class="ac-label">empresa atual</div>
-        <div class="ac-val">Data Engineer @ The Store Intelligence</div>
-      </div>
-      <div class="aside-card">
-        <div class="ac-label">localização</div>
-        <div class="ac-val">João Pessoa, Paraíba — Brasil</div>
-      </div>
-      <div class="aside-card">
-        <div class="ac-label">stack principal</div>
-        <div class="ac-val mono">Azure · Databricks · PySpark · Python · SQL</div>
-      </div>
-      <div class="aside-card">
-        <div class="ac-label">idiomas</div>
-        <div class="ac-val">Português (nativo) · Espanhol (avançado)</div>
-      </div>
-      <div class="aside-card">
-        <div class="ac-label">formação</div>
-        <div class="ac-val">ADS – Unipê · MSc Data Science – PUC-Rio</div>
-      </div>
+    <div class="wrap">
+      <div class="facts"><dl class="fact"><span class="ic fi" style="--i:var(--i-timer)" aria-hidden="true"></span><dt data-i18n="fact_exp_k">Experiência</dt><dd data-i18n="fact_exp_v">2 anos em engenharia de dados</dd></dl><dl class="fact"><span class="ic fi" style="--i:var(--i-cloud)" aria-hidden="true"></span><dt data-i18n="fact_stack_k">No dia a dia</dt><dd data-i18n="fact_stack_v">Azure Data Factory, Databricks, Snowflake, Azure DevOps, Power BI</dd></dl><dl class="fact"><span class="ic fi" style="--i:var(--i-layers)" aria-hidden="true"></span><dt data-i18n="fact_arch_k">Arquitetura</dt><dd data-i18n="fact_arch_v">Lakehouse Medallion: Bronze, Silver e Gold</dd></dl><dl class="fact"><span class="ic fi" style="--i:var(--i-cap)" aria-hidden="true"></span><dt data-i18n="fact_edu_k">Formação</dt><dd data-i18n="fact_edu_v">Pós em Ciência de Dados e Analytics (PUC-Rio)</dd></dl></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SKILLS -->
-<section class="section" id="skills">
-  <div class="section-header rv">
-    <div>
-      <div class="sh-num">02 — habilidades</div>
-      <div class="sh-title">Stack<br><em>técnico.</em></div>
-    </div>
-    <div class="sh-sub">Tecnologias<br>e ferramentas</div>
-  </div>
+  <div class="marquee" id="marquee" aria-label="Tecnologias" role="group"></div>
 
-  <div class="skills-cols rv">
-    <div class="skill-col">
-      <div class="scol-label">Cloud & Orquestração</div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Microsoft Azure / ADF</span><span class="sk-pct">95%</span></div><div class="sk-track"><div class="sk-fill" data-w="95"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Databricks</span><span class="sk-pct">92%</span></div><div class="sk-track"><div class="sk-fill" data-w="92"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Apache Airflow</span><span class="sk-pct">80%</span></div><div class="sk-track"><div class="sk-fill" data-w="80"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Snowflake</span><span class="sk-pct">78%</span></div><div class="sk-track"><div class="sk-fill" data-w="78"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Apache Kafka</span><span class="sk-pct">72%</span></div><div class="sk-track"><div class="sk-fill" data-w="72"></div></div></div>
-
-      <div class="scol-label" style="margin-top:2rem;">Linguagens & Dados</div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Python</span><span class="sk-pct">95%</span></div><div class="sk-track"><div class="sk-fill" data-w="95"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">SQL</span><span class="sk-pct">93%</span></div><div class="sk-track"><div class="sk-fill" data-w="93"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Pandas / NumPy</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-w="90"></div></div></div>
-    </div>
-
-    <div class="skill-col">
-      <div class="scol-label">Processamento & Storage</div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">PySpark / Apache Spark</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-w="90"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Delta Lake</span><span class="sk-pct">88%</span></div><div class="sk-track"><div class="sk-fill" data-w="88"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">PostgreSQL / MySQL</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill" data-w="85"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">MongoDB / Redis</span><span class="sk-pct">75%</span></div><div class="sk-track"><div class="sk-fill" data-w="75"></div></div></div>
-
-      <div class="scol-label" style="margin-top:2rem;">Analytics & BI</div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Power BI / Tableau / Plotly</span><span class="sk-pct">88%</span></div><div class="sk-track"><div class="sk-fill" data-w="88"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Scikit-learn / MLflow</span><span class="sk-pct">82%</span></div><div class="sk-track"><div class="sk-fill" data-w="82"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">TensorFlow / Keras</span><span class="sk-pct">70%</span></div><div class="sk-track"><div class="sk-fill" data-w="70"></div></div></div>
-    </div>
-
-    <div class="skill-col">
-      <div class="scol-label">DevOps & Infra</div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Docker / Kubernetes</span><span class="sk-pct">78%</span></div><div class="sk-track"><div class="sk-fill" data-w="78"></div></div></div>
-      <div class="sk-row"><div class="sk-top"><span class="sk-name">Git / Azure DevOps</span><span class="sk-pct">90%</span></div><div class="sk-track"><div class="sk-fill" data-w="90"></div></div></div>
-
-      <div class="scol-label" style="margin-top:2rem;">Soft Skills</div>
-      <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;font-weight:300;">
-        Comunicação com stakeholders de negócio,<br>
-        documentação técnica clara,<br>
-        arquitetura orientada a custo,<br>
-        liderança de projetos de dados end-to-end.
-      </p>
-    </div>
-  </div>
-
-  <div class="stack-row rv">
-    <span class="stack-chip">Azure</span>
-    <span class="stack-chip">Databricks</span>
-    <span class="stack-chip">Snowflake</span>
-    <span class="stack-chip">PySpark</span>
-    <span class="stack-chip">Delta Lake</span>
-    <span class="stack-chip">Python</span>
-    <span class="stack-chip">PostgreSQL</span>
-    <span class="stack-chip">Power BI</span>
-    <span class="stack-chip">MLflow</span>
-    <span class="stack-chip">Docker</span>
-    <span class="stack-chip">Kubernetes</span>
-    <span class="stack-chip">Airflow</span>
-    <span class="stack-chip">Kafka</span>
-    <span class="stack-chip">FastAPI</span>
-  </div>
-</section>
-
-<!-- PROJETOS -->
-<section class="section" id="projetos">
-  <div class="section-header rv">
-    <div>
-      <div class="sh-num">03 — projetos</div>
-      <div class="sh-title">Trabalho<br><em>selecionado.</em></div>
-    </div>
-    <div class="sh-sub">20+ projetos<br>no GitHub</div>
-  </div>
-
-  <div class="proj-filter rv">
-    <button class="pfbtn on" onclick="fp('all',this)">todos</button>
-    <button class="pfbtn" onclick="fp('bigdata',this)">big data</button>
-    <button class="pfbtn" onclick="fp('ml',this)">machine learning</button>
-    <button class="pfbtn" onclick="fp('etl',this)">ETL / pipeline</button>
-    <button class="pfbtn" onclick="fp('analytics',this)">analytics</button>
-  </div>
-
-  <div class="proj-grid rv" id="pgrid">
-
-    <a class="pj wide" data-cat="bigdata etl" href="https://github.com/brunosuassuna/MVP-Engenharia-de-Dados" target="_blank">
-      <div class="pj-top"><div class="pj-cat">big data · etl</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">Medallion Architecture MVP</div>
-      <div class="pj-desc">Projeto end-to-end implementando arquitetura Medallion com Databricks, orquestração automatizada, data quality checks e boas práticas de DataOps. Do Bronze ao Gold.</div>
-      <div class="pj-stat">Bronze → Silver → Gold completo</div>
-      <div class="pj-tags"><span class="pjtag">Databricks</span><span class="pjtag">Delta Lake</span><span class="pjtag">PySpark</span><span class="pjtag">Medallion</span></div>
-    </a>
-
-    <a class="pj" data-cat="bigdata etl" href="https://github.com/brunosuassuna/Analise-de-Corridas-de-Taxi-em-NYC" target="_blank">
-      <div class="pj-top"><div class="pj-cat">big data</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">NYC Taxi Big Data Analytics</div>
-      <div class="pj-desc">EDA distribuída em 10M+ registros de corridas de táxi em Nova York, com análise geoespacial avançada e padrões temporais de demanda.</div>
-      <div class="pj-stat">10M+ registros processados</div>
-      <div class="pj-tags"><span class="pjtag">Databricks</span><span class="pjtag">PySpark</span><span class="pjtag">Delta Lake</span><span class="pjtag">Geospatial</span></div>
-    </a>
-
-    <a class="pj" data-cat="bigdata ml" href="https://github.com/brunosuassuna/Analise-Temporal-de-Passageiros-Aereos" target="_blank">
-      <div class="pj-top"><div class="pj-cat">ml · time series</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">Passenger Demand Forecasting</div>
-      <div class="pj-desc">Séries temporais com ARIMA/SARIMA para previsão de demanda de passageiros aéreos com identificação de padrões sazonais.</div>
-      <div class="pj-stat">Acurácia &gt;95% nas previsões</div>
-      <div class="pj-tags"><span class="pjtag">Python</span><span class="pjtag">ARIMA</span><span class="pjtag">Statsmodels</span><span class="pjtag">Time Series</span></div>
-    </a>
-
-    <a class="pj" data-cat="ml" href="https://github.com/brunosuassuna/Analise-Qualidade-de-Vinhos" target="_blank">
-      <div class="pj-top"><div class="pj-cat">machine learning</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">Wine Quality ML Pipeline</div>
-      <div class="pj-desc">Pipeline end-to-end de classificação com PySpark, feature engineering avançado e comparação de múltiplos algoritmos de ML.</div>
-      <div class="pj-stat">82% de acurácia no modelo final</div>
-      <div class="pj-tags"><span class="pjtag">PySpark</span><span class="pjtag">MLlib</span><span class="pjtag">Feature Eng.</span></div>
-    </a>
-
-    <a class="pj" data-cat="etl analytics" href="https://github.com/brunosuassuna/Analise-de-Vendas" target="_blank">
-      <div class="pj-top"><div class="pj-cat">etl · analytics</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">Sales Analytics Pipeline</div>
-      <div class="pj-desc">ETL end-to-end com dashboards executivos interativos focados em KPIs estratégicos e métricas de negócio de alta qualidade.</div>
-      <div class="pj-stat">15+ KPIs automatizados</div>
-      <div class="pj-tags"><span class="pjtag">ETL</span><span class="pjtag">PySpark</span><span class="pjtag">Plotly</span><span class="pjtag">BI</span></div>
-    </a>
-
-    <a class="pj" data-cat="analytics" href="https://github.com/brunosuassuna/premier-league-analysis" target="_blank">
-      <div class="pj-top"><div class="pj-cat">analytics</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">Premier League Analytics</div>
-      <div class="pj-desc">Dashboard da temporada 2023-2024 com 100+ métricas de performance de times e jogadores, correlações estatísticas e visualizações.</div>
-      <div class="pj-stat">380 partidas · 100+ métricas</div>
-      <div class="pj-tags"><span class="pjtag">Python</span><span class="pjtag">Pandas</span><span class="pjtag">Statistics</span></div>
-    </a>
-
-    <a class="pj" data-cat="bigdata etl" href="https://github.com/brunosuassuna/COVID-19-Global-Data-Analysis" target="_blank">
-      <div class="pj-top"><div class="pj-cat">big data</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">COVID-19 Global Analysis</div>
-      <div class="pj-desc">Pipeline Databricks + Delta Lake para análise comparativa do impacto global da COVID-19, com foco no Brasil e séries temporais interativas.</div>
-      <div class="pj-stat">190+ países analisados</div>
-      <div class="pj-tags"><span class="pjtag">Delta Lake</span><span class="pjtag">Databricks</span><span class="pjtag">Plotly</span></div>
-    </a>
-
-    <a class="pj" data-cat="etl" href="https://github.com/brunosuassuna/API_Gerenciamento_Usuarios" target="_blank">
-      <div class="pj-top"><div class="pj-cat">etl · api</div><div class="pj-arr">↗</div></div>
-      <div class="pj-title">User Management API</div>
-      <div class="pj-desc">API RESTful robusta com JWT, CRUD completo, validações avançadas e melhores práticas de segurança em ambiente containerizado.</div>
-      <div class="pj-stat">95% de cobertura de testes</div>
-      <div class="pj-tags"><span class="pjtag">FastAPI</span><span class="pjtag">PostgreSQL</span><span class="pjtag">Docker</span><span class="pjtag">JWT</span></div>
-    </a>
-
-  </div>
-
-  <div style="text-align:center;margin-top:2rem;" class="rv">
-    <a href="https://github.com/brunosuassuna?tab=repositories" target="_blank" class="btn-ghost">Ver todos os 20+ projetos no GitHub ↗</a>
-  </div>
-</section>
-
-<!-- IMPACTO -->
-<section class="section" id="impacto">
-  <div class="section-header rv">
-    <div>
-      <div class="sh-num">04 — impacto</div>
-      <div class="sh-title">Números<br><em>reais.</em></div>
-    </div>
-    <div class="sh-sub">Resultados<br>mensuráveis</div>
-  </div>
-
-  <div class="impact-cols">
-    <div class="impact-nums rv">
-      <div class="imp-row">
-        <div class="imp-n" id="i-cost">0<em>%</em></div>
-        <div class="imp-l">redução em custos de infraestrutura cloud</div>
+  <section id="pipeline">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">pipeline</p>
+        <h2><span class="ic hi" style="--i:var(--i-flow)" aria-hidden="true"></span><span data-i18n="pipe_h">Como eu construo um pipeline</span></h2>
+        <p class="intro" data-i18n="pipe_p">Cada etapa tem uma responsabilidade clara. Escolha uma para ver o que acontece nela e um exemplo em PySpark.</p>
       </div>
-      <div class="imp-row">
-        <div class="imp-n" id="i-speed">0<em>×</em></div>
-        <div class="imp-l">mais velocidade nos pipelines de dados</div>
+      <div class="tabs" role="tablist" id="tabs" aria-label="Etapas do pipeline" data-i18n-aria="tabs_aria"></div>
+      <div class="panel" id="panel" role="tabpanel" tabindex="0"></div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" data-i18n="demo_eyebrow">ao vivo</p>
+        <h2><span class="ic hi" style="--i:var(--i-play)" aria-hidden="true"></span><span data-i18n="demo_h">Rode o pipeline</span></h2>
+        <p class="intro" data-i18n="demo_p">Um conjunto pequeno e fictício de pedidos passa pelas três camadas aqui no seu navegador. Execute cada etapa e veja o que sai e o que fica.</p>
       </div>
-      <div class="imp-row">
-        <div class="imp-n" id="i-data">0 <em style="font-size:.45em">TB</em></div>
-        <div class="imp-l">de dados processados em produção</div>
+      <div class="win">
+        <div class="win-bar"><span class="wd"></span><span class="wd"></span><span class="wd"></span><span class="win-t">pipeline_demo.py</span><span class="live"><i></i><span data-i18n="demo_eyebrow">ao vivo</span></span></div>
+        <div class="win-body">
+      <div class="steps" id="dsteps"></div>
+      <div class="dctl">
+        <button class="btn primary bi" style="--i:var(--i-play)" id="drun" type="button"></button>
+        <button class="btn ghost bi" style="--i:var(--i-redo)" id="dreset" type="button" hidden></button>
       </div>
-      <div class="imp-row">
-        <div class="imp-n">20<em>+</em></div>
-        <div class="imp-l">projetos entregues com sucesso</div>
+      <div class="demo">
+        <div class="dtable" id="dtable"></div>
+        <div class="dside">
+          <ul class="log" id="dlog" aria-live="polite"></ul>
+          <div class="codebox" id="dcode"></div>
+        </div>
+      </div>
+        </div>
+      </div>
+      <p class="dnote" data-i18n="demo_note">Dados fictícios. Os números acima são calculados agora, no seu navegador.</p>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" data-i18n="proj_eyebrow">repositórios</p>
+        <h2><span class="ic hi" style="--i:var(--i-layers)" aria-hidden="true"></span><span data-i18n="proj_h">Projetos</span></h2>
+        <p class="intro" data-i18n="proj_p">Repositórios públicos no GitHub. Clique em um projeto para ver o problema, o que construí e a stack.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar projetos" data-i18n-aria="filters_aria"></div>
+      <div class="grid" id="grid"></div>
+      <p class="more"><a href="https://github.com/brunosuassuna?tab=repositories" target="_blank" rel="noopener" data-i18n="all_repos">Ver todos os repositórios</a></p>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">stack</p>
+        <h2><span class="ic hi" style="--i:var(--i-zap)" aria-hidden="true"></span><span data-i18n="stack_h">Stack</span></h2>
+        <p class="intro" data-i18n="stack_p">Separado entre o que uso no trabalho todos os dias e o que já usei em projetos.</p>
+      </div>
+      <div class="stack" id="stackbox"></div>
+    </div>
+  </section>
+
+  <section id="formacao">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow" data-i18n="cert_eyebrow">formação</p>
+        <h2><span class="ic hi" style="--i:var(--i-cap)" aria-hidden="true"></span><span data-i18n="cert_h">Formação e certificações</span></h2>
+      </div>
+      <div class="two" id="certbox"></div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="wrap">
+      <p class="eyebrow sec-eb" data-i18n="contact_eyebrow">contato</p>
+      <h2><span class="ic hi" style="--i:var(--i-mail)" aria-hidden="true"></span><span data-i18n="contact_h">Vamos conversar sobre dados</span></h2>
+      <p class="intro" data-i18n="contact_p">Se você quer trocar ideia sobre engenharia de dados, Azure, Databricks ou PySpark, é só escrever.</p>
+      <div class="ccards">
+        <div class="ccard"><span class="ic cic" style="--i:var(--i-mail)" aria-hidden="true"></span><span class="k" data-i18n="email">E-mail</span><span class="v" id="emailtext">brunosuassuna.dev@gmail.com</span><button class="icon-btn bi" style="--i:var(--i-copy)" id="copy" type="button" data-i18n="copy">Copiar</button></div>
+        <a class="ccard" href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank" rel="noopener"><span class="ic cic" style="--i:var(--i-in)" aria-hidden="true"></span><span class="k">LinkedIn</span><span class="v">linkedin.com/in/bruno-suassuna-698aa7235</span><span class="ic go" style="--i:var(--i-ur)" aria-hidden="true"></span></a>
+        <a class="ccard" href="https://github.com/brunosuassuna" target="_blank" rel="noopener"><span class="ic cic" style="--i:var(--i-gh)" aria-hidden="true"></span><span class="k">GitHub</span><span class="v">github.com/brunosuassuna</span><span class="ic go" style="--i:var(--i-ur)" aria-hidden="true"></span></a>
       </div>
     </div>
-
-    <div class="rv">
-      <div class="cert-title">certificações</div>
-      <ul class="cert-list">
-        <li class="cert-li">
-          <div class="cbullet"></div>
-          <div><div class="cert-name">Governança de Dados: Conceitos Fundamentais</div><div class="cert-from">Alura</div></div>
-          <span class="cert-badge">concluído</span>
-        </li>
-        <li class="cert-li">
-          <div class="cbullet"></div>
-          <div><div class="cert-name">Formação Data Science</div><div class="cert-from">Alura</div></div>
-          <span class="cert-badge">concluído</span>
-        </li>
-        <li class="cert-li">
-          <div class="cbullet"></div>
-          <div><div class="cert-name">Databricks e Azure Data Factory</div><div class="cert-from">Alura</div></div>
-          <span class="cert-badge">concluído</span>
-        </li>
-        <li class="cert-li">
-          <div class="cbullet"></div>
-          <div><div class="cert-name">Fundamentos de Engenharia de Dados</div><div class="cert-from">Data Science Academy</div></div>
-          <span class="cert-badge">concluído</span>
-        </li>
-        <li class="cert-li">
-          <div class="cbullet"></div>
-          <div><div class="cert-name">Data Science: Regressão Linear</div><div class="cert-from">Alura</div></div>
-          <span class="cert-badge">concluído</span>
-        </li>
-        <li class="cert-li">
-          <div class="cbullet prog"></div>
-          <div><div class="cert-name">Azure Data Engineer Associate — DP-203</div><div class="cert-from">Microsoft</div></div>
-          <span class="cert-badge prog">em progresso</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- CONTATO -->
-<section class="section" id="contato">
-  <div class="section-header rv">
-    <div>
-      <div class="sh-num">05 — contato</div>
-      <div class="sh-title">Vamos<br><em>conversar.</em></div>
-    </div>
-    <div class="sh-sub">Aberto a novas<br>oportunidades</div>
-  </div>
-
-  <div class="contact-body">
-    <div class="rv">
-      <div class="cta-big">Dados transformam <em>negócios.</em><br>Vamos trabalhar juntos?</div>
-      <p>Estou sempre aberto a novos projetos, colaborações e oportunidades interessantes na área de dados.</p>
-      <a href="mailto:brunosuassuna.dev@gmail.com" class="contact-email">brunosuassuna.dev@gmail.com</a>
-    </div>
-
-    <div class="contact-links-col rv">
-      <a class="clink" href="https://www.linkedin.com/in/bruno-suassuna-698aa7235" target="_blank">
-        <div class="clink-icon">in</div>
-        <div class="clink-body"><div class="clink-label">LinkedIn</div><div class="clink-val">linkedin.com/in/brunosuassuna</div></div>
-        <div class="clink-arr">→</div>
-      </a>
-      <a class="clink" href="https://github.com/brunosuassuna" target="_blank">
-        <div class="clink-icon">gh</div>
-        <div class="clink-body"><div class="clink-label">GitHub</div><div class="clink-val">github.com/brunosuassuna</div></div>
-        <div class="clink-arr">→</div>
-      </a>
-      <a class="clink" href="https://brunosuassuna.github.io/" target="_blank">
-        <div class="clink-icon">↗</div>
-        <div class="clink-body"><div class="clink-label">Portfolio</div><div class="clink-val">brunosuassuna.github.io</div></div>
-        <div class="clink-arr">→</div>
-      </a>
-      <a class="clink" href="mailto:brunosuassuna.dev@gmail.com">
-        <div class="clink-icon">@</div>
-        <div class="clink-body"><div class="clink-label">Email</div><div class="clink-val">brunosuassuna.dev@gmail.com</div></div>
-        <div class="clink-arr">→</div>
-      </a>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <footer>
-  <div class="foot-copy">© 2025 <span>Bruno Suassuna</span> — Feito com dados e café ☕</div>
-  <div class="foot-copy"><span>João Pessoa, Brasil 🇧🇷</span></div>
+  <div class="wrap foot"><span data-i18n="foot">Bruno Suassuna · João Pessoa, PB</span><a href="#top" class="totop"><span class="ic" style="--i:var(--i-up)" aria-hidden="true"></span><span data-i18n="totop">Topo</span></a></div>
 </footer>
 
+<div class="cmd" id="cmd" hidden>
+  <div class="cmd-box" role="dialog" aria-modal="true" aria-label="Paleta de comandos" data-i18n-aria="palette_aria">
+    <input id="cmdq" type="text" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="cmdlist" aria-autocomplete="list" placeholder="Ir para uma seção, projeto ou ação…" aria-label="Paleta de comandos">
+    <ul id="cmdlist" role="listbox"></ul>
+    <p class="cmd-foot" id="cmdfoot"></p>
+  </div>
+</div>
+
 <script>
-/* cursor */
-const dot=document.getElementById('cdot');
-const ring=document.getElementById('cring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
-});
-(function step(){
-  rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(step);
-})();
+(function () {
+  "use strict";
 
-/* nav */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  const s=window.scrollY>60;
-  nav.classList.toggle('scrolled',s);
-  nav.classList.toggle('active',s);
-});
-
-/* reveal */
-const rvels=document.querySelectorAll('.rv');
-const robs=new IntersectionObserver(es=>{
-  es.forEach((e,i)=>{
-    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*70);robs.unobserve(e.target);}
-  });
-},{threshold:.1});
-rvels.forEach(el=>robs.observe(el));
-
-/* skill bars */
-const skobs=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.sk-fill').forEach((f,i)=>{
-        setTimeout(()=>f.style.width=f.dataset.w+'%',i*60);
-      });
-      skobs.unobserve(e.target);
+  /* ---------- Conteúdo ---------- */
+  var I18N = {
+    pt: {
+      skip: "Pular para o conteúdo",
+      nav_aria: "Principal", nav_pipeline: "Pipeline", nav_projects: "Projetos", nav_stack: "Stack", nav_cert: "Formação", nav_contact: "Contato",
+      theme_aria: "Alternar tema", lang_aria: "Switch to English", lang_btn: "EN",
+      eyebrow: "João Pessoa, PB · Engenharia de Dados",
+      h1: "Engenheiro de Dados",
+      lead: "Construo pipelines de dados na nuvem com Azure, Databricks e Snowflake, do dado bruto ao dashboard.",
+      cta_projects: "Ver projetos", cta_contact: "Entrar em contato",
+      fact_exp_k: "Experiência", fact_exp_v: "2 anos em engenharia de dados",
+      fact_stack_k: "No dia a dia", fact_stack_v: "Azure Data Factory, Databricks, Snowflake, Azure DevOps, Power BI",
+      fact_arch_k: "Arquitetura", fact_arch_v: "Lakehouse Medallion: Bronze, Silver e Gold",
+      fact_edu_k: "Formação", fact_edu_v: "Pós em Ciência de Dados e Analytics (PUC-Rio)",
+      canvas_alt: "Simulação animada de registros passando pelas camadas Bronze, Silver e Gold",
+      canvas_cap: "Cada ponto é um registro. Os vermelhos são inválidos e saem na Silver. Passe o mouse para mexer neles ou escolha uma camada para ver como eu implemento.", pill_src: "Fontes", pills_aria: "Camadas do pipeline",
+      z_src: "FONTES",
+      pipe_h: "Como eu construo um pipeline",
+      pipe_p: "Cada etapa tem uma responsabilidade clara. Escolha uma para ver o que acontece nela e um exemplo em PySpark.",
+      tabs_aria: "Etapas do pipeline", code_note: "Exemplo ilustrativo com dados fictícios", no_code: "Esta etapa é configuração e decisão de projeto, não código de transformação.",
+      proj_eyebrow: "repositórios", proj_h: "Projetos",
+      proj_p: "Repositórios públicos no GitHub. Clique em um projeto para ver o problema, o que construí e a stack.",
+      filters_aria: "Filtrar projetos",
+      f_all: "Todos", f_eng: "Engenharia", f_ml: "Machine Learning", f_ana: "Análise", f_api: "API",
+      lbl_problem: "Problema", lbl_built: "O que construí", lbl_stack: "Stack", lnk_repo: "Ver repositório",
+      all_repos: "Ver todos os repositórios",
+      stack_h: "Stack", stack_p: "Separado entre o que uso no trabalho todos os dias e o que já usei em projetos.",
+      stack_daily: "Uso diário no trabalho", stack_proj: "Usei em projetos",
+      cert_eyebrow: "formação", cert_h: "Formação e certificações",
+      cert_edu: "Formação acadêmica", cert_courses: "Certificações e cursos",
+      cert_inprog: "Em preparação", cert_link: "Ver certificado",
+      edu_post: "Pós-graduação em Ciência de Dados e Analytics", edu_grad: "Graduação em Análise e Desenvolvimento de Sistemas",
+      lang_h: "Idiomas", lang_v: "Português (nativo), Espanhol (avançado)",
+      contact_eyebrow: "contato", contact_h: "Vamos conversar sobre dados",
+      contact_p: "Se você quer trocar ideia sobre engenharia de dados, Azure, Databricks ou PySpark, é só escrever.",
+      email: "E-mail", copy: "Copiar", copied: "Copiado",
+      foot: "Bruno Suassuna · João Pessoa, PB",
+      nav_demo: "Demo",
+      demo_eyebrow: "ao vivo", demo_h: "Rode o pipeline",
+      demo_p: "Um conjunto pequeno e fictício de pedidos passa pelas três camadas aqui no seu navegador. Execute cada etapa e veja o que sai e o que fica.",
+      demo_note: "Dados fictícios. Os números acima são calculados agora, no seu navegador.",
+      col_diag: "diagnóstico", col_orders: "pedidos", d_dup: "duplicado", d_neg: "valor negativo", d_null: "valor nulo", d_ok: "ok",
+      run_silver: "Executar Silver", run_gold: "Executar Gold", run_done: "Pipeline concluído", reset: "Recomeçar",
+      u_rows: "linhas", u_groups: "canais",
+      log_bronze: "bronze.pedidos: {n} linhas gravadas, sem nenhuma alteração.",
+      log_dup: "silver.pedidos: {n} duplicados removidos com dropDuplicates.",
+      log_bad: "silver.pedidos: {n} linhas inválidas filtradas (valor nulo ou menor que zero).",
+      log_out: "silver.pedidos: {n} linhas confiáveis.",
+      log_gold: "gold.receita_por_canal: {n} canais, receita total {v}.",
+      lbl_flow: "Fluxo", totop: "Topo", kbtn_aria: "Abrir busca rápida", hint: "Dica: pressione {k} para buscar seções e projetos.",
+      palette_aria: "Paleta de comandos", palette_ph: "Ir para uma seção, projeto ou ação…", palette_empty: "Nada encontrado",
+      palette_foot: "↑ ↓ navegar · Enter abrir · Esc fechar",
+      g_sections: "Seções", g_projects: "Projetos", g_actions: "Ações",
+      a_theme: "Alternar tema claro/escuro", a_lang: "Mudar idioma (PT/EN)", a_copy: "Copiar e-mail", a_linkedin: "Abrir LinkedIn", a_github: "Abrir GitHub"
+    },
+    en: {
+      skip: "Skip to content",
+      nav_aria: "Main", nav_pipeline: "Pipeline", nav_projects: "Projects", nav_stack: "Stack", nav_cert: "Education", nav_contact: "Contact",
+      theme_aria: "Toggle theme", lang_aria: "Mudar para português", lang_btn: "PT",
+      eyebrow: "João Pessoa, Brazil · Data Engineering",
+      h1: "Data Engineer",
+      lead: "I build cloud data pipelines with Azure, Databricks and Snowflake, from raw data to dashboard.",
+      cta_projects: "See projects", cta_contact: "Get in touch",
+      fact_exp_k: "Experience", fact_exp_v: "2 years in data engineering",
+      fact_stack_k: "Day to day", fact_stack_v: "Azure Data Factory, Databricks, Snowflake, Azure DevOps, Power BI",
+      fact_arch_k: "Architecture", fact_arch_v: "Medallion lakehouse: Bronze, Silver and Gold",
+      fact_edu_k: "Education", fact_edu_v: "Postgraduate in Data Science and Analytics (PUC-Rio)",
+      canvas_alt: "Animated simulation of records moving through the Bronze, Silver and Gold layers",
+      canvas_cap: "Each dot is a record. The red ones are invalid and leave in Silver. Move the mouse to push them around, or pick a layer to see how I implement it.", pill_src: "Sources", pills_aria: "Pipeline layers",
+      z_src: "SOURCES",
+      pipe_h: "How I build a pipeline",
+      pipe_p: "Each stage has a clear responsibility. Pick one to see what happens there, with a PySpark example.",
+      tabs_aria: "Pipeline stages", code_note: "Illustrative example with made-up data", no_code: "This stage is configuration and design decisions, not transformation code.",
+      proj_eyebrow: "repositories", proj_h: "Projects",
+      proj_p: "Public repositories on GitHub. Click a project to see the problem, what I built and the stack.",
+      filters_aria: "Filter projects",
+      f_all: "All", f_eng: "Engineering", f_ml: "Machine Learning", f_ana: "Analytics", f_api: "API",
+      lbl_problem: "Problem", lbl_built: "What I built", lbl_stack: "Stack", lnk_repo: "View repository",
+      all_repos: "See all repositories",
+      stack_h: "Stack", stack_p: "Split between what I use at work every day and what I have used in projects.",
+      stack_daily: "Daily at work", stack_proj: "Used in projects",
+      cert_eyebrow: "education", cert_h: "Education and certifications",
+      cert_edu: "Academic background", cert_courses: "Certifications and courses",
+      cert_inprog: "In preparation", cert_link: "View certificate",
+      edu_post: "Postgraduate in Data Science and Analytics", edu_grad: "Bachelor in Systems Analysis and Development",
+      lang_h: "Languages", lang_v: "Portuguese (native), Spanish (advanced)",
+      contact_eyebrow: "contact", contact_h: "Let's talk about data",
+      contact_p: "If you want to exchange ideas about data engineering, Azure, Databricks or PySpark, just write.",
+      email: "E-mail", copy: "Copy", copied: "Copied",
+      foot: "Bruno Suassuna · João Pessoa, Brazil",
+      nav_demo: "Demo",
+      demo_eyebrow: "live", demo_h: "Run the pipeline",
+      demo_p: "A small, made-up set of orders goes through the three layers right here in your browser. Run each stage and see what leaves and what stays.",
+      demo_note: "Made-up data. The numbers above are computed right now, in your browser.",
+      col_diag: "diagnosis", col_orders: "orders", d_dup: "duplicate", d_neg: "negative value", d_null: "null value", d_ok: "ok",
+      run_silver: "Run Silver", run_gold: "Run Gold", run_done: "Pipeline finished", reset: "Start over",
+      u_rows: "rows", u_groups: "channels",
+      log_bronze: "bronze.pedidos: {n} rows written, untouched.",
+      log_dup: "silver.pedidos: {n} duplicates removed with dropDuplicates.",
+      log_bad: "silver.pedidos: {n} invalid rows filtered (null or below zero).",
+      log_out: "silver.pedidos: {n} trustworthy rows.",
+      log_gold: "gold.receita_por_canal: {n} channels, total revenue {v}.",
+      lbl_flow: "Flow", totop: "Top", kbtn_aria: "Open quick search", hint: "Tip: press {k} to search sections and projects.",
+      palette_aria: "Command palette", palette_ph: "Jump to a section, project or action…", palette_empty: "Nothing found",
+      palette_foot: "↑ ↓ navigate · Enter open · Esc close",
+      g_sections: "Sections", g_projects: "Projects", g_actions: "Actions",
+      a_theme: "Toggle light/dark theme", a_lang: "Switch language (PT/EN)", a_copy: "Copy e-mail", a_linkedin: "Open LinkedIn", a_github: "Open GitHub"
     }
-  });
-},{threshold:.2});
-document.querySelectorAll('.skills-cols').forEach(g=>skobs.observe(g));
+  };
 
-/* count up */
-function cUp(el,end,dur=1800){
-  const st=performance.now();
-  const isFloat=String(end).includes('.');
-  function s(now){
-    const p=Math.min((now-st)/dur,1);
-    const ease=1-(1-p)**3;
-    const val=ease*end;
-    el.dataset.cur=isFloat?val.toFixed(1):Math.round(val);
-    renderStat(el);
-    if(p<1)requestAnimationFrame(s);
+  var STAGES = [
+    { id: "src", color: "--ink-2",
+      name: { pt: "Fontes", en: "Sources" },
+      desc: { pt: "Os dados chegam de APIs, arquivos e bancos relacionais. Aqui eu defino o contrato: formato, frequência e quem é dono de cada fonte.", en: "Data arrives from APIs, files and relational databases. Here I define the contract: format, frequency and who owns each source." },
+      bullets: { pt: ["Mapear formato e frequência de cada fonte", "Definir o dono do dado", "Prever mudanças de schema"], en: ["Map the format and frequency of each source", "Define who owns the data", "Plan for schema changes"] },
+      tools: ["APIs", "JSON / CSV / Parquet", "Bancos relacionais"] },
+    { id: "orch", color: "--accent",
+      name: { pt: "Orquestração", en: "Orchestration" },
+      desc: { pt: "O Azure Data Factory dispara e acompanha as cargas. Cuido de gatilhos, dependências, tentativas automáticas e alertas, com tudo versionado no Azure DevOps.", en: "Azure Data Factory triggers and monitors the loads. I handle triggers, dependencies, automatic retries and alerts, with everything versioned in Azure DevOps." },
+      bullets: { pt: ["Gatilhos por horário ou evento", "Reprocessamento seguro, sem duplicar dados", "Alerta quando uma carga falha", "Deploy dos pipelines a partir do repositório"], en: ["Schedule or event triggers", "Safe reprocessing without duplicating data", "Alerts when a load fails", "Pipeline deployment from the repository"] },
+      tools: ["Azure Data Factory", "Azure DevOps"] },
+    { id: "bronze", color: "--bronze",
+      name: { pt: "Bronze", en: "Bronze" },
+      desc: { pt: "O dado bruto, do jeito que chegou, gravado em Delta com metadados de ingestão. Nada é descartado aqui, então dá para reprocessar quando for preciso.", en: "Raw data, as it arrived, written to Delta with ingestion metadata. Nothing is discarded here, so it can be reprocessed whenever needed." },
+      bullets: { pt: ["Guardar o dado original sem alterar", "Registrar data e arquivo de origem", "Gravar em Delta para manter histórico"], en: ["Keep the original data untouched", "Record ingestion time and source file", "Write to Delta to keep history"] },
+      tools: ["Databricks", "Delta Lake", "PySpark"],
+      code: 'from pyspark.sql import functions as F\n\npath = "abfss://raw@<storage>.dfs.core.windows.net/pedidos/"\nraw = spark.read.format("json").load(path)\n\n(raw.withColumn("_ingested_at", F.current_timestamp())\n    .withColumn("_source_file", F.col("_metadata.file_path"))\n    .write.format("delta").mode("append")\n    .saveAsTable("bronze.pedidos"))' },
+    { id: "silver", color: "--silver",
+      name: { pt: "Silver", en: "Silver" },
+      desc: { pt: "O dado limpo e confiável: duplicados removidos, tipos corrigidos, registros inválidos filtrados e schema validado.", en: "Clean, trustworthy data: duplicates removed, types fixed, invalid records filtered and schema validated." },
+      bullets: { pt: ["Remover duplicados", "Padronizar tipos e datas", "Aplicar regras de qualidade", "Validar o schema"], en: ["Remove duplicates", "Standardize types and dates", "Apply quality rules", "Validate the schema"] },
+      tools: ["Databricks", "Delta Lake", "PySpark"],
+      code: 'from pyspark.sql import functions as F\n\nbronze = spark.read.table("bronze.pedidos")\n\nsilver = (bronze\n    .dropDuplicates(["pedido_id"])\n    .withColumn("valor", F.col("valor").cast("decimal(12,2)"))\n    .withColumn("data_pedido", F.to_date("data_pedido"))\n    .filter(F.col("valor") > 0))\n\n(silver.write.format("delta").mode("overwrite")\n    .saveAsTable("silver.pedidos"))' },
+    { id: "gold", color: "--gold",
+      name: { pt: "Gold", en: "Gold" },
+      desc: { pt: "Tabelas modeladas para o negócio: métricas e KPIs prontos para consulta, calculados uma vez e usados por todo mundo.", en: "Business-ready tables: metrics and KPIs ready to query, computed once and used by everyone." },
+      bullets: { pt: ["Modelar por assunto de negócio", "Calcular KPIs uma única vez", "Expor tabelas simples para BI"], en: ["Model by business subject", "Compute KPIs only once", "Expose simple tables to BI"] },
+      tools: ["Delta Lake", "SQL", "PySpark"],
+      code: 'from pyspark.sql import functions as F\n\ngold = (spark.read.table("silver.pedidos")\n    .groupBy("data_pedido", "canal")\n    .agg(F.sum("valor").alias("receita"),\n         F.countDistinct("pedido_id").alias("pedidos")))\n\n(gold.write.format("delta").mode("overwrite")\n    .saveAsTable("gold.receita_diaria"))' },
+    { id: "use", color: "--accent",
+      name: { pt: "Consumo", en: "Consumption" },
+      desc: { pt: "Power BI para quem decide e modelos de Machine Learning, acompanhados no MLflow, para quem precisa prever.", en: "Power BI for decision makers and Machine Learning models, tracked in MLflow, for those who need to predict." },
+      bullets: { pt: ["Dashboards ligados às tabelas Gold", "Modelos treinados sobre dados já tratados", "Experimentos registrados no MLflow"], en: ["Dashboards connected to Gold tables", "Models trained on already-clean data", "Experiments logged in MLflow"] },
+      tools: ["Power BI", "MLflow", "Scikit-learn"] }
+  ];
+
+  var R = "https://github.com/brunosuassuna/";
+  var PROJECTS = [
+    { cats: ["eng"], title: "MVP Engenharia de Dados", metric: { pt: "Bronze → Silver → Gold", en: "Bronze → Silver → Gold" },
+      problem: { pt: "Estruturar dados brutos em um fluxo confiável e reutilizável.", en: "Turn raw data into a reliable, reusable flow." },
+      built: { pt: "Pipeline Medallion completo no Databricks, com orquestração automatizada, schema enforcement e checagens de qualidade.", en: "End-to-end Medallion pipeline on Databricks, with automated orchestration, schema enforcement and data quality checks." },
+      stack: ["Databricks", "Delta Lake", "Azure Data Factory", "PySpark"], repo: R + "MVP-Engenharia-de-Dados" },
+    { cats: ["eng", "ana"], title: "NYC Taxi", metric: { pt: "10M+ registros", en: "10M+ records" },
+      problem: { pt: "Extrair padrões de demanda de um grande volume de corridas de táxi.", en: "Extract demand patterns from a large volume of taxi rides." },
+      built: { pt: "Processamento distribuído com Databricks e PySpark, análise geoespacial e modelagem de demanda por horário.", en: "Distributed processing with Databricks and PySpark, geospatial analysis and demand modeling by hour." },
+      stack: ["Databricks", "PySpark", "Delta Lake"], repo: R + "Analise-de-Corridas-de-Taxi-em-NYC" },
+    { cats: ["eng", "ana"], title: "Sales Analytics", metric: { pt: "15+ KPIs", en: "15+ KPIs" },
+      problem: { pt: "Consolidar vendas em indicadores que a gestão consiga acompanhar.", en: "Consolidate sales into indicators management can follow." },
+      built: { pt: "ETL automatizado alimentando KPIs de receita, churn, LTV e conversão em dashboards interativos.", en: "Automated ETL feeding revenue, churn, LTV and conversion KPIs into interactive dashboards." },
+      stack: ["PySpark", "Plotly", "Power BI"], repo: R + "Analise-de-Vendas" },
+    { cats: ["ml"], title: "Wine Quality", metric: { pt: "82% de acurácia", en: "82% accuracy" },
+      problem: { pt: "Classificar a qualidade de vinhos a partir de características físico-químicas.", en: "Classify wine quality from physicochemical properties." },
+      built: { pt: "Feature engineering e comparação de Random Forest, GBT e Regressão Logística com PySpark MLlib, rastreados no MLflow.", en: "Feature engineering and comparison of Random Forest, GBT and Logistic Regression with PySpark MLlib, tracked in MLflow." },
+      stack: ["PySpark MLlib", "MLflow", "Scikit-learn"], repo: R + "Analise-Qualidade-de-Vinhos" },
+    { cats: ["api"], title: "API de Gestão de Usuários", metric: { pt: "95%+ de cobertura de testes", en: "95%+ test coverage" },
+      problem: { pt: "Oferecer gestão de usuários com autenticação segura.", en: "Provide user management with secure authentication." },
+      built: { pt: "API REST com FastAPI, autenticação JWT, CRUD completo, validação de entrada e PostgreSQL, pronta para Docker.", en: "REST API with FastAPI, JWT authentication, full CRUD, input validation and PostgreSQL, Docker-ready." },
+      stack: ["FastAPI", "JWT", "PostgreSQL", "Docker"], repo: R + "API_Gerenciamento_Usuarios" },
+    { cats: ["ml", "ana"], title: "Séries Temporais", metric: { pt: ">95% de acurácia", en: ">95% accuracy" },
+      problem: { pt: "Prever a demanda de passageiros aéreos.", en: "Forecast air passenger demand." },
+      built: { pt: "Pipeline de séries temporais com ARIMA/SARIMA, decomposição, testes de estacionariedade e ajuste de hiperparâmetros.", en: "Time series pipeline with ARIMA/SARIMA, decomposition, stationarity tests and hyperparameter tuning." },
+      stack: ["Python", "Pandas", "Statsmodels"], repo: R + "Analise-Temporal-de-Passageiros-Aereos" },
+    { cats: ["eng", "ana"], title: "COVID-19 Global", metric: { pt: "190+ países", en: "190+ countries" },
+      problem: { pt: "Acompanhar o impacto global da pandemia.", en: "Track the global impact of the pandemic." },
+      built: { pt: "Pipeline epidemiológico com Delta Lake versionado para casos, óbitos e vacinação, com séries temporais em Plotly.", en: "Epidemiological pipeline with versioned Delta Lake for cases, deaths and vaccination, with Plotly time series." },
+      stack: ["Databricks", "Delta Lake", "Plotly"], repo: R + "COVID-19-Global-Data-Analysis" },
+    { cats: ["ana"], title: "Premier League Analytics", metric: { pt: "380+ partidas", en: "380+ matches" },
+      problem: { pt: "Entender o desempenho esportivo da temporada 2023/24.", en: "Understand sporting performance in the 2023/24 season." },
+      built: { pt: "Dashboard analítico com mais de 100 métricas por time e jogador, incluindo a correlação de xG com a posição final.", en: "Analytical dashboard with 100+ metrics per team and player, including the correlation of xG with final position." },
+      stack: ["Python", "Pandas", "Plotly"], repo: R + "premier-league-analysis" }
+  ];
+
+  var FLOWS = [
+    { pt: ["Fonte", "Data Factory", "Bronze", "Silver", "Gold"], en: ["Source", "Data Factory", "Bronze", "Silver", "Gold"] },
+    { pt: ["Corridas", "PySpark", "Delta Lake", "Análise geoespacial", "Demanda por horário"], en: ["Rides", "PySpark", "Delta Lake", "Geospatial analysis", "Demand by hour"] },
+    { pt: ["Vendas", "ETL PySpark", "KPIs", "Dashboards"], en: ["Sales", "PySpark ETL", "KPIs", "Dashboards"] },
+    { pt: ["Dados", "Feature engineering", "3 modelos", "MLflow"], en: ["Data", "Feature engineering", "3 models", "MLflow"] },
+    { pt: ["Cliente", "FastAPI + JWT", "PostgreSQL"], en: ["Client", "FastAPI + JWT", "PostgreSQL"] },
+    { pt: ["Série histórica", "Decomposição", "ARIMA/SARIMA", "Previsão"], en: ["Historical series", "Decomposition", "ARIMA/SARIMA", "Forecast"] },
+    { pt: ["Dados globais", "Delta versionado", "Séries temporais", "Plotly"], en: ["Global data", "Versioned Delta", "Time series", "Plotly"] },
+    { pt: ["Partidas 2023/24", "Métricas", "xG × posição", "Dashboard"], en: ["2023/24 matches", "Metrics", "xG vs position", "Dashboard"] }
+  ];
+  function flowHtml(i) {
+    return FLOWS[i][lang].map(function (n, k) {
+      var c = { bronze: "b", silver: "s", gold: "g" }[n.toLowerCase()];
+      return (k ? '<i aria-hidden="true">→</i>' : "") + '<span class="node' + (c ? " " + c : "") + '">' + esc(n) + "</span>";
+    }).join("");
   }
-  requestAnimationFrame(s);
-}
-function renderStat(el){
-  const v=el.dataset.cur||'0';
-  const sfx=el.dataset.suffix||'';
-  el.textContent=v+sfx;
-}
 
-/* hero stats */
-const sobs=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('[data-target]').forEach(el=>{
-        cUp(el,+el.dataset.target);
+  var STACK_DAILY = ["Azure Data Factory", "Databricks", "Snowflake", "Azure DevOps", "Power BI", "Python", "SQL", "PySpark", "Delta Lake"];
+  var STACK_PROJ = ["Airflow", "Kafka", "FastAPI", "PostgreSQL", "MongoDB", "Docker", "MLflow", "Scikit-learn", "TensorFlow", "Tableau", "Plotly"];
+
+  var COURSES = [
+    { n: "Databricks e Azure Data Factory", w: "Alura", u: "https://www.alura.com.br/certificados/f7f1b321-c941-400f-9e69-b0884846dddd" },
+    { n: "Fundamentos de Engenharia de Dados", w: "Data Science Academy", u: "https://www.datascienceacademy.com.br/certificados/6400288ed95562f1e20b5169" },
+    { n: "Formação Data Science", w: "Alura", u: "https://www.alura.com.br/certificados/5b4e3bf7-0adf-4a17-8aa7-6455fe7cdee1" },
+    { n: "Data Science: Regressão Linear", w: "Alura", u: "https://www.alura.com.br/certificados/616d92b5-d324-4b61-937c-e90d710cf3a0" },
+    { n: "Governança de Dados: Conceitos Fundamentais", w: "Alura", u: "https://www.alura.com.br/certificados/2dcf795f-f659-4eae-b4d3-1824b8575e0c" }
+  ];
+
+  /* ---------- Utilidades ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var root = document.documentElement;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var lang = "pt", stage = "bronze", filter = "all";
+  var CMDKEY = /Mac|iPhone|iPad/.test(navigator.platform || "") ? "⌘K" : "Ctrl K";
+
+  function store(k, v) { try { if (v === undefined) { return localStorage.getItem(k); } localStorage.setItem(k, v); } catch (e) { return null; } }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function t(k) { return I18N[lang][k] || k; }
+  function L(o) { return o[lang]; }
+  function ic(n, c) { return '<span class="ic' + (c ? " " + c : "") + '" style="--i:var(--i-' + n + ')" aria-hidden="true"></span>'; }
+  var SICON = { src: "inbox", orch: "flow", bronze: "db", silver: "shield", gold: "award", use: "chart" };
+  var PICON = ["layers", "pin", "chart", "flask", "plug", "timer", "globe", "award"];
+  var BRAND = { "Azure Data Factory": ["ADF", "#0078D4"], "Databricks": ["DB", "#E8503A"], "Snowflake": ["SF", "#29B5E8"], "Azure DevOps": ["DO", "#2B7BD6"], "Power BI": ["PB", "#E5B100"], "Python": ["Py", "#3776AB"], "SQL": ["SQL", "#6B7C93"], "PySpark": ["Ps", "#E25A1C"], "Delta Lake": ["Δ", "#00ADD4"], "Airflow": ["Af", "#017CEE"], "Kafka": ["Kf", "#5A6270"], "FastAPI": ["Fa", "#059489"], "PostgreSQL": ["Pg", "#336791"], "MongoDB": ["Mg", "#47A248"], "Docker": ["Dk", "#2496ED"], "MLflow": ["ML", "#0194E2"], "Scikit-learn": ["Sk", "#F7931E"], "TensorFlow": ["TF", "#FF6F00"], "Tableau": ["Tb", "#4E79A7"], "Plotly": ["Pl", "#7C5CFF"] };
+  function badge(n) { var b = BRAND[n] || [n.slice(0, 2), "#6B7C93"]; return '<span class="tbadge" style="--bc:' + b[1] + '">' + esc(b[0]) + "</span>"; }
+  function highlight(code) {
+    var out = esc(code);
+    out = out.replace(/("[^"]*")/g, '<span class="s">$1</span>');
+    out = out.replace(/\b(from|import|as)\b(?![^<]*>)/g, '<span class="k">$1</span>');
+    return out;
+  }
+
+  /* ---------- Render ---------- */
+  function renderTabs() {
+    var box = $("tabs");
+    box.innerHTML = STAGES.map(function (s) {
+      var sel = s.id === stage;
+      return '<button class="tab" role="tab" id="tab-' + s.id + '" aria-selected="' + sel + '" aria-controls="panel" tabindex="' + (sel ? 0 : -1) + '" data-id="' + s.id + '" style="--stage: var(' + s.color + ')">' + ic(SICON[s.id], "ti") + esc(L(s.name)) + "</button>";
+    }).join("");
+  }
+  function renderPanel() {
+    var s = STAGES.filter(function (x) { return x.id === stage; })[0];
+    var p = $("panel");
+    p.setAttribute("aria-labelledby", "tab-" + s.id);
+    p.style.setProperty("--stage", "var(" + s.color + ")");
+    var right = s.code
+      ? '<div class="codebox"><header><span>PySpark · Delta Lake</span><span>' + esc(t("code_note")) + "</span></header><pre><code>" + highlight(s.code) + "</code></pre></div>"
+      : '<div class="nocode">' + esc(t("no_code")) + "</div>";
+    p.innerHTML =
+      "<div><h3>" + ic(SICON[s.id], "pic") + "<span>" + esc(L(s.name)) + "</span></h3><p>" + esc(L(s.desc)) + "</p><ul>" +
+      L(s.bullets).map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") +
+      '</ul><ul class="chips">' + s.tools.map(function (x) { return '<li class="chip">' + esc(x) + "</li>"; }).join("") + "</ul></div>" + right;
+  }
+  function selectStage(id, scroll) {
+    stage = id; renderTabs(); renderPanel();
+    if (scroll) { $("pipeline").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
+  }
+
+  var FILTERS = ["all", "eng", "ml", "ana", "api"];
+  function renderFilters() {
+    $("filters").innerHTML = FILTERS.map(function (f) {
+      return '<button class="filter" type="button" data-f="' + f + '" aria-pressed="' + (f === filter) + '">' + esc(t("f_" + f)) + "</button>";
+    }).join("");
+  }
+  function renderProjects() {
+    var open = {};
+    Array.prototype.forEach.call(document.querySelectorAll(".card-head[aria-expanded='true']"), function (b) { open[b.getAttribute("data-i")] = true; });
+    $("grid").innerHTML = PROJECTS.map(function (p, i) {
+      var show = filter === "all" || p.cats.indexOf(filter) > -1;
+      var isOpen = !!open[i];
+      return '<article class="card"' + (show ? "" : " hidden") + ">" +
+        '<h3><button class="card-head" type="button" data-i="' + i + '" aria-expanded="' + isOpen + '" aria-controls="body-' + i + '">' +
+        '<span class="cats">' + p.cats.map(function (c) { return esc(t("f_" + c)); }).join(" · ") + "</span>" +
+        ic(PICON[i], "pi") + '<span class="ttl">' + esc(p.title) + '</span><span class="metric">' + esc(L(p.metric)) + '</span><span class="chev" aria-hidden="true"></span><span class="mini">' + esc(p.stack.slice(0, 3).join(" · ")) + "</span></button></h3>" +
+        '<div class="card-body" id="body-' + i + '"' + (isOpen ? "" : " hidden") + "><dl>" +
+        "<dt>" + esc(t("lbl_problem")) + "</dt><dd>" + esc(L(p.problem)) + "</dd>" +
+        "<dt>" + esc(t("lbl_built")) + "</dt><dd>" + esc(L(p.built)) + "</dd>" +
+        "<dt>" + esc(t("lbl_flow")) + '</dt><dd class="fl">' + flowHtml(i) + "</dd>" +
+        "<dt>" + esc(t("lbl_stack")) + '</dt><dd><ul class="chips">' + p.stack.map(function (x) { return '<li class="chip">' + esc(x) + "</li>"; }).join("") + "</ul></dd></dl>" +
+        '<a class="lnk" href="' + p.repo + '" target="_blank" rel="noopener">' + ic("gh") + esc(t("lnk_repo")) + ic("ur") + "</a></div></article>";
+    }).join("");
+  }
+  function chips(list) { return '<ul class="chips">' + list.map(function (x) { return '<li class="chip">' + esc(x) + "</li>"; }).join("") + "</ul>"; }
+  function tiles(list, cls) { return '<ul class="tiles ' + cls + '">' + list.map(function (x) { return '<li class="tile">' + badge(x) + "<span>" + esc(x) + "</span></li>"; }).join("") + "</ul>"; }
+  function renderMarquee() {
+    var all = STACK_DAILY.concat(STACK_PROJ.slice(0, 7));
+    var one = all.map(function (x) { return '<li class="mq">' + badge(x) + "<span>" + esc(x) + "</span></li>"; }).join("");
+    $("marquee").innerHTML = '<div class="mq-track"><ul>' + one + '</ul><ul aria-hidden="true">' + one + "</ul></div>";
+  }
+  function renderStack() {
+    $("stackbox").innerHTML =
+      '<div class="daily scard"><h3>' + ic("zap", "sh") + esc(t("stack_daily")) + "</h3>" + tiles(STACK_DAILY, "big") + "</div>" +
+      '<div class="scard"><h3>' + ic("flask", "sh") + esc(t("stack_proj")) + "</h3>" + tiles(STACK_PROJ, "") + "</div>";
+  }
+  function renderCerts() {
+    $("certbox").innerHTML =
+      "<div class=\"ccol\"><h3>" + ic("cap", "sh") + esc(t("cert_edu")) + '</h3><ul class="rows">' +
+      '<li>' + ic("cap", "ri") + '<span class="main">' + esc(t("edu_post")) + '<span class="sub">PUC-Rio</span></span></li>' +
+      '<li>' + ic("cap", "ri") + '<span class="main">' + esc(t("edu_grad")) + '<span class="sub">Unipê</span></span></li>' +
+      '<li>' + ic("langs", "ri") + '<span class="main">' + esc(t("lang_h")) + '<span class="sub">' + esc(t("lang_v")) + "</span></span></li></ul></div>" +
+      "<div class=\"ccol\"><h3>" + ic("award", "sh") + esc(t("cert_courses")) + '</h3><ul class="rows">' +
+      '<li>' + ic("award", "ri") + '<span class="main">Microsoft Azure Data Engineer Associate (DP-203)<span class="sub">Microsoft</span></span><span class="badge">' + esc(t("cert_inprog")) + "</span></li>" +
+      COURSES.map(function (c) {
+        return '<li>' + ic("award", "ri") + '<span class="main">' + esc(c.n) + '<span class="sub">' + esc(c.w) + '</span></span><a class="who" href="' + c.u + '" target="_blank" rel="noopener">' + esc(t("cert_link")) + ic("ur") + "</a></li>";
+      }).join("") + "</ul></div>";
+  }
+
+  function applyLang() {
+    root.lang = lang === "pt" ? "pt-BR" : "en";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function (el) { el.textContent = t(el.getAttribute("data-i18n")); });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-aria]"), function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria"))); });
+    $("lang").textContent = t("lang_btn");
+    $("lang").setAttribute("aria-label", t("lang_aria"));
+    renderTabs(); renderPanel(); renderFilters(); renderProjects(); renderStack(); renderCerts(); renderMarquee(); renderDemo();
+    var hp = t("hint").split("{k}");
+    $("hint").innerHTML = esc(hp[0]) + "<kbd>" + CMDKEY + "</kbd>" + esc(hp[1] || "");
+    $("cmdq").placeholder = t("palette_ph"); $("cmdfoot").textContent = t("palette_foot");
+    if (window.__flowRedraw) { window.__flowRedraw(); }
+  }
+
+  /* ---------- Eventos ---------- */
+  $("tabs").addEventListener("click", function (e) {
+    var b = e.target.closest(".tab"); if (b) { selectStage(b.getAttribute("data-id"), false); }
+  });
+  $("tabs").addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") { return; }
+    var ids = STAGES.map(function (s) { return s.id; }), i = ids.indexOf(stage);
+    if (e.key === "ArrowRight") { i = (i + 1) % ids.length; }
+    else if (e.key === "ArrowLeft") { i = (i - 1 + ids.length) % ids.length; }
+    else if (e.key === "Home") { i = 0; } else { i = ids.length - 1; }
+    e.preventDefault(); selectStage(ids[i], false); $("tab-" + ids[i]).focus();
+  });
+  $("filters").addEventListener("click", function (e) {
+    var b = e.target.closest(".filter"); if (!b) { return; }
+    filter = b.getAttribute("data-f"); renderFilters(); renderProjects();
+  });
+  $("grid").addEventListener("click", function (e) {
+    var b = e.target.closest(".card-head"); if (!b) { return; }
+    var ex = b.getAttribute("aria-expanded") === "true";
+    b.setAttribute("aria-expanded", String(!ex));
+    $("body-" + b.getAttribute("data-i")).hidden = ex;
+  });
+  $("lang").addEventListener("click", function () {
+    lang = lang === "pt" ? "en" : "pt"; store("bs-lang", lang); applyLang();
+  });
+  function effectiveTheme() {
+    return root.getAttribute("data-theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  }
+  $("theme").addEventListener("click", function () {
+    var next = effectiveTheme() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next); store("bs-theme", next);
+    if (window.__flowRedraw) { window.__flowRedraw(); }
+  });
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onMq = function () { if (window.__flowRedraw) { window.__flowRedraw(); } };
+    if (mq.addEventListener) { mq.addEventListener("change", onMq); }
+  }
+  $("copy").addEventListener("click", function () {
+    var btn = $("copy"), txt = $("emailtext").textContent;
+    function done() { btn.textContent = t("copied"); setTimeout(function () { btn.textContent = t("copy"); }, 1600); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents($("emailtext"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+  });
+
+  /* Link ativo no menu */
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll("#nav a"));
+    if (!("IntersectionObserver" in window)) { return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (a) { a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + en.target.id)); });
+        }
       });
-      sobs.unobserve(e.target);
-    }
-  });
-},{threshold:.4});
-document.querySelectorAll('.hero-stats-big').forEach(s=>sobs.observe(s));
+    }, { rootMargin: "-35% 0px -60% 0px" });
+    ["pipeline", "demo", "projetos", "stack", "formacao", "contato"].forEach(function (id) { io.observe($(id)); });
+  })();
 
-/* impact counters */
-const iobs=new IntersectionObserver(es=>{
-  es.forEach(e=>{
-    if(e.isIntersecting&&!e.target._done){
-      e.target._done=true;
-      const cost=document.getElementById('i-cost');
-      const speed=document.getElementById('i-speed');
-      const data=document.getElementById('i-data');
-      // animate manually to preserve inner HTML
-      function count(end,dur,cb){
-        const st=performance.now();
-        function s(now){const p=Math.min((now-st)/dur,1);const ease=1-(1-p)**3;cb(Math.round(ease*end));if(p<1)requestAnimationFrame(s);}
-        requestAnimationFrame(s);
+  /* ---------- Simulação do pipeline (canvas) ---------- */
+  (function () {
+    var cv = $("flow"), ctx = cv.getContext("2d");
+    var W = 0, H = 0, dpr = 1;
+    var B = [0.16, 0.44, 0.72];
+    var ZONE_IDS = ["src", "bronze", "silver", "gold"];
+    var LANES = 7, TOP = 34, BOT = 14;
+    var parts = [], spawnAcc = 0, last = 0, hover = -1, running = false, visible = true, C = {}, mx = -999, my = -999, hz = -1;
+    var KEYS = [[0, 1], [0.44, 1], [0.52, 0.32], [0.72, 0.32], [0.8, 0]];
+
+    function cssv(n) { return getComputedStyle(root).getPropertyValue(n).trim(); }
+    function readColors() {
+      C = { surface: cssv("--surface"), s2: cssv("--surface-2"), ink2: cssv("--ink-2"), line: cssv("--line"),
+            bronze: cssv("--bronze"), silver: cssv("--silver"), gold: cssv("--gold"), bad: cssv("--bad"), accent: cssv("--accent") };
+    }
+    function amp(xf) {
+      for (var i = 1; i < KEYS.length; i++) {
+        if (xf <= KEYS[i][0]) {
+          var a = KEYS[i - 1], b = KEYS[i], k = (xf - a[0]) / (b[0] - a[0]);
+          return a[1] + (b[1] - a[1]) * Math.max(0, Math.min(1, k));
+        }
       }
-      count(40,1800,v=>{cost.innerHTML=v+'<em>%</em>';});
-      count(10,1500,v=>{speed.innerHTML=v+'<em>×</em>';});
-      count(500,2200,v=>{data.innerHTML=v+' <em style="font-size:.45em">TB</em>';});
-      iobs.unobserve(e.target);
+      return 0;
     }
-  });
-},{threshold:.3});
-document.querySelectorAll('.impact-nums').forEach(s=>iobs.observe(s));
+    function laneH() { return (H - TOP - BOT) / LANES; }
+    function laneY(i) { return TOP + (i + 0.5) * laneH(); }
 
-/* project filter */
-function fp(cat,btn){
-  document.querySelectorAll('.pfbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.pj').forEach(c=>{
-    const h=cat!=='all'&&!c.dataset.cat.includes(cat);
-    c.classList.toggle('hidden',h);
-    // wide only when all shown
-    if(c.classList.contains('wide')){
-      c.style.gridColumn=(!h&&cat==='all')?'1/-1':'';
+    function spawn() {
+      parts.push({ x: -8, lane: Math.floor(Math.random() * LANES), off: Math.random() * 2 - 1, sz: Math.random(),
+                   sp: 0.85 + Math.random() * 0.3, bad: Math.random() < 0.13, dead: 0, a: 0.6 + Math.random() * 0.4 });
     }
+    function step(dt) {
+      var speed = W * 0.085;
+      spawnAcc += dt * 7.5 * (LANES / 7);
+      while (spawnAcc >= 1) { spawn(); spawnAcc -= 1; }
+      for (var i = parts.length - 1; i >= 0; i--) {
+        var p = parts[i];
+        p.x += speed * p.sp * dt;
+        if (p.bad && p.x / W > B[1] + 0.04) { p.dead += dt * 2.4; }
+        if (p.dead >= 1 || p.x > W + 14) { parts.splice(i, 1); }
+      }
+    }
+    function rr(x, y, w, h, r) {
+      ctx.beginPath();
+      if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r); } else { ctx.rect(x, y, w, h); }
+      ctx.fill();
+    }
+    function draw() {
+      if (!W) { return; }
+      ctx.clearRect(0, 0, W, H);
+      var z, x0, x1;
+      for (z = 0; z < 4; z++) {
+        x0 = (z === 0 ? 0 : B[z - 1]) * W; x1 = (z === 3 ? 1 : B[z]) * W;
+        if (z % 2) { ctx.globalAlpha = 0.5; ctx.fillStyle = C.s2; ctx.fillRect(x0, 0, x1 - x0, H); }
+        if (hz === z) { ctx.globalAlpha = 0.16; ctx.fillStyle = C.accent; ctx.fillRect(x0, 0, x1 - x0, H); }
+        if (z > 0) { ctx.globalAlpha = 1; ctx.fillStyle = C.line; ctx.fillRect(x0, 0, 1, H); }
+      }
+      ctx.globalAlpha = 0.5; ctx.fillStyle = C.line;
+      for (var i = 0; i < LANES; i++) { ctx.fillRect(0, Math.round(laneY(i)), W, 1); }
+      ctx.globalAlpha = 1;
+      ctx.font = "500 11px 'IBM Plex Mono', ui-monospace, monospace"; ctx.textBaseline = "middle";
+      var labels = [t("z_src"), "BRONZE", "SILVER", "GOLD"], cols = [C.ink2, C.bronze, C.silver, C.gold];
+      for (z = 0; z < 4; z++) {
+        x0 = (z === 0 ? 0 : B[z - 1]) * W; x1 = (z === 3 ? 1 : B[z]) * W;
+        if (x1 - x0 < 84) { continue; }
+        ctx.fillStyle = cols[z]; ctx.fillText(labels[z], x0 + 12, 17);
+      }
+      var lh = laneH();
+      for (var j = 0; j < parts.length; j++) {
+        var p = parts[j], xf = p.x / W, y = laneY(p.lane) + p.off * amp(xf) * lh * 0.95, w, h, col;
+        if (!reduce && hover >= 0) {
+          var ddx = p.x - mx, ddy = y - my, dd = Math.sqrt(ddx * ddx + ddy * ddy);
+          if (dd < 70 && dd > 0.1) { y += (ddy / dd) * (1 - dd / 70) * 26; }
+        }
+        if (xf < B[0]) { col = C.ink2; w = 4 + p.sz * 6; h = 3 + p.sz * 4; }
+        else if (xf < B[1]) { col = C.bronze; w = 5 + p.sz * 8; h = 4 + p.sz * 4; }
+        else if (xf < B[2]) { col = C.silver; w = 10; h = 6; }
+        else { col = C.gold; w = 13; h = 6; }
+        if (p.bad) { col = C.bad; }
+        ctx.globalAlpha = p.a * (1 - p.dead); ctx.fillStyle = col;
+        rr(p.x - w / 2, y - h / 2, w, h, 1.5);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function frame(ts) {
+      if (!running) { return; }
+      var dt = Math.min((ts - last) / 1000, 0.05); last = ts;
+      step(dt); draw(); requestAnimationFrame(frame);
+    }
+    function start() { if (reduce || running || !visible || document.hidden) { return; } running = true; last = performance.now(); requestAnimationFrame(frame); }
+    function stop() { running = false; }
+    function prime() { parts = []; spawnAcc = 0; for (var i = 0; i < 480; i++) { step(1 / 30); } }
+    function resize() {
+      var r = cv.getBoundingClientRect(); W = r.width; H = r.height; LANES = Math.max(7, Math.round((H - TOP - BOT) / 46)); dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (reduce) { prime(); }
+      draw();
+    }
+    window.__flowRedraw = function () { readColors(); draw(); };
+
+    function zoneAt(e) {
+      var r = cv.getBoundingClientRect(), xf = (e.clientX - r.left) / r.width;
+      return xf < B[0] ? 0 : xf < B[1] ? 1 : xf < B[2] ? 2 : 3;
+    }
+    var host = $("herotop");
+    host.addEventListener("pointermove", function (e) {
+      var r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; hover = 0; if (!running) { draw(); }
+    });
+    host.addEventListener("pointerleave", function () { hover = -1; mx = -999; my = -999; if (!running) { draw(); } });
+    window.__flowHover = function (z) { hz = z; if (!running) { draw(); } };
+
+    readColors();
+    if ("ResizeObserver" in window) { new ResizeObserver(resize).observe(cv); } else { window.addEventListener("resize", resize); }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) { start(); } else { stop(); } }).observe(cv);
+    }
+    document.addEventListener("visibilitychange", function () { if (document.hidden) { stop(); } else { start(); } });
+    resize();
+    if (!reduce) { prime(); draw(); start(); }
+  })();
+
+  /* ---------- Demo: o pipeline rodando em dados fictícios ---------- */
+  var ORDERS = [
+    [1001, "2026-03-01", "web", "120.50"], [1002, "2026-03-01", "app", "89.90"], [1002, "2026-03-01", "app", "89.90"],
+    [1003, "2026-03-02", "loja", "240.00"], [1004, "2026-03-02", "web", "-15.00"], [1005, "2026-03-02", "app", "60.00"],
+    [1006, "2026-03-03", "web", ""], [1007, "2026-03-03", "loja", "310.75"], [1007, "2026-03-03", "loja", "310.75"],
+    [1008, "2026-03-03", "app", "45.20"], [1009, "2026-03-04", "web", "99.00"], [1010, "2026-03-04", "loja", "180.00"]
+  ];
+  var DEMO_GOLD = 'from pyspark.sql import functions as F\n\ngold = (spark.read.table("silver.pedidos")\n    .groupBy("canal")\n    .agg(F.sum("valor").alias("receita"),\n         F.countDistinct("pedido_id").alias("pedidos")))\n\n(gold.write.format("delta").mode("overwrite")\n    .saveAsTable("gold.receita_por_canal"))';
+  var demoStep = 0, demoBusy = false;
+
+  function demoData() {
+    var seen = {};
+    var rows = ORDERS.map(function (r) {
+      var v = parseFloat(r[3]); if (isNaN(v)) { v = null; }
+      var issue = null;
+      if (seen[r[0]]) { issue = "dup"; } else if (v === null) { issue = "null"; } else if (v <= 0) { issue = "neg"; }
+      seen[r[0]] = true;
+      return { id: r[0], date: r[1], ch: r[2], raw: r[3], v: v, issue: issue };
+    });
+    var good = rows.filter(function (r) { return !r.issue; });
+    var by = {};
+    good.forEach(function (r) { by[r.ch] = by[r.ch] || { ch: r.ch, rev: 0, n: 0 }; by[r.ch].rev += r.v; by[r.ch].n += 1; });
+    var gold = Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return b.rev - a.rev; });
+    function count(k) { return rows.filter(function (r) { return r.issue === k; }).length; }
+    return { rows: rows, good: good, gold: gold, dup: count("dup"), neg: count("neg"), nul: count("null"),
+             total: gold.reduce(function (s, g) { return s + g.rev; }, 0) };
+  }
+  function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return o[k]; }); }
+
+  function renderDemo() {
+    var d = demoData();
+    var nf = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    var counts = [d.rows.length, d.good.length, d.gold.length];
+    var names = ["Bronze", "Silver", "Gold"], cols = ["--bronze", "--silver", "--gold"], units = [t("u_rows"), t("u_rows"), t("u_groups")];
+    $("dsteps").innerHTML = names.map(function (n, i) {
+      return '<button type="button" class="dstep" data-s="' + i + '" aria-pressed="' + (i === demoStep) + '" style="--stage: var(' + cols[i] + ')"><span class="dot"></span><b>' + n + "</b><span>" + counts[i] + " " + units[i] + "</span></button>";
+    }).join("");
+
+    var html, i;
+    if (demoStep === 0) {
+      html = "<table><thead><tr><th>pedido_id</th><th>data</th><th>canal</th><th>valor (string)</th><th>" + esc(t("col_diag")) + "</th></tr></thead><tbody>" +
+        d.rows.map(function (r) {
+          var diag = r.issue ? '<span class="tag">' + esc(t("d_" + r.issue)) + "</span>" : '<span class="ok">' + esc(t("d_ok")) + "</span>";
+          return '<tr class="' + (r.issue ? "flag" : "") + '"><td>' + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td>"' + esc(r.raw) + '"</td><td>' + diag + "</td></tr>";
+        }).join("") + "</tbody></table>";
+    } else if (demoStep === 1) {
+      html = '<table><thead><tr><th>pedido_id</th><th>data</th><th>canal</th><th class="num">valor</th></tr></thead><tbody>' +
+        d.good.map(function (r) { return "<tr><td>" + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td class="num">' + nf.format(r.v) + "</td></tr>"; }).join("") + "</tbody></table>";
+    } else {
+      var max = d.gold[0].rev;
+      html = '<div class="gold">' + d.gold.map(function (g) {
+        return '<div class="grow"><span>' + esc(g.ch) + '</span><span class="gtrack"><span class="gfill" data-w="' + (g.rev / max * 100).toFixed(1) + '"></span></span><span class="gval">' + nf.format(g.rev) + "<small>" + g.n + " " + esc(t("col_orders")) + "</small></span></div>";
+      }).join("") + "</div>";
+    }
+    $("dtable").innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll("#dtable .gfill"), function (el) {
+      requestAnimationFrame(function () { requestAnimationFrame(function () { el.style.width = el.getAttribute("data-w") + "%"; }); });
+    });
+
+    var lines = [fill(t("log_bronze"), { n: d.rows.length })];
+    if (demoStep >= 1) {
+      lines.push(fill(t("log_dup"), { n: d.dup }), fill(t("log_bad"), { n: d.neg + d.nul }), fill(t("log_out"), { n: d.good.length }));
+    }
+    if (demoStep >= 2) { lines.push(fill(t("log_gold"), { n: d.gold.length, v: nf.format(d.total) })); }
+    $("dlog").innerHTML = lines.map(function (l, k) { return '<li class="' + (k >= lines.length - (demoStep === 1 ? 3 : 1) ? "new" : "") + '">' + esc(l) + "</li>"; }).join("");
+
+    var sid = ["bronze", "silver", "gold"][demoStep];
+    var st = STAGES.filter(function (x) { return x.id === sid; })[0];
+    $("dcode").innerHTML = "<header><span>PySpark · Delta Lake</span><span>" + esc(L(st.name)) + "</span></header><pre><code>" + highlight(sid === "gold" ? DEMO_GOLD : st.code) + "</code></pre>";
+
+    var run = $("drun");
+    run.textContent = demoStep === 0 ? t("run_silver") : demoStep === 1 ? t("run_gold") : t("run_done");
+    run.disabled = demoStep > 1 || demoBusy;
+    $("dreset").textContent = t("reset"); $("dreset").hidden = demoStep === 0;
+    i = 0;
+  }
+  $("drun").addEventListener("click", function () {
+    if (demoBusy || demoStep > 1) { return; }
+    if (demoStep === 0 && !reduce) {
+      demoBusy = true; $("drun").disabled = true;
+      Array.prototype.forEach.call(document.querySelectorAll("#dtable tr.flag"), function (tr) { tr.classList.add("drop"); });
+      setTimeout(function () { demoStep = 1; demoBusy = false; renderDemo(); }, 750);
+    } else { demoStep += 1; renderDemo(); }
   });
-}
+  $("dreset").addEventListener("click", function () { if (!demoBusy) { demoStep = 0; renderDemo(); } });
+  $("dsteps").addEventListener("click", function (e) {
+    var b = e.target.closest(".dstep"); if (b && !demoBusy) { demoStep = +b.getAttribute("data-s"); renderDemo(); }
+  });
+
+  /* ---------- Barra de progresso (Bronze → Silver → Gold) ---------- */
+  (function () {
+    var bar = $("prog"), ticking = false;
+    function upd() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + "%"; ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+    window.addEventListener("resize", upd); upd();
+  })();
+
+  /* ---------- Busca rápida (Ctrl/⌘ K) ---------- */
+  (function () {
+    var box = $("cmd"), q = $("cmdq"), list = $("cmdlist"), items = [], shown = [], idx = 0, prev = null;
+    $("kbtn").textContent = CMDKEY;
+    function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+    function go(id) { $(id).scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
+    function openProject(i) {
+      filter = "all"; renderFilters(); renderProjects();
+      var h = document.querySelector('.card-head[data-i="' + i + '"]');
+      h.setAttribute("aria-expanded", "true"); $("body-" + i).hidden = false;
+      h.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); h.focus({ preventScroll: true });
+    }
+    function build() {
+      items = [];
+      [["pipeline", "nav_pipeline"], ["demo", "nav_demo"], ["projetos", "nav_projects"], ["stack", "nav_stack"], ["formacao", "nav_cert"], ["contato", "nav_contact"]].forEach(function (s) {
+        items.push({ g: "g_sections", label: t(s[1]), run: function () { go(s[0]); } });
+      });
+      PROJECTS.forEach(function (p, i) { items.push({ g: "g_projects", label: p.title, hint: L(p.metric), run: function () { openProject(i); } }); });
+      items.push(
+        { g: "g_actions", label: t("a_theme"), run: function () { $("theme").click(); } },
+        { g: "g_actions", label: t("a_lang"), run: function () { $("lang").click(); } },
+        { g: "g_actions", label: t("a_copy"), run: function () { go("contato"); $("copy").click(); } },
+        { g: "g_actions", label: t("a_linkedin"), run: function () { window.open("https://www.linkedin.com/in/bruno-suassuna-698aa7235", "_blank", "noopener"); } },
+        { g: "g_actions", label: t("a_github"), run: function () { window.open("https://github.com/brunosuassuna", "_blank", "noopener"); } }
+      );
+    }
+    function render() {
+      var qq = norm(q.value.trim()), html = "", lastG = "";
+      shown = items.filter(function (it) { return !qq || norm(it.label).indexOf(qq) > -1; });
+      if (idx >= shown.length) { idx = 0; }
+      if (!shown.length) { html = '<li class="empty">' + esc(t("palette_empty")) + "</li>"; }
+      shown.forEach(function (it, k) {
+        if (it.g !== lastG) { html += '<li class="grp" role="presentation">' + esc(t(it.g)) + "</li>"; lastG = it.g; }
+        html += '<li role="option" id="cmd-' + k + '" data-k="' + k + '" aria-selected="' + (k === idx) + '"><span>' + esc(it.label) + "</span>" + (it.hint ? "<small>" + esc(it.hint) + "</small>" : "") + "</li>";
+      });
+      list.innerHTML = html;
+      q.setAttribute("aria-activedescendant", shown.length ? "cmd-" + idx : "");
+      var cur = $("cmd-" + idx); if (cur) { cur.scrollIntoView({ block: "nearest" }); }
+    }
+    function open() { prev = document.activeElement; build(); q.value = ""; idx = 0; box.hidden = false; render(); q.focus(); }
+    function close() { box.hidden = true; if (prev && prev.focus) { prev.focus({ preventScroll: true }); } }
+    function choose(k) { var it = shown[k]; close(); if (it) { it.run(); } }
+    q.addEventListener("input", function () { idx = 0; render(); });
+    q.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") { e.preventDefault(); if (shown.length) { idx = (idx + 1) % shown.length; render(); } }
+      else if (e.key === "ArrowUp") { e.preventDefault(); if (shown.length) { idx = (idx - 1 + shown.length) % shown.length; render(); } }
+      else if (e.key === "Enter") { e.preventDefault(); if (shown.length) { choose(idx); } }
+      else if (e.key === "Escape") { e.preventDefault(); close(); }
+      else if (e.key === "Tab") { e.preventDefault(); }
+    });
+    list.addEventListener("click", function (e) { var li = e.target.closest("li[data-k]"); if (li) { choose(+li.getAttribute("data-k")); } });
+    box.addEventListener("click", function (e) { if (e.target === box) { close(); } });
+    $("kbtn").addEventListener("click", open);
+    document.addEventListener("keydown", function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); if (box.hidden) { open(); } else { close(); } }
+    });
+  })();
+
+  /* ---------- Botões de camada do hero ---------- */
+  (function () {
+    var ids = ["src", "bronze", "silver", "gold"];
+    Array.prototype.forEach.call(document.querySelectorAll(".stg"), function (b, i) {
+      b.addEventListener("click", function () { selectStage(ids[i], true); });
+      ["mouseenter", "focus"].forEach(function (ev) { b.addEventListener(ev, function () { window.__flowHover(i); }); });
+      ["mouseleave", "blur"].forEach(function (ev) { b.addEventListener(ev, function () { window.__flowHover(-1); }); });
+    });
+  })();
+
+  /* ---------- Revelação suave ao rolar ---------- */
+  (function () {
+    if (reduce || !("IntersectionObserver" in window)) { return; }
+    var els = Array.prototype.slice.call(document.querySelectorAll(".sec-head, .filters, .stack, .two, .demo, .steps, .contact-list, .panel, .tabs"));
+    els.forEach(function (el) { el.classList.add("rv"); });
+    root.classList.add("rvon");
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---------- Início ---------- */
+  var savedTheme = store("bs-theme");
+  if (savedTheme === "dark" || savedTheme === "light") { root.setAttribute("data-theme", savedTheme); }
+  var savedLang = store("bs-lang");
+  lang = savedLang === "pt" || savedLang === "en" ? savedLang : ((navigator.language || "pt").toLowerCase().indexOf("pt") === 0 ? "pt" : "en");
+  applyLang();
+})();
 </script>
 </body>
 </html>
