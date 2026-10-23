@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bruno Suassuna · Engenheiro de Dados</title>
 <meta name="description" content="Portfólio de Bruno Suassuna, engenheiro de dados. Pipelines em Azure, Databricks e Snowflake, projetos e stack.">
+<meta name="theme-color" content="#09111D">
+<link rel="canonical" href="https://brunosuassuna.github.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23D88C46'/%3E%3Cstop offset='.55' stop-color='%23E9BA4B'/%3E%3Cstop offset='1' stop-color='%235BA8FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='800' text-anchor='middle' fill='%2306101D'%3EBS%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bruno Suassuna">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://brunosuassuna.github.io/">
+<meta property="og:title" content="Bruno Suassuna · Engenheiro de Dados">
+<meta property="og:description" content="Pipelines de dados na nuvem com Azure, Databricks e Snowflake. Veja uma pipeline rodando ao vivo no navegador.">
+<meta property="og:image" content="https://brunosuassuna.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bruno Suassuna, Engenheiro de Dados: pipeline Medallion com Bronze, Silver e Gold">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bruno Suassuna · Engenheiro de Dados">
+<meta name="twitter:description" content="Pipelines de dados na nuvem com Azure, Databricks e Snowflake. Veja uma pipeline rodando ao vivo no navegador.">
+<meta name="twitter:image" content="https://brunosuassuna.github.io/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -480,6 +497,165 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --on-ic: #06101D; } }
 :root[data-theme="dark"] { --on-ic: #06101D; }
 .tbadge { text-shadow: 0 1px 1px rgba(0,0,0,.25); }
+
+/* demo v6 */
+.dleft { min-width: 0; display: grid; gap: 12px; }
+.drules { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 16px; margin: 0 0 16px; border: 1px dashed var(--line); border-radius: 12px; background: color-mix(in srgb, var(--surface-2) 55%, transparent); }
+.rules-t { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.rti { color: var(--silver); }
+.rules-h { flex-basis: 100%; font-size: .82rem; color: var(--ink-2); margin: -2px 0 0; }
+.sw { display: inline-flex; align-items: center; gap: 9px; font-size: .88rem; cursor: pointer; user-select: none; }
+.sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.trk { width: 36px; height: 20px; border-radius: 999px; background: var(--line); position: relative; transition: background .2s; flex: none; }
+.trk::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s; }
+.sw input:checked + .trk { background: var(--accent); }
+.sw input:checked + .trk::after { transform: translateX(16px); }
+.sw input:focus-visible + .trk { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sw input:disabled + .trk { opacity: .55; }
+.dstep .dsi { color: var(--stage); }
+.impact { margin: 0; font-size: .88rem; display: flex; align-items: flex-start; gap: 8px; padding: 0; min-height: 0; }
+.impact:empty { display: none; }
+.impact.good, .impact.bad { padding: 10px 14px; border-radius: 10px; border: 1px solid; }
+.impact.good { color: #1B8F4E; border-color: color-mix(in srgb, #2DBE6C 45%, transparent); background: color-mix(in srgb, #2DBE6C 10%, transparent); }
+.impact.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 45%, transparent); background: var(--flag-bg); }
+:root[data-theme="dark"] .impact.good { color: #5EE59A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .impact.good { color: #5EE59A; } }
+.imi { margin-top: .2em; }
+.tag.warn { border-color: var(--gold); color: var(--gold); }
+.pbi { padding: 16px; display: grid; gap: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, var(--surface)), var(--surface)); }
+.pbi-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pbi-t { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.pbi-i { color: var(--accent); }
+.pbi-tag { font-family: var(--font-mono); font-size: .7rem; padding: 2px 9px; border-radius: 999px; background: #F2C811; color: #1b1500; font-weight: 500; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kpi { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); min-width: 0; }
+.kpi small { display: block; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
+.kpi b { display: block; font-family: var(--font-display); font-stretch: 105%; font-size: clamp(1rem, 2.4vw, 1.35rem); margin-top: 4px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.pbi-body { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.donut { width: 132px; height: 132px; border-radius: 50%; position: relative; flex: none; }
+.donut::before { content: ""; position: absolute; inset: 24px; border-radius: 50%; background: var(--surface); }
+.donut span { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 38px; font-family: var(--font-mono); font-size: .62rem; text-transform: uppercase; color: var(--ink-2); line-height: 1.2; z-index: 1; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-family: var(--font-mono); font-size: .85rem; flex: 1; min-width: 150px; }
+.legend li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; }
+.legend i { width: 12px; height: 12px; border-radius: 4px; }
+@media (max-width: 520px) { .kpis { grid-template-columns: minmax(0, 1fr); } .drules { padding: 12px; } }
+
+/* laboratório */
+.dtabs { display: inline-flex; gap: 6px; padding: 5px; margin: 0 0 18px; background: var(--surface-2); border-radius: 12px; max-width: 100%; overflow-x: auto; }
+.dtab { font-family: var(--font-mono); font-size: .82rem; border: 0; background: none; color: var(--ink-2); padding: 9px 14px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.dtab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.dtab::before { color: var(--accent); }
+.lab-intro { margin: 0 0 16px; color: var(--ink-2); max-width: 78ch; font-size: .95rem; }
+.lab-bar { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.lab-ctl, .lab-chaos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.lab-ctl .btn { padding: 9px 14px; font-size: .88rem; }
+.lab-speed { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: .75rem; color: var(--ink-2); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+.seg button { font-family: var(--font-mono); font-size: .78rem; background: var(--surface); color: var(--ink-2); border: 0; padding: 7px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.chaos { font-family: var(--font-mono); font-size: .78rem; padding: 7px 12px; border: 1px solid color-mix(in srgb, var(--bad) 50%, var(--line)); background: var(--flag-bg); color: var(--bad); border-radius: 999px; cursor: pointer; }
+.chaos:hover:not(:disabled) { background: color-mix(in srgb, var(--bad) 18%, transparent); }
+.chaos:disabled { opacity: .45; cursor: default; }
+.lab-alert { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-radius: 12px; border: 1px solid; margin-bottom: 14px; font-size: .9rem; }
+.lab-alert > span:not(.ic) { flex: 1; min-width: 220px; text-align: left; }
+.lab-alert.warn { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 50%, transparent); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+.lab-alert.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 50%, transparent); background: var(--flag-bg); }
+.lab-alert .btn { padding: 7px 12px; font-size: .82rem; }
+.flow-scroll { overflow-x: auto; margin: 0 -2px 16px; padding: 0 2px; }
+.lab-flow { position: relative; height: 236px; min-width: 660px; border: 1px solid var(--line); border-radius: 14px; background:
+  linear-gradient(90deg, color-mix(in srgb, var(--bronze) 7%, transparent) 33.3%, color-mix(in srgb, var(--silver) 7%, transparent) 33.3% 66.6%, color-mix(in srgb, var(--gold) 8%, transparent) 66.6%) , var(--bg); overflow: hidden; }
+.lbus { position: absolute; left: 8.33%; right: 8.33%; top: 62px; height: 0; border-top: 2px dashed var(--line); }
+.lnode { position: absolute; top: 14px; width: 112px; height: 96px; transform: translateX(-50%); border: 1.5px solid var(--nc); border-radius: 14px; background: var(--surface); display: grid; grid-template-rows: auto auto auto auto; justify-items: center; align-content: center; gap: 1px; padding: 6px; text-align: center; box-shadow: var(--shadow); z-index: 2; }
+.lni { color: var(--nc); width: 1.3em; height: 1.3em; }
+.lnm { font-weight: 600; font-size: .8rem; line-height: 1.1; }
+.lct { font-family: var(--font-mono); font-size: .95rem; font-weight: 500; font-variant-numeric: tabular-nums; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lnode small { font-family: var(--font-mono); font-size: .62rem; color: var(--ink-2); }
+.lq { position: absolute; top: 140px; width: 112px; transform: translateX(-50%); border: 1.5px dashed var(--bad); border-radius: 12px; background: var(--flag-bg); display: grid; justify-items: center; gap: 0; padding: 6px; z-index: 1; color: var(--bad); }
+.lq .lnm { font-size: .72rem; } .lq .lct { color: var(--bad); }
+.lpts { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.pt { position: absolute; left: 0; top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); will-change: transform; }
+.pt.gd { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+.pt.bad { background: var(--bad); box-shadow: 0 0 10px var(--bad); }
+.lab-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 16px; align-items: start; margin-bottom: 16px; }
+@media (max-width: 900px) { .lab-grid { grid-template-columns: minmax(0, 1fr); } }
+.lab-col { display: grid; gap: 16px; min-width: 0; }
+.ps { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 16px; min-width: 0; }
+.ps h4 { margin: 0 0 12px; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); font-weight: 500; }
+.ps h5 { margin: 14px 0 8px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); font-weight: 500; }
+.lkpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; }
+.lkpis .kpi { padding: 10px 12px; }
+.lkpis .kpi b { font-size: .98rem; white-space: nowrap; overflow-wrap: normal; }
+.spark { width: 100%; height: 56px; display: block; margin-top: 12px; border-bottom: 1px solid var(--line); }
+.lbars { display: grid; gap: 6px; }
+.lbar { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: .82rem; padding: 6px 8px; border-radius: 9px; cursor: pointer; border: 1px solid transparent; }
+.lbar:hover { background: var(--surface-2); }
+.lbar[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.lbar:focus-visible { outline: 2px solid var(--accent); }
+.lbar b { font-weight: 500; text-align: right; }
+.lhint, .lhead { margin: 0; font-size: .88rem; color: var(--ink-2); }
+.lhead { color: var(--ink); font-weight: 500; margin-bottom: 8px; }
+#lablin ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+#lablin li { display: grid; grid-template-columns: 52px 92px minmax(0, 1fr); gap: 8px; font-family: var(--font-mono); font-size: .76rem; padding: 5px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+#lablin li code { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.runs li { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: .8rem; font-family: var(--font-mono); padding: 7px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--bg); }
+.runs .rs { font-size: .7rem; text-align: center; padding: 2px 6px; border-radius: 999px; }
+.runs li.ok .rs { color: #1B8F4E; background: color-mix(in srgb, #2DBE6C 14%, transparent); }
+.runs li.bad .rs { color: var(--bad); background: var(--flag-bg); }
+:root[data-theme="dark"] .runs li.ok .rs { color: #5EE59A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .runs li.ok .rs { color: #5EE59A; } }
+.runs time, .lablog time { color: var(--ink-2); font-size: .72rem; }
+.ex { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 86px; gap: 10px; align-items: center; padding: 5px 0; font-size: .78rem; }
+.ex code { font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.extr { height: 8px; border-radius: 99px; background: var(--flag-bg); overflow: hidden; display: block; }
+.exf { display: block; height: 100%; transition: width .4s; }
+.ex b { font-family: var(--font-mono); font-weight: 500; text-align: right; font-size: .74rem; color: var(--ink-2); }
+.ex b.w { color: var(--gold); }
+.lablog { margin-bottom: 14px; }
+.lab-code { margin-top: 4px; }
+.lab-code summary { cursor: pointer; font-family: var(--font-mono); font-size: .82rem; color: var(--accent); padding: 6px 0; }
+.lab-code .codebox { margin-top: 8px; }
+@media (max-width: 520px) { .ex { grid-template-columns: minmax(0, 1fr) 70px; } .ex .extr { display: none; } #lablin li { grid-template-columns: 48px 80px; } #lablin li code { display: none; } }
+
+.wks { display: flex; gap: 6px; margin-bottom: 10px; }
+.wk { width: 100%; max-width: 36px; height: 28px; border-radius: 7px; border: 1px solid var(--line); background: var(--bg); transition: background .3s, border-color .3s, box-shadow .3s; }
+.wk.on { background: color-mix(in srgb, var(--accent) 22%, var(--surface)); border-color: var(--accent); box-shadow: 0 0 10px -2px var(--accent); }
+.clm { margin: 0; font-family: var(--font-mono); font-size: .8rem; color: var(--ink-2); }
+.clm b { color: var(--ink); font-weight: 500; }
+.lab-grid2 { margin-top: 0; }
+.ttctl { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.ttctl input[type=range] { flex: 1; min-width: 160px; accent-color: var(--accent); }
+.ttv { font-family: var(--font-mono); font-size: .8rem; font-weight: 500; color: var(--ink); }
+.chaos.ok { color: var(--accent); border-color: var(--accent); background: transparent; }
+.ttr { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: .82rem; padding: 4px 0; }
+.ttr .gtrack { position: relative; }
+.ttr .ttg { position: absolute; left: 0; top: 0; bottom: 0; background: color-mix(in srgb, var(--gold) 22%, transparent); border-radius: 2px; }
+.ttr .gfill { position: absolute; left: 0; top: 0; transition: width .25s; }
+.ttr b { font-weight: 500; text-align: right; }
+.hist { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: .74rem; margin-top: 10px; }
+.hist th { text-align: left; font-weight: 500; color: var(--ink-2); padding: 6px 4px; border-bottom: 1px solid var(--line); text-transform: uppercase; font-size: .66rem; letter-spacing: .05em; }
+.hist td { padding: 5px 4px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.hist .num { text-align: right; }
+.hist tr.cur td { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.qchips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.qchip { font-family: var(--font-mono); font-size: .74rem; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink-2); cursor: pointer; }
+.qchip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sqlbox { margin: 0 0 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); font-family: var(--font-mono); font-size: .78rem; line-height: 1.55; overflow-x: auto; }
+.ps .dtable { max-height: 230px; overflow: auto; }
+.sqlfoot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-family: var(--font-mono); font-size: .74rem; color: var(--ink-2); }
+
+/* tour */
+.tour { position: relative; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 16px 16px; margin-bottom: 14px; border: 1px solid var(--accent); border-radius: 14px; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, var(--surface)), var(--surface)); overflow: hidden; box-shadow: 0 10px 30px -14px var(--accent); }
+.tour[hidden] { display: none; }
+.tn { font-family: var(--font-mono); font-size: .78rem; font-weight: 500; padding: 5px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); flex: none; }
+.ttx { flex: 1; min-width: 220px; display: grid; gap: 2px; }
+.ttx b { font-family: var(--font-display); font-stretch: 105%; font-size: 1.05rem; }
+.ttx span { font-size: .9rem; color: var(--ink-2); }
+.tpg { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--bronze), var(--silver), var(--gold)); transition: width .15s linear; }
+.lab-flow .lnode, .lab-flow .lq { transition: opacity .35s, box-shadow .35s, transform .35s; }
+.lab-flow.tour .lnode:not(.hl), .lab-flow.tour .lq:not(.hl) { opacity: .45; }
+.lnode.hl, .lq.hl { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent), 0 12px 28px -10px var(--accent); transform: translateX(-50%) scale(1.06); }
 </style>
 </head>
 <body id="top-of-page">
@@ -558,17 +734,68 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
       <div class="win">
         <div class="win-bar"><span class="wd"></span><span class="wd"></span><span class="wd"></span><span class="win-t">pipeline_demo.py</span><span class="live"><i></i><span data-i18n="demo_eyebrow">ao vivo</span></span></div>
         <div class="win-body">
+      <div class="dtabs" id="dtabs" role="tablist">
+        <button type="button" class="dtab bi" style="--i:var(--i-zap)" role="tab" aria-selected="true" data-tab="lab" data-i18n="lab_tab_lab">Simulador ao vivo</button>
+        <button type="button" class="dtab bi" style="--i:var(--i-layers)" role="tab" aria-selected="false" tabindex="-1" data-tab="step" data-i18n="lab_tab_step">Passo a passo</button>
+      </div>
+      <div id="pane-lab" class="lab">
+        <p class="lab-intro" id="labintro"></p>
+        <div class="lab-bar">
+          <div class="lab-ctl">
+            <button class="btn primary bi" style="--i:var(--i-timer)" id="labplay" type="button"></button>
+            <button class="btn ghost bi" style="--i:var(--i-redo)" id="labreset" type="button"></button>
+            <button class="btn ghost bi" style="--i:var(--i-zap)" id="labtourbtn" type="button"></button>
+            <span class="lab-speed"><span id="labspeedl"></span><span class="seg" id="labspeed"><button type="button" data-sp="1" aria-pressed="true">1×</button><button type="button" data-sp="2" aria-pressed="false">2×</button><button type="button" data-sp="4" aria-pressed="false">4×</button></span></span>
+          </div>
+          <div class="lab-chaos"><span class="rules-t"><span class="ic rti" style="--i:var(--i-zap)" aria-hidden="true"></span><span id="labchaos"></span></span>
+            <button type="button" class="chaos" id="labdup"></button><button type="button" class="chaos" id="labbad"></button><button type="button" class="chaos" id="labdrift"></button><button type="button" class="chaos" id="laboff"></button></div>
+        </div>
+        <div class="tour" id="labtour" hidden aria-live="polite"></div>
+        <div class="lab-alert" id="labalert" hidden aria-live="polite"></div>
+        <div class="flow-scroll"><div class="lab-flow" id="labflow"></div></div>
+        <div class="lab-grid">
+          <div class="lab-col">
+            <section class="ps" aria-labelledby="labh-dash"><h4 id="labh-dash"></h4>
+              <div class="lkpis" id="labkpi"></div>
+              <svg class="spark" id="labspark" viewBox="0 0 220 56" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <h5 id="labh-by"></h5><div class="lbars" id="labbars"></div>
+            </section>
+            <section class="ps" aria-labelledby="labh-lin"><h4 id="labh-lin"></h4><div id="lablin"></div></section>
+          </div>
+          <div class="lab-col">
+            <section class="ps" aria-labelledby="labh-cl"><h4 id="labh-cl"></h4><div id="labcl"></div></section>
+            <section class="ps" aria-labelledby="labh-runs"><h4 id="labh-runs"></h4><ul class="runs" id="labruns"></ul></section>
+            <section class="ps" aria-labelledby="labh-exp"><h4 id="labh-exp"></h4><div id="labexp"></div></section>
+          </div>
+        </div>
+        <div class="lab-grid lab-grid2">
+          <section class="ps" aria-labelledby="labh-tt"><h4 id="labh-tt"></h4>
+            <div class="ttctl"><input type="range" id="labtt" min="0" max="0" value="0" aria-labelledby="labh-tt"><output id="labttv" class="ttv"></output><button type="button" class="chaos ok" id="labttlive" hidden></button></div>
+            <div id="labttbars"></div><table class="hist" id="labhist"></table></section>
+          <section class="ps" aria-labelledby="labh-sql"><h4 id="labh-sql"></h4>
+            <div class="qchips" id="labq"></div>
+            <pre class="sqlbox"><code id="labsqlcode"></code></pre>
+            <div class="dtable" id="labsqlres"></div>
+            <div class="sqlfoot"><span id="labsqlmeta"></span><label class="sw"><input type="checkbox" id="labsqllive" checked><span class="trk" aria-hidden="true"></span><span id="labsqllivel"></span></label></div></section>
+        </div>
+        <ul class="log lablog" id="lablog" aria-live="off"></ul>
+        <details class="lab-code"><summary id="labsum"></summary><div class="codebox"><header><span>PySpark · Structured Streaming</span><span id="labnote"></span></header><pre><code id="labcode"></code></pre></div></details>
+      </div>
+      <div id="pane-step" hidden>
       <div class="steps" id="dsteps"></div>
+      <div class="drules" id="drules"></div>
       <div class="dctl">
         <button class="btn primary bi" style="--i:var(--i-play)" id="drun" type="button"></button>
+        <button class="btn ghost bi" style="--i:var(--i-zap)" id="dall" type="button"></button>
         <button class="btn ghost bi" style="--i:var(--i-redo)" id="dreset" type="button" hidden></button>
       </div>
       <div class="demo">
-        <div class="dtable" id="dtable"></div>
+        <div class="dleft"><div class="dtable" id="dtable"></div><p class="impact" id="dimpact" aria-live="polite"></p></div>
         <div class="dside">
           <ul class="log" id="dlog" aria-live="polite"></ul>
           <div class="codebox" id="dcode"></div>
         </div>
+      </div>
       </div>
         </div>
       </div>
@@ -679,7 +906,7 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
       foot: "Bruno Suassuna · João Pessoa, PB",
       nav_demo: "Demo",
       demo_eyebrow: "ao vivo", demo_h: "Rode o pipeline",
-      demo_p: "Um conjunto pequeno e fictício de pedidos passa pelas três camadas aqui no seu navegador. Execute cada etapa e veja o que sai e o que fica.",
+      demo_p: "Um conjunto pequeno e fictício de pedidos passa pelas camadas aqui no seu navegador, até virar KPI no Power BI. Rode etapa por etapa ou tudo de uma vez, e desligue uma regra de qualidade para ver o estrago no resultado final.",
       demo_note: "Dados fictícios. Os números acima são calculados agora, no seu navegador.",
       col_diag: "diagnóstico", col_orders: "pedidos", d_dup: "duplicado", d_neg: "valor negativo", d_null: "valor nulo", d_ok: "ok",
       run_silver: "Executar Silver", run_gold: "Executar Gold", run_done: "Pipeline concluído", reset: "Recomeçar",
@@ -689,7 +916,15 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
       log_bad: "silver.pedidos: {n} linhas inválidas filtradas (valor nulo ou menor que zero).",
       log_out: "silver.pedidos: {n} linhas confiáveis.",
       log_gold: "gold.receita_por_canal: {n} canais, receita total {v}.",
-      lbl_flow: "Fluxo", totop: "Topo", kbtn_aria: "Abrir busca rápida", hint: "Dica: pressione {k} para buscar seções e projetos.",
+      lbl_flow: "Fluxo", totop: "Topo",
+      r_title: "Regras de qualidade (Silver)", r_dup: "Remover duplicados", r_null: "Filtrar valores nulos", r_neg: "Filtrar valores negativos",
+      r_hint: "Desligue uma regra e veja o impacto no resultado final.",
+      run_pbi: "Publicar no Power BI", run_all: "Executar tudo", d_pass: "passou sem filtro",
+      imp_ok: "Receita correta: o mesmo resultado de quando todas as regras estão ligadas.",
+      imp_diff: "Receita fora do correto em {d} por causa das regras desligadas.",
+      imp_pass: "{n} linha(s) inválida(s) passaram para a Silver e vão contaminar o Gold.",
+      log_pbi: "dataset publicado: {k} medidas disponíveis para o relatório no Power BI.",
+      pbi_title: "Receita por canal", kpi_rev: "Receita total", kpi_orders: "Pedidos", kpi_ticket: "Ticket médio", kbtn_aria: "Abrir busca rápida", hint: "Dica: pressione {k} para buscar seções e projetos.",
       palette_aria: "Paleta de comandos", palette_ph: "Ir para uma seção, projeto ou ação…", palette_empty: "Nada encontrado",
       palette_foot: "↑ ↓ navegar · Enter abrir · Esc fechar",
       g_sections: "Seções", g_projects: "Projetos", g_actions: "Ações",
@@ -732,7 +967,7 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
       foot: "Bruno Suassuna · João Pessoa, Brazil",
       nav_demo: "Demo",
       demo_eyebrow: "live", demo_h: "Run the pipeline",
-      demo_p: "A small, made-up set of orders goes through the three layers right here in your browser. Run each stage and see what leaves and what stays.",
+      demo_p: "A small, made-up set of orders goes through the layers right here in your browser, all the way to a KPI in Power BI. Run it stage by stage or all at once, and turn a quality rule off to see the damage in the final result.",
       demo_note: "Made-up data. The numbers above are computed right now, in your browser.",
       col_diag: "diagnosis", col_orders: "orders", d_dup: "duplicate", d_neg: "negative value", d_null: "null value", d_ok: "ok",
       run_silver: "Run Silver", run_gold: "Run Gold", run_done: "Pipeline finished", reset: "Start over",
@@ -742,7 +977,15 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
       log_bad: "silver.pedidos: {n} invalid rows filtered (null or below zero).",
       log_out: "silver.pedidos: {n} trustworthy rows.",
       log_gold: "gold.receita_por_canal: {n} channels, total revenue {v}.",
-      lbl_flow: "Flow", totop: "Top", kbtn_aria: "Open quick search", hint: "Tip: press {k} to search sections and projects.",
+      lbl_flow: "Flow", totop: "Top",
+      r_title: "Quality rules (Silver)", r_dup: "Remove duplicates", r_null: "Filter null values", r_neg: "Filter negative values",
+      r_hint: "Turn a rule off and see the impact on the final result.",
+      run_pbi: "Publish to Power BI", run_all: "Run all", d_pass: "passed unfiltered",
+      imp_ok: "Correct revenue: same result as with every rule turned on.",
+      imp_diff: "Revenue is off by {d} because of the disabled rules.",
+      imp_pass: "{n} invalid row(s) got into Silver and will contaminate Gold.",
+      log_pbi: "dataset published: {k} measures available to the Power BI report.",
+      pbi_title: "Revenue by channel", kpi_rev: "Total revenue", kpi_orders: "Orders", kpi_ticket: "Average ticket", kbtn_aria: "Open quick search", hint: "Tip: press {k} to search sections and projects.",
       palette_aria: "Command palette", palette_ph: "Jump to a section, project or action…", palette_empty: "Nothing found",
       palette_foot: "↑ ↓ navigate · Enter open · Esc close",
       g_sections: "Sections", g_projects: "Projects", g_actions: "Actions",
@@ -954,7 +1197,7 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
     Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-aria]"), function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria"))); });
     $("lang").textContent = t("lang_btn");
     $("lang").setAttribute("aria-label", t("lang_aria"));
-    renderTabs(); renderPanel(); renderFilters(); renderProjects(); renderStack(); renderCerts(); renderMarquee(); renderDemo();
+    renderTabs(); renderPanel(); renderFilters(); renderProjects(); renderStack(); renderCerts(); renderMarquee(); renderDemo(); if (typeof renderLab === "function" && window.__labReady) { renderLab(); }
     var hp = t("hint").split("{k}");
     $("hint").innerHTML = esc(hp[0]) + "<kbd>" + CMDKEY + "</kbd>" + esc(hp[1] || "");
     $("cmdq").placeholder = t("palette_ph"); $("cmdfoot").textContent = t("palette_foot");
@@ -1154,85 +1397,571 @@ footer .foot { display: flex; justify-content: space-between; align-items: cente
     [1008, "2026-03-03", "app", "45.20"], [1009, "2026-03-04", "web", "99.00"], [1010, "2026-03-04", "loja", "180.00"]
   ];
   var DEMO_GOLD = 'from pyspark.sql import functions as F\n\ngold = (spark.read.table("silver.pedidos")\n    .groupBy("canal")\n    .agg(F.sum("valor").alias("receita"),\n         F.countDistinct("pedido_id").alias("pedidos")))\n\n(gold.write.format("delta").mode("overwrite")\n    .saveAsTable("gold.receita_por_canal"))';
+  var DEMO_DAX = '// Medidas do dataset (modelo semântico)\nReceita Total =\n    SUM ( gold_receita_por_canal[receita] )\n\nPedidos =\n    SUM ( gold_receita_por_canal[pedidos] )\n\nTicket Médio =\n    DIVIDE ( [Receita Total], [Pedidos] )';
+  var CHCOL = ["--accent", "--gold", "--silver"];
   var demoStep = 0, demoBusy = false;
+  var rules = { dup: true, nul: true, neg: true };
 
-  function demoData() {
+  function silverCode() {
+    var l = ['from pyspark.sql import functions as F', '', 'bronze = spark.read.table("bronze.pedidos")', '', 'silver = (bronze'];
+    if (rules.dup) { l.push('    .dropDuplicates(["pedido_id"])'); }
+    l.push('    .withColumn("valor", F.col("valor").cast("decimal(12,2)"))', '    .withColumn("data_pedido", F.to_date("data_pedido"))');
+    if (rules.nul) { l.push('    .filter(F.col("valor").isNotNull())'); }
+    if (rules.neg) { l.push(rules.nul ? '    .filter(F.col("valor") > 0)' : '    .filter(F.col("valor").isNull() | (F.col("valor") > 0))'); }
+    l[l.length - 1] += ")";
+    l.push('', '(silver.write.format("delta").mode("overwrite")', '    .saveAsTable("silver.pedidos"))');
+    return l.join("\n");
+  }
+
+  function compute(rl) {
     var seen = {};
     var rows = ORDERS.map(function (r) {
       var v = parseFloat(r[3]); if (isNaN(v)) { v = null; }
       var issue = null;
       if (seen[r[0]]) { issue = "dup"; } else if (v === null) { issue = "null"; } else if (v <= 0) { issue = "neg"; }
       seen[r[0]] = true;
-      return { id: r[0], date: r[1], ch: r[2], raw: r[3], v: v, issue: issue };
+      var key = issue === "null" ? "nul" : issue;
+      return { id: r[0], date: r[1], ch: r[2], raw: r[3], v: v, issue: issue, rm: !!(issue && rl[key]), pass: !!(issue && !rl[key]) };
     });
-    var good = rows.filter(function (r) { return !r.issue; });
+    var good = rows.filter(function (r) { return !r.rm; });
     var by = {};
-    good.forEach(function (r) { by[r.ch] = by[r.ch] || { ch: r.ch, rev: 0, n: 0 }; by[r.ch].rev += r.v; by[r.ch].n += 1; });
-    var gold = Object.keys(by).map(function (k) { return by[k]; }).sort(function (a, b) { return b.rev - a.rev; });
-    function count(k) { return rows.filter(function (r) { return r.issue === k; }).length; }
+    good.forEach(function (r) {
+      var g = by[r.ch] = by[r.ch] || { ch: r.ch, rev: 0, ids: {} };
+      g.rev += (r.v === null ? 0 : r.v); g.ids[r.id] = true;
+    });
+    var gold = Object.keys(by).map(function (k) { by[k].n = Object.keys(by[k].ids).length; return by[k]; }).sort(function (a, b) { return b.rev - a.rev; });
+    function count(k) { return rows.filter(function (r) { return r.issue === k && r.rm; }).length; }
     return { rows: rows, good: good, gold: gold, dup: count("dup"), neg: count("neg"), nul: count("null"),
-             total: gold.reduce(function (s, g) { return s + g.rev; }, 0) };
+             pass: rows.filter(function (r) { return r.pass; }).length,
+             total: gold.reduce(function (s, g) { return s + g.rev; }, 0),
+             orders: gold.reduce(function (s, g) { return s + g.n; }, 0) };
   }
+  function demoData() { return compute(rules); }
+  var DEMO_REF = compute({ dup: true, nul: true, neg: true });
   function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return o[k]; }); }
+
+  function countUp(el, to, nf, ms) {
+    if (reduce) { el.textContent = nf.format(to); return; }
+    var t0 = performance.now();
+    function tick(now) {
+      var p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = nf.format(to * e);
+      if (p < 1) { requestAnimationFrame(tick); } else { el.textContent = nf.format(to); }
+    }
+    requestAnimationFrame(tick);
+  }
 
   function renderDemo() {
     var d = demoData();
     var nf = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    var counts = [d.rows.length, d.good.length, d.gold.length];
-    var names = ["Bronze", "Silver", "Gold"], cols = ["--bronze", "--silver", "--gold"], units = [t("u_rows"), t("u_rows"), t("u_groups")];
+    var ni = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 0 });
+    var counts = [d.rows.length, d.good.length, d.gold.length, 3];
+    var names = ["Bronze", "Silver", "Gold", "Power BI"], cols = ["--bronze", "--silver", "--gold", "--accent"], units = [t("u_rows"), t("u_rows"), t("u_groups"), "KPIs"];
     $("dsteps").innerHTML = names.map(function (n, i) {
-      return '<button type="button" class="dstep" data-s="' + i + '" aria-pressed="' + (i === demoStep) + '" style="--stage: var(' + cols[i] + ')"><span class="dot"></span><b>' + n + "</b><span>" + counts[i] + " " + units[i] + "</span></button>";
+      return '<button type="button" class="dstep" data-s="' + i + '" aria-pressed="' + (i === demoStep) + '" style="--stage: var(' + cols[i] + ')">' + ic(["db", "shield", "award", "chart"][i], "dsi") + "<b>" + n + "</b><span>" + counts[i] + " " + units[i] + "</span></button>";
     }).join("");
 
-    var html, i;
+    $("drules").innerHTML = '<span class="rules-t">' + ic("shield", "rti") + esc(t("r_title")) + "</span>" +
+      [["dup", "r_dup"], ["nul", "r_null"], ["neg", "r_neg"]].map(function (r) {
+        return '<label class="sw"><input type="checkbox" data-r="' + r[0] + '"' + (rules[r[0]] ? " checked" : "") + (demoBusy ? " disabled" : "") + '><span class="trk" aria-hidden="true"></span><span>' + esc(t(r[1])) + "</span></label>";
+      }).join("") + '<span class="rules-h">' + esc(t("r_hint")) + "</span>";
+
+    var html;
     if (demoStep === 0) {
       html = "<table><thead><tr><th>pedido_id</th><th>data</th><th>canal</th><th>valor (string)</th><th>" + esc(t("col_diag")) + "</th></tr></thead><tbody>" +
         d.rows.map(function (r) {
           var diag = r.issue ? '<span class="tag">' + esc(t("d_" + r.issue)) + "</span>" : '<span class="ok">' + esc(t("d_ok")) + "</span>";
-          return '<tr class="' + (r.issue ? "flag" : "") + '"><td>' + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td>"' + esc(r.raw) + '"</td><td>' + diag + "</td></tr>";
+          return '<tr class="' + (r.issue ? "flag" : "") + '"' + (r.rm ? ' data-rm="1"' : "") + "><td>" + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td>"' + esc(r.raw) + '"</td><td>' + diag + "</td></tr>";
         }).join("") + "</tbody></table>";
     } else if (demoStep === 1) {
-      html = '<table><thead><tr><th>pedido_id</th><th>data</th><th>canal</th><th class="num">valor</th></tr></thead><tbody>' +
-        d.good.map(function (r) { return "<tr><td>" + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td class="num">' + nf.format(r.v) + "</td></tr>"; }).join("") + "</tbody></table>";
-    } else {
-      var max = d.gold[0].rev;
+      var wp = d.pass > 0;
+      html = '<table><thead><tr><th>pedido_id</th><th>data</th><th>canal</th><th class="num">valor</th>' + (wp ? "<th>" + esc(t("col_diag")) + "</th>" : "") + "</tr></thead><tbody>" +
+        d.good.map(function (r) {
+          return '<tr class="' + (r.pass ? "flag" : "") + '"><td>' + r.id + "</td><td>" + r.date + "</td><td>" + r.ch + '</td><td class="num">' + (r.v === null ? "null" : nf.format(r.v)) + "</td>" + (wp ? "<td>" + (r.pass ? '<span class="tag warn">' + esc(t("d_pass")) + "</span>" : '<span class="ok">' + esc(t("d_ok")) + "</span>") + "</td>" : "") + "</tr>";
+        }).join("") + "</tbody></table>";
+    } else if (demoStep === 2) {
+      var max = Math.max(1, d.gold[0].rev);
       html = '<div class="gold">' + d.gold.map(function (g) {
-        return '<div class="grow"><span>' + esc(g.ch) + '</span><span class="gtrack"><span class="gfill" data-w="' + (g.rev / max * 100).toFixed(1) + '"></span></span><span class="gval">' + nf.format(g.rev) + "<small>" + g.n + " " + esc(t("col_orders")) + "</small></span></div>";
+        return '<div class="grow"><span>' + esc(g.ch) + '</span><span class="gtrack"><span class="gfill" data-w="' + Math.max(0, g.rev / max * 100).toFixed(1) + '"></span></span><span class="gval">' + nf.format(g.rev) + "<small>" + g.n + " " + esc(t("col_orders")) + "</small></span></div>";
       }).join("") + "</div>";
+    } else {
+      var acc = 0, segs = d.gold.map(function (g, k) {
+        var a = acc, b = acc + (d.total > 0 ? g.rev / d.total * 100 : 0); acc = b;
+        return "var(" + CHCOL[k % 3] + ") " + a.toFixed(2) + "% " + b.toFixed(2) + "%";
+      });
+      html = '<div class="pbi"><div class="pbi-top"><span class="pbi-t">' + ic("chart", "pbi-i") + esc(t("pbi_title")) + '</span><span class="pbi-tag">Power BI</span></div>' +
+        '<div class="kpis"><div class="kpi"><small>' + esc(t("kpi_rev")) + '</small><b data-cu="' + d.total + '" data-f="n">' + nf.format(d.total) + '</b></div>' +
+        '<div class="kpi"><small>' + esc(t("kpi_orders")) + '</small><b data-cu="' + d.orders + '" data-f="i">' + ni.format(d.orders) + '</b></div>' +
+        '<div class="kpi"><small>' + esc(t("kpi_ticket")) + '</small><b data-cu="' + (d.orders ? d.total / d.orders : 0) + '" data-f="n">' + nf.format(d.orders ? d.total / d.orders : 0) + "</b></div></div>" +
+        '<div class="pbi-body"><div class="donut" style="background: conic-gradient(' + segs.join(", ") + ')" role="img" aria-label="' + esc(t("pbi_title")) + '"><span>' + esc(t("kpi_rev")) + '</span></div><ul class="legend">' +
+        d.gold.map(function (g, k) { return '<li><i style="background: var(' + CHCOL[k % 3] + ')"></i><span>' + esc(g.ch) + "</span><b>" + (d.total > 0 ? Math.round(g.rev / d.total * 100) : 0) + "%</b></li>"; }).join("") + "</ul></div></div>";
     }
     $("dtable").innerHTML = html;
     Array.prototype.forEach.call(document.querySelectorAll("#dtable .gfill"), function (el) {
       requestAnimationFrame(function () { requestAnimationFrame(function () { el.style.width = el.getAttribute("data-w") + "%"; }); });
     });
+    Array.prototype.forEach.call(document.querySelectorAll("#dtable [data-cu]"), function (el) {
+      countUp(el, +el.getAttribute("data-cu"), el.getAttribute("data-f") === "i" ? ni : nf, 900);
+    });
+
+    var imp = $("dimpact"), diff = d.total - DEMO_REF.total;
+    if (demoStep >= 2) {
+      if (Math.abs(diff) < 0.005) { imp.className = "impact good"; imp.innerHTML = ic("check", "imi") + esc(t("imp_ok")); }
+      else { imp.className = "impact bad"; imp.innerHTML = ic("zap", "imi") + esc(fill(t("imp_diff"), { d: (diff > 0 ? "+" : "−") + nf.format(Math.abs(diff)) })); }
+    } else if (demoStep === 1 && d.pass > 0) {
+      imp.className = "impact bad"; imp.innerHTML = ic("zap", "imi") + esc(fill(t("imp_pass"), { n: d.pass }));
+    } else { imp.className = "impact"; imp.textContent = ""; }
 
     var lines = [fill(t("log_bronze"), { n: d.rows.length })];
     if (demoStep >= 1) {
       lines.push(fill(t("log_dup"), { n: d.dup }), fill(t("log_bad"), { n: d.neg + d.nul }), fill(t("log_out"), { n: d.good.length }));
     }
     if (demoStep >= 2) { lines.push(fill(t("log_gold"), { n: d.gold.length, v: nf.format(d.total) })); }
-    $("dlog").innerHTML = lines.map(function (l, k) { return '<li class="' + (k >= lines.length - (demoStep === 1 ? 3 : 1) ? "new" : "") + '">' + esc(l) + "</li>"; }).join("");
+    if (demoStep >= 3) { lines.push(fill(t("log_pbi"), { k: 3 })); }
+    var newN = demoStep === 1 ? 3 : demoStep === 0 ? 1 : 1;
+    $("dlog").innerHTML = lines.map(function (l, k) { return '<li class="' + (k >= lines.length - newN ? "new" : "") + '">' + esc(l) + "</li>"; }).join("");
 
-    var sid = ["bronze", "silver", "gold"][demoStep];
+    var sid = ["bronze", "silver", "gold", "pbi"][demoStep];
     var st = STAGES.filter(function (x) { return x.id === sid; })[0];
-    $("dcode").innerHTML = "<header><span>PySpark · Delta Lake</span><span>" + esc(L(st.name)) + "</span></header><pre><code>" + highlight(sid === "gold" ? DEMO_GOLD : st.code) + "</code></pre>";
+    var code = sid === "gold" ? DEMO_GOLD : sid === "silver" ? silverCode() : sid === "pbi" ? DEMO_DAX : st.code;
+    $("dcode").innerHTML = "<header><span>" + (sid === "pbi" ? "DAX · Power BI" : "PySpark · Delta Lake") + "</span><span>" + esc(sid === "pbi" ? "Power BI" : L(st.name)) + "</span></header><pre><code>" + highlight(code) + "</code></pre>";
 
     var run = $("drun");
-    run.textContent = demoStep === 0 ? t("run_silver") : demoStep === 1 ? t("run_gold") : t("run_done");
-    run.disabled = demoStep > 1 || demoBusy;
+    run.textContent = demoStep === 0 ? t("run_silver") : demoStep === 1 ? t("run_gold") : demoStep === 2 ? t("run_pbi") : t("run_done");
+    run.disabled = demoStep > 2 || demoBusy;
+    $("dall").textContent = t("run_all"); $("dall").hidden = demoStep > 0; $("dall").disabled = demoBusy;
     $("dreset").textContent = t("reset"); $("dreset").hidden = demoStep === 0;
-    i = 0;
   }
-  $("drun").addEventListener("click", function () {
-    if (demoBusy || demoStep > 1) { return; }
+
+  function advance(cb) {
+    if (demoBusy || demoStep > 2) { return; }
+    demoBusy = true; renderDemoBtns();
+    function finish() { demoStep += 1; demoBusy = false; renderDemo(); if (cb) { cb(); } }
     if (demoStep === 0 && !reduce) {
-      demoBusy = true; $("drun").disabled = true;
-      Array.prototype.forEach.call(document.querySelectorAll("#dtable tr.flag"), function (tr) { tr.classList.add("drop"); });
-      setTimeout(function () { demoStep = 1; demoBusy = false; renderDemo(); }, 750);
-    } else { demoStep += 1; renderDemo(); }
+      var rm = document.querySelectorAll("#dtable tr[data-rm]");
+      Array.prototype.forEach.call(rm, function (tr, k) { setTimeout(function () { tr.classList.add("drop"); }, k * 160); });
+      setTimeout(finish, rm.length * 160 + 650);
+    } else { setTimeout(finish, reduce ? 0 : 350); }
+  }
+  function renderDemoBtns() {
+    $("drun").disabled = true; $("dall").disabled = true;
+    Array.prototype.forEach.call(document.querySelectorAll("#drules input"), function (i) { i.disabled = true; });
+  }
+  $("drun").addEventListener("click", function () { advance(); });
+  $("dall").addEventListener("click", function () {
+    advance(function () { setTimeout(function () { advance(function () { setTimeout(function () { advance(); }, 1100); }); }, 1100); });
   });
   $("dreset").addEventListener("click", function () { if (!demoBusy) { demoStep = 0; renderDemo(); } });
   $("dsteps").addEventListener("click", function (e) {
     var b = e.target.closest(".dstep"); if (b && !demoBusy) { demoStep = +b.getAttribute("data-s"); renderDemo(); }
+  });
+  $("drules").addEventListener("change", function (e) {
+    var i = e.target.closest("input[data-r]"); if (!i) { return; }
+    if (demoBusy) { renderDemo(); return; }
+    rules[i.getAttribute("data-r")] = i.checked; renderDemo();
+    var f = document.querySelector('#drules input[data-r="' + i.getAttribute("data-r") + '"]'); if (f) { f.focus(); }
+  });
+
+  /* ---------- Laboratório ao vivo: plataforma de dados simulada ---------- */
+  var LAB_T = {
+    pt: {
+      lab_tab_lab: "Simulador ao vivo", lab_tab_step: "Passo a passo",
+      lab_intro: "Eventos de pedidos chegam da fonte em micro-lotes, passam pelo Data Factory, Bronze, Silver e Gold e viram KPI. Injete um problema e veja a pipeline reagir.",
+      lab_pause: "Pausar", lab_resume: "Retomar", lab_reset: "Reiniciar", lab_speed: "Velocidade",
+      lab_chaos: "Injetar problema", lab_dup: "Duplicados", lab_bad: "Dados inválidos", lab_drift: "Schema drift", lab_off: "Derrubar a fonte",
+      lab_n_src: "Fontes", lab_n_adf: "Data Factory", lab_n_quar: "Quarentena",
+      lab_u_ev: "eventos", lab_u_runs: "execuções", lab_u_rows: "linhas", lab_u_ord: "pedidos",
+      lab_runs: "Monitor de execuções", lab_ok: "Sucesso", lab_fail: "Falhou",
+      lab_run_ok: "{n} eventos processados", lab_run_re: "{n} eventos, com o backlog reprocessado", lab_run_fail: "fonte indisponível, tentativa {a}/3",
+      lab_exp: "Expectativas de qualidade", lab_e_null: "valor não nulo", lab_e_pos: "valor maior que zero", lab_e_uniq: "pedido_id único", lab_e_schema: "schema esperado", lab_fails: "falhas",
+      lab_dash: "Gold ao vivo", lab_k_rev: "Receita", lab_k_ord: "Pedidos", lab_k_q: "Qualidade", lab_k_tp: "Vazão", lab_k_lat: "Latência", lab_ev_s: "ev/s", lab_by: "Receita por canal (clique para rastrear)",
+      lab_lin: "Linhagem", lab_lin_hint: "Clique em um canal para rastrear de onde vem cada real.", lab_lin_head: "{ch}: {n} pedidos, rastreados até o arquivo de origem",
+      lab_log0: "Simulador iniciado. Eventos de pedidos chegando da fonte.",
+      lab_l_dup: "Rajada de duplicados na fonte nas próximas execuções.", lab_l_bad: "Rajada de valores inválidos nas próximas execuções.",
+      lab_l_drift: "Schema drift: a fonte passou a enviar a coluna 'cupom'.", lab_l_fix: "mergeSchema aplicado na Silver. A coluna nova passa a ser aceita.",
+      lab_l_off: "Fonte derrubada. O Data Factory vai tentar de novo.", lab_l_fail: "Execução #{r} falhou (HTTP 503). Nova tentativa {a}/3 em 2s.",
+      lab_l_back: "Fonte de volta. Reprocessando {n} eventos acumulados, sem duplicar nada.", lab_l_quar: "Execução #{r}: {n} eventos foram para a quarentena.",
+      lab_alert_drift: "Schema drift detectado: coluna nova 'cupom'. A Silver está mandando os eventos para a quarentena.", lab_fix: "Aplicar mergeSchema",
+      lab_alert_off: "Fonte indisponível. O Data Factory está tentando de novo, e nada se perde: os eventos ficam no backlog.",
+      lab_code: "Ver o código por trás do simulador", lab_code_note: "Exemplo ilustrativo (Auto Loader, quarentena e streaming no Databricks)",
+      lab_tour_btn: "Ver o tour", lab_tour_skip: "Pular tour",
+      lab_tour_t1: "Os dados chegam", lab_tour_d1: "Pedidos entram da fonte em micro-lotes e atravessam Bronze, Silver e Gold. Cada ponto é um pedido.",
+      lab_tour_t2: "Chega sujeira", lab_tour_d2: "Valores nulos, negativos e duplicados aparecem. A Silver barra tudo e manda para a quarentena.",
+      lab_tour_t3: "A fonte cai", lab_tour_d3: "O Data Factory falha, tenta de novo e reprocessa o backlog sem perder nem duplicar nada.",
+      lab_tour_t4: "O resultado continua certo", lab_tour_d4: "A Gold só recebe dado validado, então a receita no Power BI é confiável. A linhagem mostra de qual arquivo veio cada real.",
+      lab_tour_t5: "Agora é com você", lab_tour_d5: "Injete seus próprios problemas, volte no tempo com o slider ou consulte as tabelas no console SQL.",
+      lab_why: "Motivos", lab_w_dup: "duplicado", lab_w_nul: "nulo", lab_w_neg: "negativo", lab_w_sch: "schema",
+      lab_cl: "Cluster Databricks (autoscaling)", lab_cl_w: "workers ativos", lab_tt: "Delta Lake: viagem no tempo", lab_tt_ver: "VERSION AS OF {v}", lab_tt_live: "Voltar ao presente",
+      lab_tt_hint: "Arraste para ver a tabela Gold como ela era em uma versão anterior.", lab_tt_cur: "versão atual", lab_tt_diff: "{d} de diferença para a versão atual",
+      lab_h_ver: "versão", lab_h_time: "horário", lab_h_op: "operação", lab_h_ord: "pedidos",
+      lab_sql: "Console SQL (tabelas ao vivo)", lab_sql_live: "Atualizar ao vivo", lab_sql_meta: "{n} linhas em {s} s", lab_sql_empty: "Nenhuma linha ainda.",
+      lab_q1: "Receita por canal", lab_q2: "Motivos da quarentena", lab_q3: "Últimas rejeições", lab_q4: "Ticket médio", lab_q5: "Qualidade geral", lab_q6: "Maiores pedidos"
+    },
+    en: {
+      lab_tab_lab: "Live simulator", lab_tab_step: "Step by step",
+      lab_intro: "Order events arrive from the source in micro-batches, go through Data Factory, Bronze, Silver and Gold, and become KPIs. Inject a problem and watch the pipeline react.",
+      lab_pause: "Pause", lab_resume: "Resume", lab_reset: "Restart", lab_speed: "Speed",
+      lab_chaos: "Inject a problem", lab_dup: "Duplicates", lab_bad: "Bad data", lab_drift: "Schema drift", lab_off: "Take source down",
+      lab_n_src: "Sources", lab_n_adf: "Data Factory", lab_n_quar: "Quarantine",
+      lab_u_ev: "events", lab_u_runs: "runs", lab_u_rows: "rows", lab_u_ord: "orders",
+      lab_runs: "Run monitor", lab_ok: "Succeeded", lab_fail: "Failed",
+      lab_run_ok: "{n} events processed", lab_run_re: "{n} events, backlog reprocessed", lab_run_fail: "source unavailable, attempt {a}/3",
+      lab_exp: "Data quality expectations", lab_e_null: "value is not null", lab_e_pos: "value greater than zero", lab_e_uniq: "unique pedido_id", lab_e_schema: "expected schema", lab_fails: "failures",
+      lab_dash: "Live Gold", lab_k_rev: "Revenue", lab_k_ord: "Orders", lab_k_q: "Quality", lab_k_tp: "Throughput", lab_k_lat: "Latency", lab_ev_s: "ev/s", lab_by: "Revenue by channel (click to trace)",
+      lab_lin: "Lineage", lab_lin_hint: "Click a channel to trace where every dollar comes from.", lab_lin_head: "{ch}: {n} orders, traced back to the source file",
+      lab_log0: "Simulator started. Order events arriving from the source.",
+      lab_l_dup: "Burst of duplicates from the source in the next runs.", lab_l_bad: "Burst of invalid values in the next runs.",
+      lab_l_drift: "Schema drift: the source started sending the 'cupom' column.", lab_l_fix: "mergeSchema applied on Silver. The new column is now accepted.",
+      lab_l_off: "Source taken down. Data Factory will retry.", lab_l_fail: "Run #{r} failed (HTTP 503). Retry {a}/3 in 2s.",
+      lab_l_back: "Source is back. Reprocessing {n} backlog events, with no duplicates.", lab_l_quar: "Run #{r}: {n} events went to quarantine.",
+      lab_alert_drift: "Schema drift detected: new column 'cupom'. Silver is sending events to quarantine.", lab_fix: "Apply mergeSchema",
+      lab_alert_off: "Source unavailable. Data Factory is retrying, and nothing is lost: events wait in the backlog.",
+      lab_code: "See the code behind the simulator", lab_code_note: "Illustrative example (Auto Loader, quarantine and streaming on Databricks)",
+      lab_tour_btn: "Watch the tour", lab_tour_skip: "Skip tour",
+      lab_tour_t1: "Data arrives", lab_tour_d1: "Orders enter from the source in micro-batches and cross Bronze, Silver and Gold. Each dot is an order.",
+      lab_tour_t2: "Dirty data shows up", lab_tour_d2: "Nulls, negatives and duplicates appear. Silver blocks them all and sends them to quarantine.",
+      lab_tour_t3: "The source goes down", lab_tour_d3: "Data Factory fails, retries and reprocesses the backlog without losing or duplicating anything.",
+      lab_tour_t4: "The result stays correct", lab_tour_d4: "Gold only receives validated data, so revenue in Power BI is trustworthy. Lineage shows which file every dollar came from.",
+      lab_tour_t5: "Now it's your turn", lab_tour_d5: "Inject your own problems, travel back in time with the slider or query the tables in the SQL console.",
+      lab_why: "Reasons", lab_w_dup: "duplicate", lab_w_nul: "null", lab_w_neg: "negative", lab_w_sch: "schema",
+      lab_cl: "Databricks cluster (autoscaling)", lab_cl_w: "active workers", lab_tt: "Delta Lake: time travel", lab_tt_ver: "VERSION AS OF {v}", lab_tt_live: "Back to present",
+      lab_tt_hint: "Drag to see the Gold table as it was at an earlier version.", lab_tt_cur: "current version", lab_tt_diff: "{d} off the current version",
+      lab_h_ver: "version", lab_h_time: "time", lab_h_op: "operation", lab_h_ord: "orders",
+      lab_sql: "SQL console (live tables)", lab_sql_live: "Live refresh", lab_sql_meta: "{n} rows in {s} s", lab_sql_empty: "No rows yet.",
+      lab_q1: "Revenue by channel", lab_q2: "Quarantine reasons", lab_q3: "Latest rejections", lab_q4: "Average ticket", lab_q5: "Overall quality", lab_q6: "Biggest orders"
+    }
+  };
+  Object.keys(LAB_T.pt).forEach(function (k) { I18N.pt[k] = LAB_T.pt[k]; I18N.en[k] = LAB_T.en[k]; });
+  var LAB_CODE = 'from pyspark.sql import functions as F\n\nevents = (spark.readStream.format("cloudFiles")\n    .option("cloudFiles.format", "json")\n    .option("cloudFiles.schemaEvolutionMode", "addNewColumns")\n    .load("abfss://raw@<storage>.dfs.core.windows.net/pedidos/"))\n\nchecked = events.withColumn("motivo",\n    F.when(F.col("valor").isNull(), "nulo")\n     .when(F.col("valor") <= 0, "negativo"))\n\nvalid = (checked.filter("motivo IS NULL")\n    .dropDuplicates(["pedido_id"]))\nbad = checked.filter("motivo IS NOT NULL")\n\n(bad.writeStream.option("checkpointLocation", "/chk/quarentena")\n    .toTable("silver.pedidos_quarentena"))\n(valid.writeStream.option("checkpointLocation", "/chk/silver")\n    .toTable("silver.pedidos"))';
+
+  var lab = (function () {
+    var NODES = [["src", "inbox", "--ink-2"], ["adf", "flow", "--accent"], ["bronze", "db", "--bronze"], ["silver", "shield", "--silver"], ["gold", "award", "--gold"], ["pbi", "chart", "--accent"]];
+    var CH = ["web", "app", "loja"], BATCH = 1500, FLOWY = 62, QY = 176;
+    var T = { on: false, t: 0, step: -1, auto: false }, TOUR = [0, 6500, 13000, 19500, 26000], TOUR_END = 33000, TOUR_HL = [["src", "adf", "bronze"], ["silver", "quar"], ["adf"], ["gold", "pbi"], []];
+    var host = $("labflow"), S, W = 700, running = false, last = 0, lastPaint = 0, inView = false, tabOn = true, sel = null;
+    function R(a, b) { return a + Math.random() * (b - a); }
+    function pad(n, k) { n = String(n); while (n.length < k) { n = "0" + n; } return n; }
+    function fresh() {
+      return { run: true, speed: 1, t: 0, acc: 0, runId: 0, nextId: 2001, parts: [], seen: {}, recent: [], emitted: 0, runs: [], logs: [], hist: [0],
+        b: 0, s: 0, q: { dup: 0, nul: 0, neg: 0, sch: 0 }, rev: { web: 0, app: 0, loja: 0 }, ord: { web: 0, app: 0, loja: 0 }, lin: { web: [], app: [], loja: [] },
+        bronze: [], vers: [], tv: null, w: 2, wt: 0, arr: [], lat: [], dupBurst: 0, badBurst: 0, drift: false, fixed: false, outage: 0, backlog: [], t0: Date.now(), nruns: 0 };
+    }
+    function money(v) { return new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { style: "currency", currency: "BRL" }).format(v); }
+    function clock() { var d = new Date(S.t0 + S.t); return pad(d.getHours(), 2) + ":" + pad(d.getMinutes(), 2) + ":" + pad(d.getSeconds(), 2); }
+    function log(key, o, kind) { S.logs.unshift({ ts: clock(), key: key, o: o || {}, kind: kind || "" }); if (S.logs.length > 7) { S.logs.pop(); } }
+
+    function build() {
+      host.innerHTML = '<div class="lbus" aria-hidden="true"></div>' + NODES.map(function (n, i) {
+        return '<div class="lnode" data-k="' + n[0] + '" style="left:' + ((i + 0.5) / 6 * 100).toFixed(3) + '%; --nc: var(' + n[2] + ')">' + ic(n[1], "lni") + '<span class="lnm" data-n="' + n[0] + '"></span><b class="lct" id="lc-' + n[0] + '">0</b><small id="lu-' + n[0] + '"></small></div>';
+      }).join("") + '<div class="lq" id="lq" style="left:' + ((3.5) / 6 * 100).toFixed(3) + '%">' + ic("zap", "lqi") + '<span class="lnm" data-n="quar"></span><b class="lct" id="lc-quar">0</b></div><div class="lpts" id="lpts" aria-hidden="true"></div>';
+      measure();
+    }
+    function measure() { W = host.clientWidth || 700; }
+    function labels() {
+      Array.prototype.forEach.call(host.querySelectorAll("[data-n]"), function (el) {
+        var k = el.getAttribute("data-n");
+        el.textContent = k === "quar" ? t("lab_n_quar") : k === "src" ? t("lab_n_src") : k === "adf" ? t("lab_n_adf") : k === "pbi" ? "Power BI" : k.charAt(0).toUpperCase() + k.slice(1);
+      });
+      var u = { src: "lab_u_ev", adf: "lab_u_runs", bronze: "lab_u_rows", silver: "lab_u_rows", gold: "lab_u_ord", pbi: "" };
+      Object.keys(u).forEach(function (k) { $("lu-" + k).textContent = u[k] ? t(u[k]) : "KPIs"; });
+    }
+
+    /* eventos */
+    function genEvent(runId) {
+      var ev, pDup = S.dupBurst > 0 ? 0.5 : 0.03, pBad = S.badBurst > 0 ? 0.55 : 0.07;
+      if (S.recent.length && Math.random() < pDup) {
+        var o = S.recent[Math.floor(Math.random() * S.recent.length)];
+        ev = { id: o.id, ch: o.ch, v: o.v, file: o.file };
+      } else {
+        var ch = CH[Math.random() < 0.4 ? 0 : Math.random() < 0.58 ? 1 : 2];
+        var v = ch === "web" ? R(40, 220) : ch === "app" ? R(20, 150) : R(80, 400);
+        v = Math.round(v * 100) / 100;
+        if (Math.random() < pBad) { v = Math.random() < 0.5 ? null : -Math.round(R(5, 45) * 100) / 100; }
+        ev = { id: S.nextId++, ch: ch, v: v, file: "bronze/pedidos/part-" + pad(runId, 4) + ".json" };
+        if (v !== null && v > 0) { S.recent.push(ev); if (S.recent.length > 30) { S.recent.shift(); } }
+      }
+      ev.drift = S.drift;
+      return ev;
+    }
+    function decide(ev) {
+      if (S.seen[ev.id]) { return "dup"; }
+      if (ev.v === null) { return "nul"; }
+      if (ev.v <= 0) { return "neg"; }
+      if (ev.drift && !S.fixed) { return "sch"; }
+      S.seen[ev.id] = true; return null;
+    }
+    var dotsHost = null;
+    function spawn(ev, delay) {
+      var p = { ev: ev, why: decide(ev), born: S.t + delay, life: R(2300, 3000), lane: R(-20, 20), stage: 0, fall: -1, el: null };
+      S.emitted++;
+      if (reduce) { for (var k = 1; k <= 4; k++) { stage(p, k); } return; }
+      var el = document.createElement("i"); el.className = "pt"; el.style.opacity = "0"; dotsHost.appendChild(el); p.el = el; S.parts.push(p);
+    }
+    function stage(p, k) {
+      if (k === 2) { S.b++; S.arr.push(S.t); p.row = { id: p.ev.id, ch: p.ev.ch, v: p.ev.v, f: p.ev.file, st: null, why: null, t: clock() }; S.bronze.push(p.row); }
+      if (k === 3) {
+        if (p.row) { p.row.st = p.why ? "q" : "s"; p.row.why = p.why; }
+        if (p.why) { S.q[p.why]++; p.fall = S.t; if (p.el) { p.el.className = "pt bad"; } } else { S.s++; }
+      }
+      if (k === 4 && !p.why) {
+        var e = p.ev; S.rev[e.ch] += e.v; S.ord[e.ch]++; S.lin[e.ch].unshift({ id: e.id, v: e.v, f: e.file }); if (S.lin[e.ch].length > 6) { S.lin[e.ch].pop(); }
+        S.lat.push(p.life); if (S.lat.length > 30) { S.lat.shift(); }
+        if (p.el) { p.el.className = "pt gd"; }
+      }
+    }
+    function stepParts() {
+      var x0 = W / 12, x5 = W * 11 / 12, keep = [];
+      S.parts.forEach(function (p) {
+        var age = S.t - p.born;
+        if (age < 0) { keep.push(p); return; }
+        var prog = Math.min(1, age / p.life), tgt = Math.floor(prog * 5 + 1e-9);
+        while (p.stage < tgt && (p.fall < 0)) { p.stage++; stage(p, p.stage); }
+        var x, y = FLOWY + p.lane, o = 1;
+        if (p.fall >= 0) {
+          var f = Math.min(1, (S.t - p.fall) / 650);
+          x = x0 + (x5 - x0) * 0.6; y = FLOWY + p.lane + (QY - FLOWY - p.lane) * f; o = 1 - f * 0.9;
+          if (f >= 1) { p.el.remove(); return; }
+        } else {
+          x = x0 + (x5 - x0) * prog; if (prog >= 1) { p.el.remove(); return; }
+        }
+        p.el.style.opacity = String(o); p.el.style.transform = "translate3d(" + (x - 4).toFixed(1) + "px," + (y - 4).toFixed(1) + "px,0)";
+        keep.push(p);
+      });
+      S.parts = keep;
+    }
+
+    /* micro-lotes */
+    function tick() {
+      S.runId++; S.nruns++;
+      var n = 3 + Math.floor(Math.random() * 4), evs = [], i;
+      for (i = 0; i < n; i++) { evs.push(genEvent(S.runId)); }
+      var failed = false;
+      if (S.outage > 0) {
+        S.outage--; S.backlog = S.backlog.concat(evs); failed = true;
+        var a = 2 - S.outage;
+        S.runs.unshift({ id: S.runId, ok: false, a: a, n: n, ts: clock() });
+        log("lab_l_fail", { r: S.runId, a: a }, "warn");
+      } else {
+        var re = S.backlog.length > 0;
+        if (re) { log("lab_l_back", { n: S.backlog.length }, "ok"); evs = S.backlog.concat(evs); S.backlog = []; }
+        S.runs.unshift({ id: S.runId, ok: true, n: evs.length, re: re, ts: clock() });
+        evs.forEach(function (ev, k) { spawn(ev, k * 130); });
+      }
+      if (S.runs.length > 5) { S.runs.pop(); }
+      if (S.badBurst > 0) { S.badBurst--; }
+      if (S.dupBurst > 0) { S.dupBurst--; }
+      var snapO = S.ord.web + S.ord.app + S.ord.loja;
+      S.vers.push({ v: S.vers.length ? S.vers[S.vers.length - 1].v + 1 : 0, t: clock(), rev: { web: S.rev.web, app: S.rev.app, loja: S.rev.loja }, ord: snapO, op: S.vers.length ? "STREAMING UPDATE" : "CREATE TABLE" });
+      if (S.vers.length > 120) { S.vers.shift(); if (S.tv !== null) { S.tv = Math.max(0, S.tv - 1); } }
+      var tot = S.rev.web + S.rev.app + S.rev.loja; S.hist.push(tot); if (S.hist.length > 36) { S.hist.shift(); }
+    }
+
+    /* render */
+    function pct(n, d) { return d > 0 ? (n / d * 100) : 100; }
+    function paint() {
+      var nf = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1 });
+      var rev = S.rev.web + S.rev.app + S.rev.loja, ord = S.ord.web + S.ord.app + S.ord.loja;
+      var recent = S.arr.filter(function (x) { return S.t - x < 5000; }).length / 5;
+      var lat = S.lat.length ? S.lat.slice().sort(function (a, b) { return a - b; })[Math.floor(S.lat.length / 2)] / 1000 : 0;
+      $("lc-src").textContent = S.emitted; $("lc-adf").textContent = S.nruns; $("lc-bronze").textContent = S.b; $("lc-silver").textContent = S.s; $("lc-gold").textContent = ord;
+      $("lc-pbi").textContent = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { style: "currency", currency: "BRL", notation: "compact", maximumFractionDigits: 1 }).format(rev); $("lc-quar").textContent = S.q.dup + S.q.nul + S.q.neg + S.q.sch;
+      /* KPIs */
+      var q = S.b ? S.s / S.b * 100 : 100;
+      $("labkpi").innerHTML = [["lab_k_rev", money(rev)], ["lab_k_ord", ord], ["lab_k_q", nf.format(q) + "%"], ["lab_k_tp", nf.format(recent) + " " + t("lab_ev_s")], ["lab_k_lat", nf.format(lat) + " s"]].map(function (k) { return '<div class="kpi"><small>' + esc(t(k[0])) + "</small><b>" + esc(String(k[1])) + "</b></div>"; }).join("");
+      /* barras + linhagem */
+      var max = Math.max(1, S.rev.web, S.rev.app, S.rev.loja);
+      var order = CH.slice().sort(function (a, b) { return S.rev[b] - S.rev[a]; });
+      $("labbars").innerHTML = order.map(function (c, k) {
+        return '<button type="button" class="lbar" data-ch="' + c + '" aria-pressed="' + (sel === c) + '"><span>' + c + '</span><span class="gtrack"><span class="gfill" style="width:' + Math.max(0, S.rev[c] / max * 100).toFixed(1) + '%; transition: width .5s"></span></span><b>' + esc(money(S.rev[c])) + "</b></button>";
+      }).join("");
+      var lin = $("lablin");
+      if (!sel) { lin.innerHTML = '<p class="lhint">' + esc(t("lab_lin_hint")) + "</p>"; }
+      else {
+        lin.innerHTML = '<p class="lhead">' + esc(fill(t("lab_lin_head"), { ch: sel, n: S.ord[sel] })) + "</p><ul>" + S.lin[sel].map(function (e) { return "<li><b>#" + e.id + "</b><span>" + esc(money(e.v)) + "</span><code>" + esc(e.f) + "</code></li>"; }).join("") + "</ul>";
+      }
+      /* sparkline */
+      var h = S.hist, mx = Math.max(1, h[h.length - 1]), pts = h.map(function (v, i) { return (i / Math.max(1, 35) * 220).toFixed(1) + "," + (52 - v / mx * 46).toFixed(1); }).join(" ");
+      $("labspark").innerHTML = '<polyline points="0,52 ' + pts + " " + ((h.length - 1) / 35 * 220).toFixed(1) + ',52" fill="var(--accent)" opacity=".12"/><polyline points="' + pts + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+      /* expectativas */
+      var ex = [["lab_e_null", S.q.nul], ["lab_e_pos", S.q.neg], ["lab_e_uniq", S.q.dup], ["lab_e_schema", S.q.sch]];
+      $("labexp").innerHTML = ex.map(function (e) {
+        var p = pct(S.b - e[1], S.b);
+        return '<div class="ex"><code>' + esc(t(e[0])) + '</code><span class="extr"><span class="exf" style="width:' + p.toFixed(1) + '%; background:' + (e[1] ? "var(--gold)" : "#2DBE6C") + '"></span></span><b class="' + (e[1] ? "w" : "") + '">' + (e[1] ? e[1] + " " + esc(t("lab_fails")) : "100%") + "</b></div>";
+      }).join("");
+      /* cluster */
+      var tgt = Math.max(2, Math.min(8, 2 + Math.ceil(S.parts.length / 5)));
+      if (tgt > S.w) { S.w = tgt; S.wt = S.t; } else if (tgt < S.w && S.t - S.wt > 4000) { S.w--; S.wt = S.t; }
+      var wk = ""; for (var wi = 0; wi < 8; wi++) { wk += '<i class="wk' + (wi < S.w ? " on" : "") + '"></i>'; }
+      $("labcl").innerHTML = '<div class="wks" aria-hidden="true">' + wk + '</div><p class="clm"><b>' + S.w + "/8</b> " + esc(t("lab_cl_w")) + " · <b>" + nf.format(S.w * 0.75) + "</b> DBU/h</p>";
+      /* time travel */
+      var vs = S.vers, lastV = vs.length - 1, cur = S.tv === null ? lastV : S.tv, snap = vs[cur], head = vs[lastV];
+      var sl = $("labtt"); sl.max = String(lastV); sl.value = String(cur);
+      $("labttv").textContent = S.tv === null ? t("lab_tt_cur") + " (v" + head.v + ")" : fill(t("lab_tt_ver"), { v: snap.v });
+      $("labttlive").hidden = S.tv === null;
+      var mxs = Math.max(1, head.rev.web, head.rev.app, head.rev.loja), sT = snap.rev.web + snap.rev.app + snap.rev.loja, hT = head.rev.web + head.rev.app + head.rev.loja;
+      $("labttbars").innerHTML = CH.map(function (c) {
+        return '<div class="ttr"><span>' + c + '</span><span class="gtrack"><span class="ttg" style="width:' + (head.rev[c] / mxs * 100).toFixed(1) + '%"></span><span class="gfill" style="width:' + (snap.rev[c] / mxs * 100).toFixed(1) + '%"></span></span><b>' + esc(money(snap.rev[c])) + "</b></div>";
+      }).join("") + '<p class="lhint">' + esc(S.tv === null ? t("lab_tt_hint") : fill(t("lab_tt_diff"), { d: money(hT - sT) })) + "</p>";
+      $("labhist").innerHTML = "<thead><tr><th>" + esc(t("lab_h_ver")) + "</th><th>" + esc(t("lab_h_time")) + "</th><th>" + esc(t("lab_h_op")) + '</th><th class="num">' + esc(t("lab_h_ord")) + "</th></tr></thead><tbody>" +
+        vs.slice(-5).reverse().map(function (v) { return "<tr" + (v === snap ? ' class="cur"' : "") + "><td>" + v.v + "</td><td>" + v.t + "</td><td>" + v.op + '</td><td class="num">' + v.ord + "</td></tr>"; }).join("") + "</tbody>";
+      /* SQL */
+      if ($("labsqllive").checked && ts0() - lastSql > 1000) { sql(); }
+      /* execuções */
+      $("labruns").innerHTML = S.runs.map(function (r) {
+        return '<li class="' + (r.ok ? "ok" : "bad") + '"><span class="rs">' + esc(r.ok ? t("lab_ok") : t("lab_fail")) + "</span><span>#" + pad(r.id, 4) + " · " + esc(r.ok ? fill(t(r.re ? "lab_run_re" : "lab_run_ok"), { n: r.n }) : fill(t("lab_run_fail"), { a: r.a })) + "</span><time>" + r.ts + "</time></li>";
+      }).join("");
+      $("lablog").innerHTML = S.logs.map(function (l, k) { return '<li class="' + (k === 0 ? "new " : "") + l.kind + '"><time>' + l.ts + "</time> " + esc(fill(t(l.key), l.o)) + "</li>"; }).join("");
+      /* tour */
+      var tb = $("labtour");
+      if (T.on && T.step >= 0) {
+        var key = T.step + lang;
+        if (tb.getAttribute("data-k") !== key) {
+          tb.setAttribute("data-k", key); tb.hidden = false;
+          tb.innerHTML = '<span class="tn">' + (T.step + 1) + '/5</span><div class="ttx"><b>' + esc(t("lab_tour_t" + (T.step + 1))) + "</b><span>" + esc(t("lab_tour_d" + (T.step + 1))) + '</span></div><button type="button" class="chaos ok" id="tourskip">' + esc(t("lab_tour_skip")) + '</button><i class="tpg"></i>';
+        }
+        tb.querySelector(".tpg").style.width = Math.min(100, T.t / TOUR_END * 100).toFixed(1) + "%";
+      } else { tb.hidden = true; tb.removeAttribute("data-k"); tb.innerHTML = ""; }
+      /* alerta + botões */
+      var al = $("labalert");
+      if (S.drift && !S.fixed) { al.hidden = false; al.className = "lab-alert warn"; al.innerHTML = ic("zap", "imi") + "<span>" + esc(t("lab_alert_drift")) + '</span><button type="button" class="btn primary" id="labfix">' + esc(t("lab_fix")) + "</button>"; }
+      else if (S.outage > 0 || S.backlog.length > 0) { al.hidden = false; al.className = "lab-alert bad"; al.innerHTML = ic("zap", "imi") + "<span>" + esc(t("lab_alert_off")) + "</span>"; }
+      else { al.hidden = true; al.innerHTML = ""; }
+      $("labdrift").disabled = S.drift && !S.fixed; $("laboff").disabled = S.outage > 0 || S.backlog.length > 0;
+      $("labplay").textContent = t(S.run ? "lab_pause" : "lab_resume"); $("labplay").style.setProperty("--i", S.run ? "var(--i-timer)" : "var(--i-play)");
+    }
+    function texts() {
+      $("labtourbtn").textContent = t("lab_tour_btn"); $("labreset").textContent = t("lab_reset"); $("labdup").textContent = t("lab_dup"); $("labbad").textContent = t("lab_bad"); $("labdrift").textContent = t("lab_drift"); $("laboff").textContent = t("lab_off");
+      $("labchaos").textContent = t("lab_chaos"); $("labspeedl").textContent = t("lab_speed");
+      $("labh-runs").textContent = t("lab_runs"); $("labh-exp").textContent = t("lab_exp"); $("labh-dash").textContent = t("lab_dash"); $("labh-by").textContent = t("lab_by"); $("labh-lin").textContent = t("lab_lin");
+      $("labh-cl").textContent = t("lab_cl"); $("labh-tt").textContent = t("lab_tt"); $("labttlive").textContent = t("lab_tt_live"); $("labh-sql").textContent = t("lab_sql"); $("labsqllivel").textContent = t("lab_sql_live");
+      sqlChips(); sql();
+      $("labsum").textContent = t("lab_code"); $("labnote").textContent = t("lab_code_note"); $("labintro").textContent = t("lab_intro");
+      $("labcode").innerHTML = highlight(LAB_CODE);
+      labels(); paint();
+    }
+
+    /* console SQL sobre as tabelas simuladas */
+    var qsel = 0, lastSql = 0;
+    function ts0() { return performance.now(); }
+    function agg(rows, f) { var m = {}; rows.forEach(function (r) { var k = f(r); (m[k] = m[k] || []).push(r); }); return m; }
+    function r2(x) { return Math.round(x * 100) / 100; }
+    var QS = [
+      { sql: "SELECT canal, SUM(valor) AS receita,\n       COUNT(DISTINCT pedido_id) AS pedidos\nFROM silver.pedidos\nGROUP BY canal\nORDER BY receita DESC",
+        run: function (sv) { var m = agg(sv, function (r) { return r.ch; }); return { c: ["canal", "receita", "pedidos"], r: Object.keys(m).map(function (k) { return [k, r2(m[k].reduce(function (a, r) { return a + r.v; }, 0)), m[k].length]; }).sort(function (a, b) { return b[1] - a[1]; }) }; } },
+      { sql: "SELECT motivo, COUNT(*) AS qtd\nFROM silver.pedidos_quarentena\nGROUP BY motivo\nORDER BY qtd DESC",
+        run: function (sv, qr) { var m = agg(qr, function (r) { return r.why; }), nm = { dup: "duplicado", nul: "nulo", neg: "negativo", sch: "schema" }; return { c: ["motivo", "qtd"], r: Object.keys(m).map(function (k) { return [nm[k], m[k].length]; }).sort(function (a, b) { return b[1] - a[1]; }) }; } },
+      { sql: "SELECT pedido_id, canal, valor, motivo\nFROM silver.pedidos_quarentena\nORDER BY ingested_at DESC\nLIMIT 6",
+        run: function (sv, qr) { var nm = { dup: "duplicado", nul: "nulo", neg: "negativo", sch: "schema" }; return { c: ["pedido_id", "canal", "valor", "motivo"], r: qr.slice(-6).reverse().map(function (r) { return [r.id, r.ch, r.v === null ? "NULL" : r.v, nm[r.why]]; }) }; } },
+      { sql: "SELECT canal, ROUND(AVG(valor), 2) AS ticket_medio\nFROM silver.pedidos\nGROUP BY canal\nORDER BY ticket_medio DESC",
+        run: function (sv) { var m = agg(sv, function (r) { return r.ch; }); return { c: ["canal", "ticket_medio"], r: Object.keys(m).map(function (k) { return [k, r2(m[k].reduce(function (a, r) { return a + r.v; }, 0) / m[k].length)]; }).sort(function (a, b) { return b[1] - a[1]; }) }; } },
+      { sql: "SELECT b.n AS bronze, s.n AS silver,\n       ROUND(100.0 * s.n / b.n, 1) AS pct_qualidade\nFROM (SELECT COUNT(*) n FROM bronze.pedidos) b,\n     (SELECT COUNT(*) n FROM silver.pedidos) s",
+        run: function (sv, qr, br) { var done = br.filter(function (r) { return r.st; }).length; return { c: ["bronze", "silver", "pct_qualidade"], r: done ? [[done, sv.length, r2(sv.length / done * 100)]] : [] }; } },
+      { sql: "SELECT pedido_id, canal, valor\nFROM silver.pedidos\nORDER BY valor DESC\nLIMIT 5",
+        run: function (sv) { return { c: ["pedido_id", "canal", "valor"], r: sv.slice().sort(function (a, b) { return b.v - a.v; }).slice(0, 5).map(function (r) { return [r.id, r.ch, r.v]; }) }; } }
+    ];
+    function sql() {
+      lastSql = ts0();
+      var t0 = performance.now(), nfq = new Intl.NumberFormat(lang === "pt" ? "pt-BR" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      var br = S.bronze, sv = br.filter(function (r) { return r.st === "s"; }), qr = br.filter(function (r) { return r.st === "q"; });
+      var res = QS[qsel].run(sv, qr, br), ms = (performance.now() - t0) / 1000 + 0.18;
+      $("labsqlcode").textContent = QS[qsel].sql.replace(/\\n/g, "\n");
+      $("labsqlres").innerHTML = res.r.length ? "<table><thead><tr>" + res.c.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+        res.r.map(function (row) { return "<tr>" + row.map(function (v) { var isn = typeof v === "number" && String(v).indexOf(".") > -1; return "<td" + (typeof v === "number" ? ' class="num"' : "") + ">" + esc(isn ? nfq.format(v) : String(v)) + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table>" : '<p class="lhint" style="padding:14px">' + esc(t("lab_sql_empty")) + "</p>";
+      $("labsqlmeta").textContent = fill(t("lab_sql_meta"), { n: res.r.length, s: nfq.format(ms) });
+    }
+    function sqlChips() {
+      $("labq").innerHTML = QS.map(function (q, i) { return '<button type="button" class="qchip" data-q="' + i + '" aria-pressed="' + (i === qsel) + '">' + esc(t("lab_q" + (i + 1))) + "</button>"; }).join("");
+    }
+
+    /* tour guiado */
+    function hl() {
+      var keys = T.on && T.step >= 0 ? TOUR_HL[T.step] : [];
+      Array.prototype.forEach.call(host.querySelectorAll(".lnode,.lq"), function (el) { var k = el.id === "lq" ? "quar" : el.getAttribute("data-k"); el.classList.toggle("hl", keys.indexOf(k) > -1); });
+      host.classList.toggle("tour", keys.length > 0);
+    }
+    function tourEnter(i) {
+      T.step = i;
+      if (i === 1) { S.badBurst = 3; S.dupBurst = 3; log("lab_l_bad", {}, "warn"); }
+      if (i === 2) { S.outage = 2; log("lab_l_off", {}, "warn"); }
+      if (i === 3) { sel = CH.slice().sort(function (a, b) { return S.rev[b] - S.rev[a]; })[0]; }
+      hl();
+    }
+    function startTour() {
+      reset(); S.speed = 1;
+      Array.prototype.forEach.call($("labspeed").children, function (x) { x.setAttribute("aria-pressed", String(x.getAttribute("data-sp") === "1")); });
+      T.on = true; T.t = 0; T.step = -1; tourEnter(0); paint();
+    }
+    function endTour() { if (!T.on) { return; } T.on = false; hl(); paint(); }
+
+    /* laço */
+    function shouldRun() { return inView && tabOn && !document.hidden; }
+    function frame(ts) {
+      if (!running) { return; }
+      var dt = Math.min(64, ts - last), real = dt; last = ts;
+      if (S.run) {
+        if (T.on) {
+          T.t += real; var ni = 0; TOUR.forEach(function (x, i) { if (T.t >= x) { ni = i; } });
+          if (ni !== T.step) { tourEnter(ni); }
+          if (T.t >= TOUR_END) { endTour(); }
+        }
+        dt *= S.speed; S.t += dt; S.acc += dt;
+        while (S.acc >= BATCH) { S.acc -= BATCH; tick(); }
+        stepParts();
+      }
+      if (ts - lastPaint > 110) { lastPaint = ts; paint(); }
+      requestAnimationFrame(frame);
+    }
+    function sync() {
+      var want = shouldRun();
+      if (want && !T.auto && S) { T.auto = true; startTour(); }
+      if (want && !running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
+      else if (!want) { running = false; }
+    }
+    function reset() {
+      if (dotsHost) { dotsHost.innerHTML = ""; }
+      var sp = S ? S.speed : 1; S = fresh(); S.speed = sp; sel = null; T.on = false; hl(); log("lab_log0", {}, "ok"); tick(); paint();
+    }
+    function init() {
+      build(); dotsHost = $("lpts"); S = fresh(); log("lab_log0", {}, "ok"); tick();
+      $("pane-lab").addEventListener("click", function (e) { if (T.on && !e.target.closest("#labplay,#labtour,#labtourbtn")) { endTour(); } }, true);
+      $("pane-lab").addEventListener("input", function () { endTour(); }, true);
+      $("labtour").addEventListener("click", function (e) { if (e.target.closest("#tourskip")) { endTour(); } });
+      $("labtourbtn").addEventListener("click", startTour);
+      $("labplay").addEventListener("click", function () { S.run = !S.run; paint(); });
+      $("labreset").addEventListener("click", reset);
+      $("labspeed").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-sp]"); if (!b) { return; }
+        S.speed = +b.getAttribute("data-sp");
+        Array.prototype.forEach.call($("labspeed").children, function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      });
+      $("labdup").addEventListener("click", function () { S.dupBurst = 3; log("lab_l_dup", {}, "warn"); paint(); });
+      $("labbad").addEventListener("click", function () { S.badBurst = 3; log("lab_l_bad", {}, "warn"); paint(); });
+      $("labdrift").addEventListener("click", function () { S.drift = true; S.fixed = false; log("lab_l_drift", {}, "warn"); paint(); });
+      $("laboff").addEventListener("click", function () { S.outage = 2; log("lab_l_off", {}, "warn"); paint(); });
+      $("labalert").addEventListener("click", function (e) { if (e.target.closest("#labfix")) { S.fixed = true; log("lab_l_fix", {}, "ok"); paint(); } });
+      $("labbars").addEventListener("click", function (e) { var b = e.target.closest(".lbar"); if (b) { sel = sel === b.getAttribute("data-ch") ? null : b.getAttribute("data-ch"); paint(); } });
+      $("labtt").addEventListener("input", function () { var v = +this.value; S.tv = v >= S.vers.length - 1 ? null : v; paint(); });
+      $("labttlive").addEventListener("click", function () { S.tv = null; paint(); });
+      $("labq").addEventListener("click", function (e) { var b = e.target.closest(".qchip"); if (b) { qsel = +b.getAttribute("data-q"); sqlChips(); sql(); } });
+      $("labsqllive").addEventListener("change", function () { if (this.checked) { sql(); } });
+      window.addEventListener("resize", measure);
+      document.addEventListener("visibilitychange", sync);
+      if ("IntersectionObserver" in window) { new IntersectionObserver(function (en) { inView = en[0].isIntersecting; sync(); }).observe($("pane-lab")); } else { inView = true; sync(); }
+      window.__labTab = function (on) { tabOn = on; if (on) { measure(); } sync(); };
+      texts();
+    }
+    init();
+    return { texts: texts };
+  })();
+  function renderLab() { lab.texts(); }
+  window.__labReady = true;
+
+  $("dtabs").addEventListener("click", function (e) {
+    var b = e.target.closest(".dtab"); if (!b) { return; }
+    var which = b.getAttribute("data-tab");
+    Array.prototype.forEach.call($("dtabs").children, function (x) { x.setAttribute("aria-selected", String(x === b)); x.tabIndex = x === b ? 0 : -1; });
+    $("pane-lab").hidden = which !== "lab"; $("pane-step").hidden = which !== "step";
+    window.__labTab(which === "lab");
   });
 
   /* ---------- Barra de progresso (Bronze → Silver → Gold) ---------- */
